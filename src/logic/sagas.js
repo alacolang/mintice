@@ -24,7 +24,11 @@ function* trial() {
   console.log("trial!");
   yield* navigate(routes.gameTrial);
   const {result, timeout} = yield race({
-    result: take(types.TRIAL_PRESSED),
+    result: take([
+      types.TRIAL_SUCCESS,
+      types.TRIAL_COMISSION,
+      types.TRIAL_OMISSION
+    ]),
     timeout: call(delay, 400)
   });
   if (timeout) {
@@ -50,18 +54,20 @@ function* blank() {
   yield call(delay, 500);
 }
 
-function* theSagas() {
-  yield take(types.INIT);
+function* session() {
   let n = 0;
-  let a;
   while (n++ < 10) {
-    console.log("n=", n);
     yield* fixation();
     yield* blank();
     yield* trial();
     yield* blank();
     yield* feedback();
   }
+}
+
+function* theSagas() {
+  yield take(types.INIT);
+  yield* session();
 }
 
 export default function* rootSaga() {
