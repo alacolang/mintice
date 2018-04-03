@@ -2,8 +2,10 @@
 import React from "react";
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
-
+import Game from "../logic/stimulus";
 // const icons = [Icons.heartO, Icons.circleO, Icons.heartO, Icons.heartO];
+
+// stimuli;
 const icons = ["T", "X", "N", "O"];
 const iconColors = ["red", "green", "red", "green"];
 const RandomImage = () => (
@@ -14,17 +16,20 @@ const RandomImage = () => (
     style={styles.image}
   />
 );
-
+// <Text style={[styles.imageIcon, {color: iconColors[iconIdx]}]}>
+//   {icons[iconIdx]}
+// </Text>
 class GameTrial extends React.Component {
+  state: {item: null};
+  componentDidMount() {
+    // debugger;
+    // this.setState({item: Game.pickItem()});
+  }
   render() {
     const iconIdx = Math.floor(Math.random() * 4);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Text style={[styles.imageIcon, {color: iconColors[iconIdx]}]}>
-            {icons[iconIdx]}
-          </Text>
-        </View>
+        <View style={styles.imageContainer}>{Game.pickItem().render}</View>
         <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
           <FontAwesome style={styles.buttonIcon}>{Icons.thumbsUp}</FontAwesome>
         </TouchableOpacity>
