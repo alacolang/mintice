@@ -1,35 +1,38 @@
 // @flow
 import React from "react";
+import {connect} from "react-redux";
+import type {Dispatch} from "redux";
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
-import Game from "../logic/stimulus";
-// const icons = [Icons.heartO, Icons.circleO, Icons.heartO, Icons.heartO];
+import Game from "../logic/game";
+import type {Item} from "../logic/game";
+import {trialResult} from "../logic/actions";
 
-// stimuli;
-const icons = ["T", "X", "N", "O"];
-const iconColors = ["red", "green", "red", "green"];
-const RandomImage = () => (
-  <Image
-    source={{
-      uri: `https://picsum.photos/200/300?i=${new Date().toDateString()}`
-    }}
-    style={styles.image}
-  />
-);
-// <Text style={[styles.imageIcon, {color: iconColors[iconIdx]}]}>
-//   {icons[iconIdx]}
-// </Text>
-class GameTrial extends React.Component {
-  state: {item: null};
+type Props = {
+  dispatch: Dispatch
+};
+type State = {
+  item: ?Item,
+  isGo: ?boolean,
+  start: Date
+};
+
+class GameTrial extends React.Component<Props, State> {
+  state = {item: null, isGo: null, start: new Date()};
   componentDidMount() {
-    // debugger;
-    // this.setState({item: Game.pickItem()});
+    const [category, item] = Game.pickItem();
+    this.setState({item, isGo: category == "go"});
   }
+  handlePress = () => {
+    const [session, block, trial] = [1, 1, 1];
+    this.props.dispatch(trialResult(new Date() - this.state.start));
+  };
   render() {
+    if (!this.state.item) return null;
     const iconIdx = Math.floor(Math.random() * 4);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>{Game.pickItem().render}</View>
+        <View style={styles.imageContainer}>{this.state.item.render}</View>
         <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
           <FontAwesome style={styles.buttonIcon}>{Icons.thumbsUp}</FontAwesome>
         </TouchableOpacity>
@@ -77,4 +80,5 @@ const styles = StyleSheet.create({
     fontSize: 42
   }
 });
-export default GameTrial;
+
+export default connect()(GameTrial);

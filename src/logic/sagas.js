@@ -1,13 +1,8 @@
 // @flow
+
 import {
-  put,
-  call,
-  takeEvery,
-  select,
-  all,
-  take,
-  race,
-  fork
+  put,  call, takeEvery, select,
+  all, take, race, fork
 } from "redux-saga/effects";
 import {delay} from "redux-saga";
 import messages from "../fa";
@@ -24,11 +19,7 @@ function* trial() {
   console.log("trial!");
   yield* navigate(routes.gameTrial);
   const {result, timeout} = yield race({
-    result: take([
-      types.TRIAL_SUCCESS,
-      types.TRIAL_COMISSION,
-      types.TRIAL_OMISSION
-    ]),
+    result: take(types.TRIAL_RESULT),
     timeout: call(delay, 400)
   });
   if (timeout) {
