@@ -33,7 +33,10 @@ class GameTrial extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>{this.state.item.render}</View>
-        <TouchableOpacity onPress={() => {}} style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={this.handlePress}
+          style={styles.buttonContainer}
+        >
           <FontAwesome style={styles.buttonIcon}>{Icons.thumbsUp}</FontAwesome>
         </TouchableOpacity>
       </View>

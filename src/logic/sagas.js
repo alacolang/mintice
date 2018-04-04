@@ -8,6 +8,7 @@ import {delay} from "redux-saga";
 import messages from "../fa";
 import * as types from "./types";
 import routes from "./routes";
+import * as actions from "./actions";
 
 function* navigate(path) {
   console.log("trail called");
@@ -17,6 +18,7 @@ function* navigate(path) {
 
 function* trial() {
   console.log("trial!");
+  yield put(actions.startTrial(300, new Date(), types.CATEGORY.GO));
   yield* navigate(routes.gameTrial);
   const {result, timeout} = yield race({
     result: take(types.TRIAL_RESULT),
@@ -47,7 +49,9 @@ function* blank() {
 
 function* session() {
   let n = 0;
-  while (n++ < 10) {
+  yield put(actions.startSession(new Date()));
+  yield put(actions.startBlock(new Date()));
+  while (n++ < 2) {
     yield* fixation();
     yield* blank();
     yield* trial();
