@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   successIcon: {
     color: "green",
-    fontSize: 48 * 3
+    fontSize: 48 * 2
   }
 });
 export default GameFeedback;
