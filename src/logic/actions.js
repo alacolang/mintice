@@ -1,6 +1,6 @@
 // @flow
 import * as types from "./types";
-import type {Category} from "./types";
+import type {Category} from "./games";
 export const init = () => ({
   type: types.INIT
 });
@@ -15,21 +15,26 @@ export const startSession = (startedAt: Date) => ({
   payload: {startedAt}
 });
 
+export const pickGame = () => ({
+  type: types.PICK_GAME
+});
+
 export const startBlock = (startedAt: Date) => ({
   type: types.BLOCK_START,
   payload: {startedAt}
 });
 
-export const startTrial = (
-  delay: number,
-  startedAt: Date,
-  category: Category
-) => ({
+export const startTrial = (length: number, startedAt: Date) => ({
   type: types.TRIAL_START,
-  payload: {delay, startedAt, category}
+  payload: {length, startedAt}
+});
+
+export const setTrialCategory = (category: Category) => ({
+  type: types.TRIAL_SET_CATEGORY,
+  payload: category
 });
 
 export const trialResult = (rt: number, timeout?: boolean = false) => ({
   type: types.TRIAL_RESULT,
-  payload: {rt}
+  payload: {rt, timeout}
 });

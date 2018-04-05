@@ -3,13 +3,13 @@
 import type {Action} from "redux";
 import type {History} from "history";
 import {combineReducers} from "redux";
-import * as types from "./types";
-import game from "./gameReducer";
-import type {State as Game} from "./gameReducer";
-import profile from "./profileReducer";
-import type {State as Profile} from "./profileReducer";
+import * as types from "../types";
+import game from "./game";
+import type {State as Game} from "./game";
+import profile from "./profile";
+import type {State as Profile} from "./profile";
 
-type State = {
+export type State = {
   history?: History,
   game: Game,
   profile: Profile

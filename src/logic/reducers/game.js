@@ -1,7 +1,9 @@
 // @flow
 
-import * as types from "./types";
-import type {Category, Response} from "./types";
+import * as types from "../types";
+
+import Games, {CATEGORY, RESPONSE} from "../games";
+import type {Category, Response} from "../games";
 import type {Action} from "redux";
 import produce from "immer";
 
@@ -14,6 +16,7 @@ export type Session = {
 };
 export type Block = {
   id: string,
+  gameID: string,
   completed: boolean,
   startedAt: Date,
   finishedAt?: Date,
@@ -22,17 +25,18 @@ export type Block = {
 export type Trial = {
   id: string,
   startedAt: Date,
-  delay: number,
+  length: number,
   category: Category,
   rt?: number,
   response?: Response
 };
 export type Metrics = {
-  lastDelay: number,
+  lastLength: number,
   sessionID?: string,
   blockID?: string,
   trialID?: string,
-  lastActivity?: Date
+  lastActivity?: Date,
+  gameID: string
 };
 
 export type State = {
@@ -44,7 +48,7 @@ export type State = {
 
 const initialState: State = {
   metrics: {
-    lastDelay: 300
+    lastLength: 300
     // sessionID: "0",
     // blockID: "0",
     // trialID: "0"
@@ -69,7 +73,7 @@ const initialState: State = {
     // "1": {
     //   id: "1",
     //   startedAt: new Date(),
-    //   delay: 301,
+    //   length: 301,
     //   category: types.CATEGORY.GO
     // }
   }
@@ -86,6 +90,11 @@ const reducer = (state: State = initialState, action: Action) =>
         startedAt: action.payload.startedAt,
         blocks: []
       };
+    } else if (action.type == types.PICK_GAME) {
+      const gameIDs = state.blocks.map(block => block.gameID);
+      Games.filter(game => !gameIDs.includes(game.id)).filter(
+        game => game.blockToRun == state.metrics.blockID
+      );
     } else if (action.type == types.BLOCK_START) {
       const blockID = ((+state.metrics.blockID || 0) + 1).toString();
       draft.metrics.blockID = blockID;
@@ -104,21 +113,19 @@ const reducer = (state: State = initialState, action: Action) =>
         id: trialID,
         ...action.payload
       };
+    } else if (action.type == types.TRIAL_SET_CATEGORY) {
+      const {trialID} = state.metrics;
+      draft.trials[trialID].category = action.payload;
     } else if (action.type == types.TRIAL_RESULT) {
-      const {rt} = action.payload;
-      const {sessionID, blockID, trialID} = state.metrics;
+      const {rt, timeout} = action.payload;
+      const {trialID} = state.metrics;
+      if (!trialID) return;
       const trial = state.trials[trialID];
       let response = undefined;
-      if (trial.category == types.CATEGORY.GO) {
-        response =
-          trial.delay > rt
-            ? types.RESPONSE_TYPE.SUCCESS
-            : types.RESPONSE_TYPE.OMISSION;
-      } else if (trial.category == types.CATEGORY.NO_GO) {
-        response =
-          trial.delay > rt
-            ? types.RESPONSE_TYPE.COMISSION
-            : types.RESPONSE_TYPE.SUCCESS;
+      if (trial.category == CATEGORY.GO) {
+        response = trial.length > rt ? RESPONSE.SUCCESS : RESPONSE.OMISSION;
+      } else if (trial.category == CATEGORY.NO_GO) {
+        response = trial.length > rt ? RESPONSE.COMISSION : RESPONSE.SUCCESS;
       }
       draft.trials[trialID].response = response;
       draft.trials[trialID].rt = rt;

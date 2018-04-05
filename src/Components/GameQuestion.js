@@ -4,12 +4,14 @@ import {connect} from "react-redux";
 import type {Dispatch} from "redux";
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
-import Game from "../logic/game";
-import type {Item} from "../logic/game";
-import {trialResult} from "../logic/actions";
+import games from "../logic/games";
+import type {Item, IGame} from "../logic/games";
+import {trialResult, setTrialCategory} from "../logic/actions";
+import type {State as RootState} from "../logic/reducers";
 
 type Props = {
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  game: IGame
 };
 type State = {
   item: ?Item,
@@ -17,14 +19,14 @@ type State = {
   start: Date
 };
 
-class GameTrial extends React.Component<Props, State> {
+class GameQuestion extends React.Component<Props, State> {
   state = {item: null, isGo: null, start: new Date()};
   componentDidMount() {
-    const [category, item] = Game.pickItem();
+    const [category, item] = this.props.game.pickItem();
+    this.props.dispatch(setTrialCategory(category));
     this.setState({item, isGo: category == "go"});
   }
   handlePress = () => {
-    const [session, block, trial] = [1, 1, 1];
     this.props.dispatch(trialResult(new Date() - this.state.start));
   };
   render() {
@@ -32,7 +34,7 @@ class GameTrial extends React.Component<Props, State> {
     const iconIdx = Math.floor(Math.random() * 4);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>{this.state.item.render}</View>
+        <View style={styles.imageContainer}>{this.state.item.render()}</View>
         <TouchableOpacity
           onPress={this.handlePress}
           style={styles.buttonContainer}
@@ -84,4 +86,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(GameTrial);
+const mapStateToProps = (state: RootState) => ({
+  game: games[state.game.metrics.gameID]
+});
+export default connect(mapStateToProps)(GameQuestion);
