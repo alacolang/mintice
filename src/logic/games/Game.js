@@ -10,7 +10,7 @@ export type Item = {
 };
 
 export interface IGame {
-  id: number;
+  id: string;
   blockToRun: number; // is this game runs in first block or third block
   items: Item[];
   goItems(): Item[];

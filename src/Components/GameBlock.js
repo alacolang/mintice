@@ -4,26 +4,28 @@ import {connect} from "react-redux";
 import type {Dispatch} from "redux";
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
-import Game from "../logic/game";
+import games from "../logic/games";
+import type {IGame} from "../logic/games";
 import {startBlock, init} from "../logic/actions";
+import type {State as RootState} from "../logic/reducers";
 
 type Props = {
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  game: IGame
 };
 class GameBlock extends React.Component<Props> {
-  // componentDidMount() {
-  //   this.props.dispatch(init());
-  // }
   handleClick = () => {
     this.props.dispatch(startBlock(new Date()));
   };
+  renderItem = item => <View key={item.id}>{item.render()}</View>;
   render() {
+    const {game} = this.props;
     return (
       <View style={styles.container}>
         <Text>Click on these:</Text>
-        {Game.goItems().map(item => item.render)}
+        {game.goItems().map(this.renderItem)}
         <Text>Pass on these:</Text>
-        {Game.nogoItems().map(item => item.render)}
+        {game.nogoItems().map(this.renderItem)}
         <TouchableOpacity style={styles.play} onPress={this.handleClick}>
           <FontAwesome style={styles.playIcon}>{Icons.playCircleO}</FontAwesome>
         </TouchableOpacity>
@@ -50,4 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 48
   }
 });
-export default connect()(GameBlock);
+
+const mapStateToProps = (state: RootState) => ({
+  game: games.find(game => game.id == state.game.metrics.gameID)
+});
+export default connect(mapStateToProps)(GameBlock);

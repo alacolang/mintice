@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: RootState) => ({
-  game: games[state.game.metrics.gameID]
+  game: games.find(game => game.id == state.game.metrics.gameID)
 });
 export default connect(mapStateToProps)(GameQuestion);

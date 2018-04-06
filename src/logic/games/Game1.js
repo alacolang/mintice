@@ -7,9 +7,9 @@ import {CATEGORY} from "./index";
 import type {Category} from "./index";
 import Circle from "../../Components/Shapes/Circle";
 
-const Game1 = {
+const Game1: IGame = {
   ...Game,
-  id: 1,
+  id: "1",
   blockToRun: 1,
   random: undefined,
   items: [

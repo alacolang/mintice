@@ -67,15 +67,15 @@ function* block(): Saga<void> {
   console.log("block called");
   yield put(actions.pickGame());
   yield* blockIntro();
-  yield put(actions.startBlock(new Date()));
+  // yield put(actions.startBlock(new Date()));
   yield take(types.BLOCK_START);
   let n = 0;
   yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
-  while (n++ < settings.BLOCK_TRIALS) {
-    yield take(types.TRIAL_START);
-    yield* trial();
-    yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
-  }
+  // while (n++ < settings.BLOCK_TRIALS) {
+  //   yield take(types.TRIAL_START);
+  //   yield* trial();
+  //   yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
+  // }
 }
 
 function* session(): Saga<void> {
