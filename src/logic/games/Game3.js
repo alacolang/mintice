@@ -3,15 +3,16 @@ import React from "react";
 import Game1 from "./Game1";
 import type {IGame} from "./Game";
 import Triangle from "../../Components/Shapes/Triangle";
+import Circle from "../../Components/Shapes/Circle";
 
-const Game2: IGame = {
+const Game3: IGame = {
   ...Game1,
-  id: "2",
-  blockToRun: 2,
+  id: "3",
+  blockToRun: 3,
   items: [
-    {id: 1, render: () => <Triangle color="green" />},
+    {id: 1, render: () => <Circle color="green" />},
     {id: 2, render: () => <Triangle color="blue" />}
   ]
 };
 
-export default Game2;
+export default Game3;

@@ -81,27 +81,42 @@ const initialState: State = {
 
 const reducer = (state: State = initialState, action: Action) =>
   produce((state: State), (draft: State): void => {
-    if (action.type == types.SESSION_START) {
+    if (action.type == types.SESSION_NEW) {
       const sessionID = ((+state.metrics.sessionID || 0) + 1).toString();
       draft.metrics.sessionID = sessionID;
+      draft.metrics.blockID = 0;
       draft.sessions[sessionID] = {
         id: sessionID,
         completed: false,
         startedAt: action.payload.startedAt,
         blocks: []
       };
-    } else if (action.type == types.PICK_GAME) {
+    } else if (action.type == types.SESSION_RESET) {
+      const {sessionID, startedAt} = action.payload;
+      draft.metrics.sessionID = sessionID;
+      draft.metrics.blockID = 0;
+      draft.sessions[sessionID] = {
+        id: sessionID,
+        completed: false,
+        startedAt: startedAt,
+        blocks: []
+      };
+    } else if (action.type == types.BLOCK_NEW) {
+      console.log("reducers> new_block action, state=", state, action);
+      const blocks = state.sessions[state.metrics.sessionID].blocks;
       const blockID = ((+state.metrics.blockID || 0) + 1).toString();
 
       const gameIDs: string[] = values(state.blocks).map(
         (block: Block) => block.gameID
       );
+      console.log("Games=", Games);
       const game: IGame = Games.filter(
         game => !gameIDs.includes(game.id)
-      ).filter(game => game.blockToRun == blockID)[0];
-
+      ).filter(game => game.blockToRun == blocks.length + 1)[0];
+      console.log("game=", game);
       draft.metrics.gameID = game.id;
       draft.metrics.blockID = blockID;
+      draft.metrics.lastActivity = new Date();
       draft.blocks[blockID] = {
         id: blockID,
         gameID: game.id,

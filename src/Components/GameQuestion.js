@@ -36,10 +36,16 @@ class GameQuestion extends React.Component<Props, State> {
       <View style={styles.container}>
         <View style={styles.imageContainer}>{this.state.item.render()}</View>
         <TouchableOpacity
+          // delayPressIn={0}
+          // delayPressOut={0}
           onPress={this.handlePress}
           style={styles.buttonContainer}
         >
-          <FontAwesome style={styles.buttonIcon}>{Icons.thumbsUp}</FontAwesome>
+          <View>
+            <FontAwesome style={styles.buttonIcon}>
+              {Icons.thumbsUp}
+            </FontAwesome>
+          </View>
         </TouchableOpacity>
       </View>
     );

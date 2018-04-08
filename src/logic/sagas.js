@@ -11,12 +11,15 @@ import {
   fork
 } from "redux-saga/effects";
 import {delay} from "redux-saga";
+import {AsyncStorage} from "react-native";
 import type {Saga} from "redux-saga";
 import messages from "../fa";
 import * as types from "./types";
 import routes from "./routes";
 import * as actions from "./actions";
 import * as settings from "./settings";
+import type {State} from "./reducers";
+const moment = require("moment");
 
 function* navigate(path) {
   const {history} = yield select();
@@ -65,29 +68,56 @@ function* trial(): Saga<void> {
 
 function* block(): Saga<void> {
   console.log("block called");
-  yield put(actions.pickGame());
+  yield put(actions.newBlock());
   yield* blockIntro();
-  // yield put(actions.startBlock(new Date()));
   yield take(types.BLOCK_START);
   let n = 0;
-  yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
-  // while (n++ < settings.BLOCK_TRIALS) {
-  //   yield take(types.TRIAL_START);
-  //   yield* trial();
-  //   yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
-  // }
+  while (n++ < settings.BLOCK_TRIALS) {
+    yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
+    yield* trial();
+  }
+  const state = yield select();
+  yield AsyncStorage.setItem("store", JSON.stringify({game: state.game}));
+  console.log("saved=", yield AsyncStorage.getItem("store"));
+}
+
+function* enoughToday() {
+  yield* navigate(routes.gameEnoughToday);
+}
+
+function* sessionIntro() {
+  yield* navigate(routes.gameSession);
+  yield take(types.SESSION_START);
 }
 
 function* session(): Saga<void> {
   console.log("session called");
+  const state: State = yield select();
+  const {metrics: {sessionID, lastActivity}, sessions} = state.game;
+  if (!sessionID) {
+    yield put(actions.newSession(new Date()));
+  } else {
+    const {blocks} = sessions[sessionID];
+    if (blocks.length == settings.SESSION_BLOCKS) {
+      if (moment().diff(lastActivity, "hours") < 18) {
+        yield* enoughToday();
+        return;
+      } else yield put(actions.newSession(new Date()));
+    } else if (moment().diff(lastActivity, "hours") > 18) {
+      yield put(actions.resetSession(sessionID, new Date()));
+    }
+  }
+  yield* sessionIntro();
   yield* block();
+  yield* session();
 }
 
 function* init(): Saga<void> {
   console.log("init called");
-  yield put(actions.startSession(new Date()));
-  // yield put(actions.startBlock(new Date())); // DELETE THIS!
-  // yield* blockIntro();
+  const state = yield AsyncStorage.getItem("store");
+  try {
+    yield put(actions.hydrateRedux(JSON.parse(state)));
+  } catch (e) {}
   yield* session();
 }
 
@@ -95,9 +125,5 @@ export default function* rootSaga(): Saga<void> {
   yield takeEvery(types.INIT, init);
   // yield takeEvery(types.SESSION_START, session);
   // yield takeEvery(types.BLOCK_START, block);
-  yield takeEvery(types.TRIAL_START, trial);
+  // yield takeEvery(types.TRIAL_START, trial);
 }
-
-setTimeout(() => {
-  console.log("after 10secs");
-}, 10 * 1000);

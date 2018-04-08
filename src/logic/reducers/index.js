@@ -27,4 +27,8 @@ const reducer = combineReducers({
   game,
   history
 });
-export default reducer;
+export default (state: State, action: Action) => {
+  if (action.type == types.REDUX_HYDRATE && action.payload) {
+    return {...state, ...action.payload};
+  } else return reducer(state, action);
+};

@@ -4,8 +4,9 @@ import type {Item, IGame} from "./Game";
 export type {Item, IGame};
 import Game1 from "./Game1";
 import Game2 from "./Game2";
+import Game3 from "./Game3";
 
-const Games: IGame[] = [Game1, Game2];
+const Games: IGame[] = [Game1, Game2, Game3];
 export default Games;
 
 export const RESPONSE = {

@@ -5,18 +5,31 @@ export const init = () => ({
   type: types.INIT
 });
 
+export const hydrateRedux = (state: any) => ({
+  type: types.REDUX_HYDRATE,
+  payload: state
+});
 export const addHistory = (history: History) => ({
   type: types.ADD_HISTORY,
   payload: history
 });
 
-export const startSession = (startedAt: Date) => ({
-  type: types.SESSION_START,
+export const startSession = () => ({
+  type: types.SESSION_START
+});
+
+export const newSession = (startedAt: Date) => ({
+  type: types.SESSION_NEW,
   payload: {startedAt}
 });
 
-export const pickGame = () => ({
-  type: types.PICK_GAME
+export const resetSession = (sessionID: string, startedAt: Date) => ({
+  type: types.SESSION_RESET,
+  payload: {startedAt, sessionID}
+});
+
+export const newBlock = () => ({
+  type: types.BLOCK_NEW
 });
 
 export const startBlock = (startedAt: Date) => ({
