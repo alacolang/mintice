@@ -1,10 +1,12 @@
 // @flow
 
-import {values} from "ramda";
+import {values, pluck, filter, compose} from "ramda";
 import * as types from "../types";
 import Games, {CATEGORY, RESPONSE} from "../games";
+import {diff, pickRandom} from "../games/helpers";
 import type {Category, Response, IGame} from "../games";
-import type {Action} from "redux";
+import type {Action} from "./index";
+
 import produce from "immer";
 
 export type Session = {
@@ -12,7 +14,7 @@ export type Session = {
   completed: boolean,
   startedAt: Date,
   finishedAt?: Date,
-  blocks: string[]
+  blockIDs: string[]
 };
 export type Block = {
   id: string,
@@ -20,7 +22,7 @@ export type Block = {
   completed: boolean,
   startedAt?: Date,
   finishedAt?: Date,
-  trials: string[]
+  trialIDs: string[]
 };
 export type Trial = {
   id: string,
@@ -89,7 +91,7 @@ const reducer = (state: State = initialState, action: Action) =>
         id: sessionID,
         completed: false,
         startedAt: action.payload.startedAt,
-        blocks: []
+        blockIDs: []
       };
     } else if (action.type == types.SESSION_RESET) {
       const {sessionID, startedAt} = action.payload;
@@ -101,19 +103,33 @@ const reducer = (state: State = initialState, action: Action) =>
         startedAt: startedAt,
         blocks: []
       };
+    } else if (action.type == types.SESSION_COMPLETED) {
+      const {sessionID} = state.metrics;
+      draft.sessions[sessionID].completed = true;
+      draft.sessions[sessionID].finishedAt = action.payload.finishedAt;
     } else if (action.type == types.BLOCK_NEW) {
       console.log("reducers> new_block action, state=", state, action);
-      const blocks = state.sessions[state.metrics.sessionID].blocks;
+      const completedBlocks = state.sessions[
+        state.metrics.sessionID
+      ].blockIDs.map(blockID => state.blocks[blockID]);
       const blockID = ((+state.metrics.blockID || 0) + 1).toString();
 
-      const gameIDs: string[] = values(state.blocks).map(
-        (block: Block) => block.gameID
-      );
+      const gameIDs: string[] = values(state.blocks)
+        .filter((block: Block) => block.completed)
+        .map((block: Block) => block.gameID);
       console.log("Games=", Games);
-      const game: IGame = Games.filter(
-        game => !gameIDs.includes(game.id)
-      ).filter(game => game.blockToRun == blocks.length + 1)[0];
+      console.log("done gameIDs=", gameIDs);
+
+      const blockToRun = pickRandom(
+        diff([1, 2, 3], pluck("blockToRun", completedBlocks))
+      );
+      const game: IGame = compose(
+        pickRandom,
+        filter(game => !gameIDs.includes(game.id)),
+        filter(game => game.blockToRun == blockToRun)
+      )(Games);
       console.log("game=", game);
+
       draft.metrics.gameID = game.id;
       draft.metrics.blockID = blockID;
       draft.metrics.lastActivity = new Date();
@@ -121,16 +137,20 @@ const reducer = (state: State = initialState, action: Action) =>
         id: blockID,
         gameID: game.id,
         completed: false,
-        trials: []
+        trialIDs: []
       };
-      draft.sessions[draft.metrics.sessionID].blocks.push(blockID);
+      draft.sessions[draft.metrics.sessionID].blockIDs.push(blockID);
     } else if (action.type == types.BLOCK_START) {
       const blockID = state.metrics.blockID;
       draft.blocks[blockID].startedAt = action.payload.startedAt;
+    } else if (action.type == types.BLOCK_COMPLETED) {
+      const blockID = state.metrics.blockID;
+      draft.blocks[blockID].completed = true;
+      draft.blocks[blockID].finishedAt = action.payload.finishedAt;
     } else if (action.type == types.TRIAL_START) {
       const trialID = ((+state.metrics.trialID || 0) + 1).toString();
       draft.metrics.trialID = trialID;
-      draft.blocks[draft.metrics.blockID].trials.push(trialID);
+      draft.blocks[draft.metrics.blockID].trialIDs.push(trialID);
       draft.trials[trialID] = {
         id: trialID,
         ...action.payload

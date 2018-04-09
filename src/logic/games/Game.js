@@ -1,12 +1,12 @@
 // @flow
 import type {ComponentType} from "react";
-import {randomIntInRange, pickRandomGoNogoIdx, diff} from "./helpers";
+import {randomIntInRange, pickRandomGoNogoIdx, diffItems} from "./helpers";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 
 export type Item = {
   id: number,
-  render: ComponentType<any>
+  Component: ComponentType<any>
 };
 
 export interface IGame {
@@ -16,11 +16,12 @@ export interface IGame {
   goItems(): Item[];
   nogoItems(): Item[];
   pickItem(): [Category, Item];
+  Goal: ComponentType<any>;
 }
 
 const Game = {
   nogoItems(): Item[] {
-    return diff(this.items, this.goItems());
+    return diffItems(this.items, this.goItems());
   },
   pickItem(): [Category, Item] {
     const [goItems, nogoItems] = [this.goItems(), this.nogoItems()];

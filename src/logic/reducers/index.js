@@ -1,14 +1,18 @@
 // @flow
 
-import type {Action} from "redux";
 import type {History} from "history";
 import {combineReducers} from "redux";
+import {isEmpty} from "ramda";
 import * as types from "../types";
 import game from "./game";
 import type {State as Game} from "./game";
 import profile from "./profile";
 import type {State as Profile} from "./profile";
 
+export type Action = {
+  type: string,
+  payload?: any
+};
 export type State = {
   history?: History,
   game: Game,
@@ -29,6 +33,7 @@ const reducer = combineReducers({
 });
 export default (state: State, action: Action) => {
   if (action.type == types.REDUX_HYDRATE && action.payload) {
-    return {...state, ...action.payload};
+    if (!isEmpty(action.payload)) return {...state, ...action.payload};
+    else return state;
   } else return reducer(state, action);
 };

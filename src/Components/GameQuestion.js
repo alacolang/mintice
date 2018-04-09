@@ -30,11 +30,14 @@ class GameQuestion extends React.Component<Props, State> {
     this.props.dispatch(trialResult(new Date() - this.state.start));
   };
   render() {
-    if (!this.state.item) return null;
+    const {item} = this.state;
+    if (!item) return null;
     const iconIdx = Math.floor(Math.random() * 4);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>{this.state.item.render()}</View>
+        <View style={styles.imageContainer}>
+          <item.Component />
+        </View>
         <TouchableOpacity
           // delayPressIn={0}
           // delayPressOut={0}

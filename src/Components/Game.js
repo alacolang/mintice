@@ -12,14 +12,14 @@ import GameBlock from "./GameBlock";
 import GameFixation from "./GameFixation";
 import gameEnoughToday from "./GameEnoughToday";
 import routes from "../logic/routes";
-import {init} from "../logic/actions";
+import {reqSession} from "../logic/actions";
 
 type Props = {
   dispatch: Dispatch
 };
 class Game extends React.Component<Props> {
   componentDidMount() {
-    this.props.dispatch(init());
+    this.props.dispatch(reqSession());
   }
   render() {
     return (

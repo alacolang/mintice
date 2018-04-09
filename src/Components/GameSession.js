@@ -9,6 +9,7 @@ import logo from "../images/logo.png";
 import {startSession} from "../logic/actions";
 import {SESSION_BLOCKS} from "../logic/settings";
 import type {State as RootState} from "../logic/reducers";
+import Tabbar from "./Tabbar";
 
 type Props = {
   dispatch: Dispatch,
@@ -27,33 +28,40 @@ class GameSession extends React.Component<Props> {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Image style={styles.logo} source={logo} />
-          <MyText style={styles.headerTitle}>
-            <FormattedMessage id="session.title" />
+      <View style={styles.outerContainer}>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Image style={styles.logo} source={logo} />
+            <MyText style={styles.headerTitle}>
+              <FormattedMessage id="session.title" />
+            </MyText>
+          </View>
+          <MyText style={styles.text}>
+            <FormattedMessage id="session.message1" />
           </MyText>
+          <TouchableOpacity
+            style={styles.playContainer}
+            onPress={this.handleClick}
+          >
+            <MyText style={styles.play}>
+              <FormattedMessage
+                id="session.start"
+                values={{block: BLOCK_TURN[String(this.props.blocks)]}}
+              />
+            </MyText>
+          </TouchableOpacity>
         </View>
-        <MyText style={styles.text}>
-          <FormattedMessage id="session.message1" />
-        </MyText>
-        <TouchableOpacity
-          style={styles.playContainer}
-          onPress={this.handleClick}
-        >
-          <MyText style={styles.play}>
-            <FormattedMessage
-              id="session.start"
-              values={{block: BLOCK_TURN[String(this.props.blocks)]}}
-            />
-          </MyText>
-        </TouchableOpacity>
+        <Tabbar />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
   container: {
     flex: 1,
     paddingHorizontal: 25,
@@ -93,6 +101,6 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = (state: RootState) => ({
-  blocks: state.game.sessions[state.game.metrics.sessionID].blocks.length
+  blocks: state.game.sessions[state.game.metrics.sessionID].blockIDs.length
 });
 export default connect(mapStateToProps)(GameSession);

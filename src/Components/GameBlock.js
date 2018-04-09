@@ -19,19 +19,11 @@ class GameBlock extends React.Component<Props> {
   handleClick = () => {
     this.props.dispatch(startBlock(new Date()));
   };
-  renderItem = item => <View key={item.id}>{item.render()}</View>;
   render() {
     const {game} = this.props;
     return (
       <View style={styles.container}>
-        <MyText style={styles.items}>
-          <FormattedMessage id="block.pickGoItems" />
-        </MyText>
-        {game.goItems().map(this.renderItem)}
-        <MyText style={styles.items}>
-          <FormattedMessage id="block.skipNoGoItems" />
-        </MyText>
-        {game.nogoItems().map(this.renderItem)}
+        <game.Goal game={game} />
         <TouchableOpacity
           style={styles.playContainer}
           onPress={this.handleClick}
@@ -50,9 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  items: {
-    marginVertical: 15
   },
   playContainer: {
     justifyContent: "center",

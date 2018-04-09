@@ -11,6 +11,7 @@ import {
   fork
 } from "redux-saga/effects";
 import {delay} from "redux-saga";
+import {pick} from "ramda";
 import {AsyncStorage} from "react-native";
 import type {Saga} from "redux-saga";
 import messages from "../fa";
@@ -23,7 +24,7 @@ const moment = require("moment");
 
 function* navigate(path) {
   const {history} = yield select();
-  yield call(history.push, path);
+  yield call(history.replace, path);
 }
 
 function* question() {
@@ -76,9 +77,8 @@ function* block(): Saga<void> {
     yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
     yield* trial();
   }
-  const state = yield select();
-  yield AsyncStorage.setItem("store", JSON.stringify({game: state.game}));
-  console.log("saved=", yield AsyncStorage.getItem("store"));
+  yield put(actions.completeBlock(new Date()));
+  yield put(actions.persist("game"));
 }
 
 function* enoughToday() {
@@ -97,13 +97,23 @@ function* session(): Saga<void> {
   if (!sessionID) {
     yield put(actions.newSession(new Date()));
   } else {
-    const {blocks} = sessions[sessionID];
-    if (blocks.length == settings.SESSION_BLOCKS) {
-      if (moment().diff(lastActivity, "hours") < 18) {
+    const {blockIDs} = sessions[sessionID];
+    if (blockIDs.length == settings.SESSION_BLOCKS) {
+      // if (moment().diff(lastActivity, "hours") < 18) {
+      if (moment().diff(lastActivity, "minutes") < 5) {
+        // recently done, it's enough
+        if (!session.completed) {
+          yield put(actions.completeSession(new Date()));
+          yield put(actions.persist("game"));
+        }
         yield* enoughToday();
         return;
-      } else yield put(actions.newSession(new Date()));
-    } else if (moment().diff(lastActivity, "hours") > 18) {
+      } else {
+        // start next session, probably it's next day
+        yield put(actions.newSession(new Date()));
+      }
+      //} else if (moment().diff(lastActivity, "hours") > 18) {
+    } else if (moment().diff(lastActivity, "minutes") > 5) {
       yield put(actions.resetSession(sessionID, new Date()));
     }
   }
@@ -112,18 +122,42 @@ function* session(): Saga<void> {
   yield* session();
 }
 
+function parse(x) {
+  try {
+    return JSON.parse(x) || {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function* persist({payload: key}): Saga<void> {
+  const state = yield select();
+  const old = yield AsyncStorage.getItem("store");
+  AsyncStorage.setItem(
+    "store",
+    JSON.stringify({
+      ...parse(old),
+      [key]: state[key]
+    })
+  );
+  console.log("persisted:", yield AsyncStorage.getItem("store"));
+}
+
+const KEYS = ["profile", "game"];
+function* rehydrate() {
+  const state = yield AsyncStorage.getItem("store");
+  yield put(actions.hydrateRedux(pick(KEYS, parse(state))));
+}
+
 function* init(): Saga<void> {
   console.log("init called");
-  const state = yield AsyncStorage.getItem("store");
-  try {
-    yield put(actions.hydrateRedux(JSON.parse(state)));
-  } catch (e) {}
-  yield* session();
+  yield* rehydrate();
+  // yield AsyncStorage.clear();
+  // yield* session();
 }
 
 export default function* rootSaga(): Saga<void> {
   yield takeEvery(types.INIT, init);
-  // yield takeEvery(types.SESSION_START, session);
-  // yield takeEvery(types.BLOCK_START, block);
-  // yield takeEvery(types.TRIAL_START, trial);
+  yield takeEvery(types.SESSION_REQ, session);
+  yield takeEvery(types.PERSIST, persist);
 }

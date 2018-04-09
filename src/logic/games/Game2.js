@@ -9,8 +9,8 @@ const Game2: IGame = {
   id: "2",
   blockToRun: 2,
   items: [
-    {id: 1, render: () => <Triangle color="green" />},
-    {id: 2, render: () => <Triangle color="blue" />}
+    {id: 1, Component: () => <Triangle color="green" />},
+    {id: 2, Component: () => <Triangle color="blue" />}
   ]
 };
 

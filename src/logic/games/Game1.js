@@ -1,11 +1,12 @@
 // @flow
 import React from "react";
-import {randomIntInRange, pickRandomGoNogoIdx, diff} from "./helpers";
+import {randomIntInRange} from "./helpers";
 import Game from "./Game";
 import type {Item, IGame} from "./Game";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 import Circle from "../../Components/Shapes/Circle";
+import BinaryBlockGoal from "../../Components/BinaryBlockGoal";
 
 const Game1: IGame = {
   ...Game,
@@ -13,8 +14,8 @@ const Game1: IGame = {
   blockToRun: 1,
   random: undefined,
   items: [
-    {id: 1, render: () => <Circle color="yellow" />},
-    {id: 2, render: () => <Circle color="green" />}
+    {id: 1, Component: () => <Circle color="yellow" />},
+    {id: 2, Component: () => <Circle color="green" />}
   ],
   getRandomItemIdx() {
     if (this.random != undefined) return this.random;
@@ -23,7 +24,8 @@ const Game1: IGame = {
   },
   goItems(): Item[] {
     return [this.items[this.getRandomItemIdx()]];
-  }
+  },
+  Goal: ({game}: {game: IGame}) => <BinaryBlockGoal game={game} />
 };
 
 export default Game1;

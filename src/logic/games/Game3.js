@@ -10,8 +10,8 @@ const Game3: IGame = {
   id: "3",
   blockToRun: 3,
   items: [
-    {id: 1, render: () => <Circle color="green" />},
-    {id: 2, render: () => <Triangle color="blue" />}
+    {id: 1, Component: () => <Circle color="green" />},
+    {id: 2, Component: () => <Triangle color="blue" />}
   ]
 };
 

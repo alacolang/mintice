@@ -11,8 +11,22 @@ export const randomIntInRange = (lower: number, upper: number): number =>
 export const randomInRange = (lower: number, upper: number): number =>
   Math.random() * (upper - lower) + lower;
 
-export const diff = (a: Item[], b: Item[]): Item[] =>
+export const diffItems = (a: Item[], b: Item[]): Item[] =>
   a.filter(item => !contains(item.id, pluck("id", b)));
+export const diff = (a: number[], b: number[]): number[] =>
+  a.filter(item => !contains(item, b));
+
+export const shuffleArray = <T>(array: T[]): T[] => {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
+
+export const pickRandom = <T>(array: T[]): T => shuffleArray(array)[0];
 
 type Range = [number, number];
 

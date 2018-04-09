@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {NativeRouter as Router, Route, Redirect} from "react-router-native";
@@ -8,6 +9,7 @@ import Game from "./Game";
 import routes from "../logic/routes";
 import Init from "./Init";
 import GameBlock from "./GameBlock";
+import Report from "./Report";
 
 class App extends React.Component {
   render() {
@@ -18,10 +20,11 @@ class App extends React.Component {
           <Route
             path="/"
             exact
-            render={() => <Redirect to={routes.gameEnoughToday} />}
+            render={() => <Redirect to={routes.report} />}
           />
           <Route path={routes.profile} component={Profile} />
           <Route path={routes.game} component={Game} />
+          <Route path={routes.report} component={Report} />
         </View>
       </Router>
     );
