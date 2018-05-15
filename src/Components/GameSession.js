@@ -71,31 +71,46 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerContainer: {
-    marginVertical: 30
+    marginVertical: 30,
+    alignItems: "center"
   },
   logo: {
-    width: 55,
-    height: 55,
-    borderRadius: 55 / 2
+    width: 120,
+    height: 120,
+    borderRadius: 100 / 2
   },
   headerTitle: {
-    fontSize: 24
+    fontSize: 32,
+    color: "#4F938C",
+    fontWeight: "bold"
   },
   text: {
-    marginVertical: 30,
-    fontSize: 24
+    marginTop: 20,
+    marginBottom: 30,
+    fontSize: 21,
+    lineHeight: 2 * 21,
+    color: "#A0C251"
   },
   playContainer: {
+    position: "absolute",
+    bottom: 40,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "darkblue",
-    height: 90,
-    paddingHorizontal: 20,
-    // width: 120
-    borderRadius: 5
+    height: 50,
+    width: 140,
+    paddingBottom: 4,
+    borderWidth: 2,
+    backgroundColor: "#96C3BE",
+    borderColor: "black"
+    // paddingHorizontal: 20,
+    // shadowOffset: {width: 5, height: 5},
+    // // shadowColor: "#276D68",
+    // shadowColor: "#276D68",
+    // shadowOpacity: 0.5,
+    // elevation: 5,
   },
   play: {
-    fontSize: 28,
+    fontSize: 22,
     color: "white",
     textAlign: "center"
   }

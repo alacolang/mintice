@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#404040"
+    backgroundColor: "#fff"
   }
 });
 export default GameBlank;

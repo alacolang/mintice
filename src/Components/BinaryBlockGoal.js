@@ -8,16 +8,16 @@ import type {IGame, Item} from "../logic/games";
 
 const ItemRenderer = ({item}: {item: Item}) => <item.Component />;
 
-const BinaryBlockGoal = ({game}: {game: IGame}) => {
+const Goal = ({game}: {game: IGame}) => {
   console.log("game=", game);
   return (
-    <View>
+    <View style={styles.container}>
       <MyText style={styles.items}>
-        <FormattedMessage id="block.binary.pick" />
+        <FormattedMessage id="block.binary.go" />
       </MyText>
       {game.goItems().map(item => <ItemRenderer key={item.id} item={item} />)}
       <MyText style={styles.items}>
-        <FormattedMessage id="block.binary.skip" />
+        <FormattedMessage id="block.binary.nogo" />
       </MyText>
       {game.nogoItems().map(item => <ItemRenderer key={item.id} item={item} />)}
     </View>
@@ -25,9 +25,14 @@ const BinaryBlockGoal = ({game}: {game: IGame}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center"
+  },
   items: {
-    marginVertical: 15
+    color: "#A0C251",
+    marginVertical: 15,
+    fontSize: 18
   }
 });
 
-export default BinaryBlockGoal;
+export default Goal;

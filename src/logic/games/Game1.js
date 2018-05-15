@@ -6,6 +6,7 @@ import type {Item, IGame} from "./Game";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 import Circle from "../../Components/Shapes/Circle";
+import Container from "../../Components/Shapes/Container";
 import BinaryBlockGoal from "../../Components/BinaryBlockGoal";
 
 const Game1: IGame = {
@@ -14,8 +15,22 @@ const Game1: IGame = {
   blockToRun: 1,
   random: undefined,
   items: [
-    {id: 1, Component: () => <Circle color="yellow" />},
-    {id: 2, Component: () => <Circle color="green" />}
+    {
+      id: 1,
+      Component: () => (
+        <Container>
+          <Circle color="#FFFEAD" />
+        </Container>
+      )
+    },
+    {
+      id: 2,
+      Component: () => (
+        <Container>
+          <Circle color="#E6CEF5" />
+        </Container>
+      )
+    }
   ],
   getRandomItemIdx() {
     if (this.random != undefined) return this.random;

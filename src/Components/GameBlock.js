@@ -40,22 +40,27 @@ class GameBlock extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    // justifyContent: "center",
+    paddingTop: 30,
+    alignItems: "center",
+    backgroundColor: "#fff"
   },
   playContainer: {
+    position: "absolute",
+    bottom: 50 + 40,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "darkblue",
-    height: 90,
-    width: 180,
-    marginTop: 30,
-    paddingHorizontal: 20,
-    // width: 120
-    borderRadius: 5
+    height: 50,
+    width: 140,
+    borderWidth: 2,
+    backgroundColor: "#96C3BE",
+    borderColor: "white"
+    // shadowOffset: {width: 5, height: 5},
+    // shadowColor: "#276D68",
+    // shadowOpacity: 0.5
   },
   play: {
-    fontSize: 28,
+    fontSize: 22,
     color: "white",
     textAlign: "center"
   }

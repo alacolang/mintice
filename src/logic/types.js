@@ -15,3 +15,4 @@ export const SESSION_RESET = "SESSION_RESET";
 export const TRIAL_START = "TRIAL_START";
 export const TRIAL_SET_CATEGORY = "TRIAL_SET_CATEGORY";
 export const TRIAL_RESULT = "TRIAL_RESULT";
+export const RESET = "RESET";

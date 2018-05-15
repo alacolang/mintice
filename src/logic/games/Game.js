@@ -4,10 +4,11 @@ import {randomIntInRange, pickRandomGoNogoIdx, diffItems} from "./helpers";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 
-export type Item = {
-  id: number,
-  Component: ComponentType<any>
-};
+export interface Item {
+  id: number;
+  Component: ComponentType<any>;
+  data: any;
+}
 
 export interface IGame {
   id: string;
@@ -17,6 +18,7 @@ export interface IGame {
   nogoItems(): Item[];
   pickItem(): [Category, Item];
   Goal: ComponentType<any>;
+  data?: any;
 }
 
 const Game = {

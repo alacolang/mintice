@@ -1,7 +1,8 @@
 // @flow
 
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {FormattedMessage} from "react-intl";
+import {StyleSheet, View, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
 import type {Dispatch} from "redux";
 import {Dropdown} from "react-native-material-dropdown";
@@ -9,7 +10,7 @@ import FontAwesome, {Icons} from "react-native-fontawesome";
 import {TextField} from "react-native-material-textfield";
 import Tabbar from "./Tabbar";
 import MyText from "./MyText";
-import {saveProfile, persist} from "../logic/actions";
+import {saveProfile, persist, reset} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
 import messages from "../fa";
 
@@ -19,11 +20,9 @@ type Props = {
   age: ?number
 };
 class Profile extends React.Component<Props> {
-  componentDidMount() {
-    setTimeout(() => {
-      // this.props.history.push('/game/feedback')
-    }, 1000 * 3);
-  }
+  handleReset = () => {
+    this.props.dispatch(reset());
+  };
   handleChange = values => {
     const {name, age} = this.props;
     this.props.dispatch(saveProfile({name, age, ...values}));
@@ -42,9 +41,11 @@ class Profile extends React.Component<Props> {
             label={messages["profile.name"]}
             value={this.props.name}
             containerStyle={styles.input}
-            titleTextStyle={styles.text}
-            labelTextStyle={styles.text}
-            affixTextStyle={styles.text}
+            tintColor='#4F938C'
+            textColor='#grey'
+            titleTextStyle={[styles.text, styles.textTitle]}
+            labelTextStyle={[styles.text, styles.textLabel]}
+            affixTextStyle={[styles.text, styles.textAffix]}
             onChangeText={value => this.handleChange({name: value})}
           />
           <View style={styles.ageContainer}>
@@ -56,6 +57,14 @@ class Profile extends React.Component<Props> {
             />
           </View>
         </View>
+        <TouchableOpacity
+          onPress={this.handleReset}
+          style={styles.resetContainer}
+        >
+          <MyText style={styles.reset}>
+            <FormattedMessage id="reset" />
+          </MyText>
+        </TouchableOpacity>
         <Tabbar />
       </View>
     );
@@ -65,10 +74,10 @@ class Profile extends React.Component<Props> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#EFF9D8"
   },
   container: {
-    paddingLeft: 25,
+    paddingHorizontal: 25,
     alignItems: "flex-start",
     flex: 1
   },
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 68,
-    color: "green"
+    color: "#6FA8A2"
     // paddingTop: 25,
   },
   input: {
@@ -103,8 +112,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1
   },
+  textTitle: {
+    color: '#4F938C',
+  },
+  textLabel: {
+    color: '#4F938C',
+  },
+  textAffix: {
+    color: '#4F938C',
+  },
   text: {
     fontFamily: "IRANYekanRDMobile"
+  },
+  resetContainer: {
+    backgroundColor: "red",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    alignSelf: "flex-end",
+    marginBottom: 40,
+    marginRight: 25
+  },
+  reset: {
+    color: "white"
   }
 });
 export default connect((state: RootState) => state.profile)(Profile);

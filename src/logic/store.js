@@ -1,5 +1,6 @@
 // @flow
 import {createStore, compose, applyMiddleware} from "redux";
+// import {composeWithDevTools} from "remote-redux-devtools";
 
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
@@ -20,6 +21,10 @@ if (process.env.NODE_ENV === "development") {
 const middleware = [sagaMiddleware];
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
+// const composedEnhancers = composeWithDevTools(
+// applyMiddleware(...middleware),
+// ...enhancers
+// );
 
 const store = createStore(rootReducer, composedEnhancers);
 

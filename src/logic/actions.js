@@ -50,8 +50,9 @@ export const resetSession = (sessionID: string, startedAt: Date) => ({
   payload: {startedAt, sessionID}
 });
 
-export const newBlock = () => ({
-  type: types.BLOCK_NEW
+export const newBlock = (gameID: string) => ({
+  type: types.BLOCK_NEW,
+  payload: gameID
 });
 
 export const startBlock = (startedAt: Date) => ({
@@ -77,4 +78,8 @@ export const setTrialCategory = (category: Category) => ({
 export const trialResult = (rt: number, timeout?: boolean = false) => ({
   type: types.TRIAL_RESULT,
   payload: {rt, timeout}
+});
+
+export const reset = () => ({
+  type: types.RESET
 });

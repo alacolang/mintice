@@ -1,20 +1,21 @@
 // @flow
 import React from "react";
 import Game1 from "./Game1";
-import type {IGame} from "./Game";
+import type { IGame } from "./Game";
+import RectangleH from "../../Components/Shapes/RectangleH";
+import Square from "../../Components/Shapes/Square";
 import Container from "../../Components/Shapes/Container";
-import Triangle from "../../Components/Shapes/Triangle";
 
 const Game: IGame = {
   ...Game1,
-  id: "2",
+  id: "5",
   blockToRun: 1,
   items: [
     {
       id: 1,
       Component: () => (
         <Container>
-          <Triangle color="#5D719E" />
+          <Square color="#8E9AB4" />
         </Container>
       )
     },
@@ -22,7 +23,7 @@ const Game: IGame = {
       id: 2,
       Component: () => (
         <Container>
-          <Triangle color="#62B570" />
+          <RectangleH color="#FFC34C" />
         </Container>
       )
     }

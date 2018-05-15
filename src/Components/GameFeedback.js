@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#404040"
+    backgroundColor: "#fff"
   },
   successIcon: {
-    color: "goldenrod",
+    color: "#7EB55B",
     fontSize: 48 * 2
   },
   failIcon: {

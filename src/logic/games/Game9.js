@@ -2,19 +2,19 @@
 import React from "react";
 import Game1 from "./Game1";
 import type {IGame} from "./Game";
+import Square from "../../Components/Shapes/Square";
 import Container from "../../Components/Shapes/Container";
-import Triangle from "../../Components/Shapes/Triangle";
 
 const Game: IGame = {
   ...Game1,
-  id: "2",
+  id: "9",
   blockToRun: 1,
   items: [
     {
       id: 1,
       Component: () => (
         <Container>
-          <Triangle color="#5D719E" />
+          <Square color="#2E6AF3" />
         </Container>
       )
     },
@@ -22,7 +22,7 @@ const Game: IGame = {
       id: 2,
       Component: () => (
         <Container>
-          <Triangle color="#62B570" />
+          <Square color="#B4EF91" />
         </Container>
       )
     }

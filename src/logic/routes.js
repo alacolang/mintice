@@ -8,6 +8,7 @@ export default {
   gameFeedback: "/game/feedback",
   gameBlank: "/game/blank",
   gameFixation: "/game/fixation",
+  gameAllDone: "/game/all-done",
   gameEnoughToday: "/game/enough-today",
   report: "/report"
 };

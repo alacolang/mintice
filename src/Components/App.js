@@ -17,11 +17,7 @@ class App extends React.Component {
       <Router>
         <View style={styles.container}>
           <Route path="/" component={Init} />
-          <Route
-            path="/"
-            exact
-            render={() => <Redirect to={routes.report} />}
-          />
+          <Route path="/" exact render={() => <Redirect to={routes.game} />} />
           <Route path={routes.profile} component={Profile} />
           <Route path={routes.game} component={Game} />
           <Route path={routes.report} component={Report} />

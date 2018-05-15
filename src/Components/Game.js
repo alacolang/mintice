@@ -10,7 +10,8 @@ import GameFeedback from "./GameFeedback";
 import GameBlank from "./GameBlank";
 import GameBlock from "./GameBlock";
 import GameFixation from "./GameFixation";
-import gameEnoughToday from "./GameEnoughToday";
+import GameEnoughToday from "./GameEnoughToday";
+import GameAllDone from "./GameAllDone";
 import routes from "../logic/routes";
 import {reqSession} from "../logic/actions";
 
@@ -19,7 +20,7 @@ type Props = {
 };
 class Game extends React.Component<Props> {
   componentDidMount() {
-    this.props.dispatch(reqSession());
+    setTimeout(() => this.props.dispatch(reqSession()), 0);
   }
   render() {
     return (
@@ -29,7 +30,8 @@ class Game extends React.Component<Props> {
         <Route path={routes.gameFeedback} component={GameFeedback} />
         <Route path={routes.gameBlank} component={GameBlank} />
         <Route path={routes.gameFixation} component={GameFixation} />
-        <Route path={routes.gameEnoughToday} component={gameEnoughToday} />
+        <Route path={routes.gameEnoughToday} component={GameEnoughToday} />
+        <Route path={routes.gameAllDone} component={GameAllDone} />
         <Route path={routes.gameSession} exact component={GameSession} />
       </View>
     );

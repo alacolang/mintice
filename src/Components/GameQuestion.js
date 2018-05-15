@@ -39,9 +39,9 @@ class GameQuestion extends React.Component<Props, State> {
           <item.Component />
         </View>
         <TouchableOpacity
-          // delayPressIn={0}
+          delayPressIn={50}
           // delayPressOut={0}
-          onPress={this.handlePress}
+          onPressIn={this.handlePress}
           style={styles.buttonContainer}
         >
           <View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#404040"
+    backgroundColor: "#fff"
   },
   imageContainer: {
     marginBottom: 25,
@@ -80,18 +80,18 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 50,
+    bottom: 50 + 40 - 20,
     justifyContent: "center",
     alignItems: "center",
-    width: 70,
     height: 70,
-    borderRadius: 70 / 2,
-    borderWidth: 3,
-    borderColor: "grey"
+    width: 70
+    // shadowOffset: {width: 5, height: 5},
+    // shadowColor: "#9ECB80",
+    // shadowOpacity: 0.5
   },
   buttonIcon: {
-    color: "grey",
-    fontSize: 42
+    color: "#9ECB80",
+    fontSize: 42 * 1.5
   }
 });
 

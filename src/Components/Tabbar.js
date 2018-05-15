@@ -9,6 +9,7 @@ import user from "../images/user.png";
 import report from "../images/report.png";
 import play from "../images/play.png";
 import wallet from "../images/wallet.png";
+import walletInactive from "../images/wallet-inactive.png";
 import routes from "../logic/routes";
 
 type TabProps = {
@@ -17,19 +18,26 @@ type TabProps = {
   image?: any,
   path: string
 };
-const Tab = ({to, icon, image, path}: TabProps) => (
-  <Link style={styles.tabContainer} to={to}>
-    {image ? (
-      <Image style={styles.image} source={image} />
-    ) : (
-      <FontAwesome
-        style={[styles.icon, {color: path.includes(to) ? "green" : "grey"}]}
-      >
-        {icon}
-      </FontAwesome>
-    )}
-  </Link>
-);
+
+const Tab = ({to, icon, image, path}: TabProps) => {
+  const contents = image ? (
+    <Image style={styles.image} source={image[path.includes(to) ? 'active': 'inactive']} />
+  ) : (
+    <FontAwesome
+      style={[styles.icon, {color: path.includes(to) ? "#76C46A" : "#96C3BE"}]}
+    >
+      {icon}
+    </FontAwesome>
+  );
+
+  return path.includes(to) ? (
+    <View style={styles.tabContainer}>{contents}</View>
+  ) : (
+    <Link style={styles.tabContainer} to={to}>
+      {contents}
+    </Link>
+  );
+};
 
 type Props = {
   match: {path: string}
@@ -41,7 +49,7 @@ class Tabbar extends React.Component<Props> {
       <View style={styles.container}>
         <Tab to={routes.profile} icon={Icons.user} path={path} />
         <Tab to={routes.game} icon={Icons.playCircle} path={path} />
-        <Tab to={routes.report} image={wallet} path={path} />
+        <Tab to={routes.report} image={{active: wallet, inactive: walletInactive}} path={path} />
       </View>
     );
   }
@@ -52,9 +60,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     borderWidth: 1,
+    borderColor: '#D9F19F',
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: '#D9F19F'
   },
   tabContainer: {
     flex: 1,

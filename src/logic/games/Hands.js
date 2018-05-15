@@ -31,26 +31,18 @@ import NG8 from "../../images/hands/nogo/8.jpg";
 import NG9 from "../../images/hands/nogo/9.jpg";
 import NG10 from "../../images/hands/nogo/10.jpg";
 
-const itemFactory = (images): Item[] =>
+const itemFactory = (images, startIdx = 0): Item[] =>
   images.map((image, idx) => ({
-    id: idx,
+    id: idx + startIdx,
     Component: ({style}) => (
       <Image source={image} style={[styles.image, style]} />
     )
   }));
 const goItems = itemFactory([G1, G2, G3, G4, G5, G6, G7, G8, G9, G10]);
-const ngItems = itemFactory([
-  NG1,
-  NG2,
-  NG3,
-  NG4,
-  NG5,
-  NG6,
-  NG7,
-  NG8,
-  NG9,
-  NG10
-]);
+const ngItems = itemFactory(
+  [NG1, NG2, NG3, NG4, NG5, NG6, NG7, NG8, NG9, NG10],
+  goItems.length
+);
 const items = goItems.concat(ngItems);
 
 const GoalItem = ({item}: {item: Item}) => (
@@ -58,17 +50,17 @@ const GoalItem = ({item}: {item: Item}) => (
 );
 
 const Goal = () => (
-  <View>
+  <View style={styles.goalContainer}>
     <MyText style={styles.items}>
-      <FormattedMessage id="block.hands.pick" />
+      <FormattedMessage id="block.hands.go" />
     </MyText>
-    <View style={styles.goalImagesContainer}>
+    <View style={styles.goalItemsContainer}>
       {take(2, goItems).map(item => <GoalItem key={item.id} item={item} />)}
     </View>
     <MyText style={styles.items}>
-      <FormattedMessage id="block.hands.skip" />
+      <FormattedMessage id="block.hands.nogo" />
     </MyText>
-    <View style={styles.goalImagesContainer}>
+    <View style={styles.goalItemsContainer}>
       {take(2, ngItems).map(item => <GoalItem key={item.id} item={item} />)}
     </View>
   </View>
@@ -90,21 +82,26 @@ const Hands: IGame = {
 };
 
 const styles = StyleSheet.create({
-  goalImagesContainer: {
+  goalContainer: {
+    alignItems: "center"
+  },
+  goalItemsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center"
   },
   goalImage: {
     width: 90,
-    marginHorizontal: 2,
+    marginHorizontal: 5,
     height: 90,
     borderWidth: 1,
     borderColor: "lightgrey",
     borderRadius: 5
   },
   items: {
-    marginVertical: 15
+    marginVertical: 15,
+    fontSize: 18,
+    color: "#A0C251"
   },
   image: {
     width: 200,

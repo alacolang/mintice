@@ -8,7 +8,8 @@
     "flow-bin": "^0.69.0",
     "jest": "^22.4.3",
     "jest-react-native": "^18.0.0",
-    "react-test-renderer": "16.2.0"
+    "react-test-renderer": "16.2.0",
+    "remote-redux-devtools": "^0.5.12"
   },
   "scripts": {
     "start": "react-native start",
@@ -32,6 +33,7 @@
     "react-native-fontawesome": "^5.7.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-material-textfield": "^0.12.0",
+    "react-native-shadow": "^1.2.2",
     "react-native-svg": "^6.3.1",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.2.0",
