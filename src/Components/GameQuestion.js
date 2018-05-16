@@ -4,10 +4,15 @@ import {connect} from "react-redux";
 import type {Dispatch} from "redux";
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
+import {Route} from "react-router";
 import games from "../logic/games";
+import * as settings from "../logic/settings";
 import type {Item, IGame} from "../logic/games";
 import {trialResult, setTrialCategory} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
+import {RESPONSE} from "../logic/games";
+import routes from "../logic/routes";
+import GameFeedback from "./GameFeedback";
 
 type Props = {
   dispatch: Dispatch,
@@ -19,8 +24,20 @@ type State = {
   start: Date
 };
 
+const FeedbackButton = ({handlePress}) => (
+  <TouchableOpacity
+    delayPressIn={50}
+    // delayPressOut={0}
+    onPressIn={handlePress}
+    // style={styles.buttonContainer}
+  >
+    <FontAwesome style={styles.buttonIcon}>{Icons.thumbsUp}</FontAwesome>
+  </TouchableOpacity>
+);
+
 class GameQuestion extends React.Component<Props, State> {
   state = {item: null, isGo: null, start: new Date()};
+
   componentDidMount() {
     const [category, item] = this.props.game.pickItem();
     this.props.dispatch(setTrialCategory(category));
@@ -35,21 +52,18 @@ class GameQuestion extends React.Component<Props, State> {
     const iconIdx = Math.floor(Math.random() * 4);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
+        <View style={styles.item}>
           <item.Component />
         </View>
-        <TouchableOpacity
-          delayPressIn={50}
-          // delayPressOut={0}
-          onPressIn={this.handlePress}
-          style={styles.buttonContainer}
-        >
-          <View>
-            <FontAwesome style={styles.buttonIcon}>
-              {Icons.thumbsUp}
-            </FontAwesome>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.body} />
+        <View style={styles.footer}>
+          <Route
+            path={routes.gameQuestion}
+            exact
+            component={() => <FeedbackButton handlePress={this.handlePress} />}
+          />
+          <Route path={routes.gameFeedback} component={GameFeedback} />
+        </View>
       </View>
     );
   }
@@ -62,35 +76,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff"
   },
-  imageContainer: {
-    marginBottom: 25,
-    width: 220,
-    height: 320,
+  body: {
+    // marginBottom: 25,
+    flex: 1
+    // justifyContent: "center",
+    // alignItems: "center"
+  },
+  item: {
+    overflow: "hidden",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center"
+    // width: 220,
+    // height: 320,
+    // justifyContent: "center",
   },
-  image: {
-    width: 200,
-    height: 300,
-    borderRadius: 10
+  footer: {
+    height: 50 + 50 + 40,
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
-  imageIcon: {
-    fontSize: 48 * 4,
-    color: "white"
-  },
-  buttonContainer: {
-    position: "absolute",
-    bottom: 50 + 40 - 20,
+  playContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 70,
-    width: 70
-    // shadowOffset: {width: 5, height: 5},
-    // shadowColor: "#9ECB80",
-    // shadowOpacity: 0.5
+    height: 50,
+    width: 180,
+    paddingBottom: 4,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: "#96C3BE"
   },
   buttonIcon: {
-    color: "#9ECB80",
+    color: "lightgrey",
     fontSize: 42 * 1.5
   }
 });

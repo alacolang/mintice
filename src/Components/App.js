@@ -8,7 +8,7 @@ import Profile from "./Profile";
 import Game from "./Game";
 import routes from "../logic/routes";
 import Init from "./Init";
-import GameBlock from "./GameBlock";
+import GameFeedback from "./GameFeedback";
 import Report from "./Report";
 
 class App extends React.Component {
@@ -19,6 +19,7 @@ class App extends React.Component {
           <Route path="/" component={Init} />
           <Route path="/" exact render={() => <Redirect to={routes.game} />} />
           <Route path={routes.profile} component={Profile} />
+          {/*<Route path={routes.gameFeedback} component={GameFeedback} />*/}
           <Route path={routes.game} component={Game} />
           <Route path={routes.report} component={Report} />
         </View>

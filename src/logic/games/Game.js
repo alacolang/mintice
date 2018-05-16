@@ -6,8 +6,8 @@ import type {Category} from "./index";
 
 export interface Item {
   id: number;
-  Component: ComponentType<any>;
-  data: any;
+  Component: any; //ComponentType<any>;
+  data?: any;
 }
 
 export interface IGame {

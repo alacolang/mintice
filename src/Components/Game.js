@@ -27,7 +27,7 @@ class Game extends React.Component<Props> {
       <View style={{flex: 1}}>
         <Route path={routes.gameBlock} component={GameBlock} />
         <Route path={routes.gameQuestion} component={GameQuestion} />
-        <Route path={routes.gameFeedback} component={GameFeedback} />
+        {/*<Route path={routes.gameFeedback} component={GameFeedback} />*/}
         <Route path={routes.gameBlank} component={GameBlank} />
         <Route path={routes.gameFixation} component={GameFixation} />
         <Route path={routes.gameEnoughToday} component={GameEnoughToday} />

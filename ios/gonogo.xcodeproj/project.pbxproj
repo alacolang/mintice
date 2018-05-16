@@ -35,6 +35,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* gonogoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* gonogoTests.m */; };
+		3B9AC3D320AACE700083F7D9 /* hands.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9AC3D220AACE700083F7D9 /* hands.xcassets */; };
 		3BE423592070D33D009AE654 /* IRANYekanRDMobile-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */; };
 		3BE4235A2070D33D009AE654 /* IRANYekanRDMobile-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */; };
 		3BE4235B2070D33D009AE654 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE423572070D33D009AE654 /* FontAwesome.ttf */; };
@@ -44,6 +45,7 @@
 		87B3BF96630046C7BA9E5120 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB6F7DEB765455A891B50A9 /* libRNSVG.a */; };
 		8C68D515BF8A410D8891B12F /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E551F212C6D64B40A9B58494 /* libCodePush.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		C1DBF2D55A6041CE8494379E /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5CE7BDEC014D1DBD2EAC52 /* libRNSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "gonogo-tvOS";
+		};
+		3B25C03920AC5E6F0021F215 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2239F210664145B5A6037AB3 /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
 		};
 		3BE423402070D33D009AE654 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -356,8 +365,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = gonogo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gonogo/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		2239F210664145B5A6037AB3 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* gonogo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gonogo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* gonogo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gonogo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A5CE7BDEC014D1DBD2EAC52 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
+		3B9AC3D220AACE700083F7D9 /* hands.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = hands.xcassets; sourceTree = "<group>"; };
 		3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANYekanRDMobile-Bold.ttf"; path = "../android/app/src/main/assets/fonts/IRANYekanRDMobile-Bold.ttf"; sourceTree = "<group>"; };
 		3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANYekanRDMobile-Light.ttf"; path = "../android/app/src/main/assets/fonts/IRANYekanRDMobile-Light.ttf"; sourceTree = "<group>"; };
 		3BE423572070D33D009AE654 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../android/app/src/main/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
@@ -402,6 +414,7 @@
 				8C68D515BF8A410D8891B12F /* libCodePush.a in Frameworks */,
 				22117DBA5ECB4FA282B4234F /* libz.tbd in Frameworks */,
 				87B3BF96630046C7BA9E5120 /* libRNSVG.a in Frameworks */,
+				C1DBF2D55A6041CE8494379E /* libRNSound.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +557,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3B25C03620AC5E6F0021F215 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3B25C03A20AC5E6F0021F215 /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3B528BF4FFD24CDE9A743C9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,6 +578,7 @@
 			children = (
 				E551F212C6D64B40A9B58494 /* libCodePush.a */,
 				4AB6F7DEB765455A891B50A9 /* libRNSVG.a */,
+				3A5CE7BDEC014D1DBD2EAC52 /* libRNSound.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -614,6 +636,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				EFE71012623A4E29B50002BD /* CodePush.xcodeproj */,
 				6D82AC30FC61470C936526EB /* RNSVG.xcodeproj */,
+				2239F210664145B5A6037AB3 /* RNSound.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -630,6 +653,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3B9AC3D220AACE700083F7D9 /* hands.xcassets */,
 				3BE423572070D33D009AE654 /* FontAwesome.ttf */,
 				3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */,
 				3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */,
@@ -833,6 +857,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 3B25C03620AC5E6F0021F215 /* Products */;
+					ProjectRef = 2239F210664145B5A6037AB3 /* RNSound.xcodeproj */;
+				},
+				{
 					ProductGroup = 3BE423D3207173C8009AE654 /* Products */;
 					ProjectRef = 6D82AC30FC61470C936526EB /* RNSVG.xcodeproj */;
 				},
@@ -902,6 +930,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3B25C03A20AC5E6F0021F215 /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = 3B25C03920AC5E6F0021F215 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3BE423412070D33D009AE654 /* libRCTBlob-tvOS.a */ = {
@@ -1137,6 +1172,7 @@
 			files = (
 				3BE4235A2070D33D009AE654 /* IRANYekanRDMobile-Light.ttf in Resources */,
 				3BE4235C2070D33D009AE654 /* IRANYekanRDMobile.ttf in Resources */,
+				3B9AC3D320AACE700083F7D9 /* hands.xcassets in Resources */,
 				3BE4235B2070D33D009AE654 /* FontAwesome.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3BE423592070D33D009AE654 /* IRANYekanRDMobile-Bold.ttf in Resources */,
@@ -1267,12 +1303,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = gonogoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1295,12 +1333,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = gonogoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1325,6 +1365,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = gonogo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1348,6 +1389,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = gonogo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1377,11 +1419,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = "gonogo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1414,11 +1458,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 				);
 				INFOPLIST_FILE = "gonogo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1453,6 +1499,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.gonogo-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1477,6 +1524,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

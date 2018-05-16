@@ -10,32 +10,32 @@ import MyText from "../../Components/MyText";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 
-import G1 from "../../images/hands/go/1.jpg";
-import G2 from "../../images/hands/go/2.jpg";
-import G3 from "../../images/hands/go/3.jpg";
-import G4 from "../../images/hands/go/4.jpg";
-import G5 from "../../images/hands/go/5.jpg";
-import G6 from "../../images/hands/go/6.jpg";
-import G7 from "../../images/hands/go/7.jpg";
-import G8 from "../../images/hands/go/8.jpg";
-import G9 from "../../images/hands/go/9.jpg";
-import G10 from "../../images/hands/go/10.jpg";
-import NG1 from "../../images/hands/nogo/1.jpg";
-import NG2 from "../../images/hands/nogo/2.jpg";
-import NG3 from "../../images/hands/nogo/3.jpg";
-import NG4 from "../../images/hands/nogo/4.jpg";
-import NG5 from "../../images/hands/nogo/5.jpg";
-import NG6 from "../../images/hands/nogo/6.jpg";
-import NG7 from "../../images/hands/nogo/7.jpg";
-import NG8 from "../../images/hands/nogo/8.jpg";
-import NG9 from "../../images/hands/nogo/9.jpg";
-import NG10 from "../../images/hands/nogo/10.jpg";
+const G1 = "hands_go_1";
+const G2 = "hands_go_2";
+const G3 = "hands_go_3";
+const G4 = "hands_go_4";
+const G5 = "hands_go_5";
+const G6 = "hands_go_6";
+const G7 = "hands_go_7";
+const G8 = "hands_go_8";
+const G9 = "hands_go_9";
+const G10 = "hands_go_10";
+const NG1 = "hands_nogo_1";
+const NG2 = "hands_nogo_2";
+const NG3 = "hands_nogo_3";
+const NG4 = "hands_nogo_4";
+const NG5 = "hands_nogo_5";
+const NG6 = "hands_nogo_6";
+const NG7 = "hands_nogo_7";
+const NG8 = "hands_nogo_8";
+const NG9 = "hands_nogo_9";
+const NG10 = "hands_nogo_10";
 
 const itemFactory = (images, startIdx = 0): Item[] =>
   images.map((image, idx) => ({
     id: idx + startIdx,
     Component: ({style}) => (
-      <Image source={image} style={[styles.image, style]} />
+      <Image source={{uri: image}} style={[styles.image, style]} />
     )
   }));
 const goItems = itemFactory([G1, G2, G3, G4, G5, G6, G7, G8, G9, G10]);

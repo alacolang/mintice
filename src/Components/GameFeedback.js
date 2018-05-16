@@ -1,23 +1,122 @@
 // @flow
 import React from "react";
 import {connect} from "react-redux";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View, Animated, Easing} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
 import MyText from "./MyText";
 import type {State} from "../logic/reducers";
 import {RESPONSE} from "../logic/games";
+import {coinSound} from "../sound";
+
+const AnimateLostMoney = ({drop, color}) => (
+  <Animated.View
+    style={[
+      styles.playContainer,
+      {
+        position: "absolute",
+        top: drop
+      }
+    ]}
+  >
+    <Animated.Text style={[styles.lostMoney, {color}]}>- ۵</Animated.Text>
+  </Animated.View>
+);
 
 type Props = {
   success: boolean
 };
 class GameFeedback extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    coinSound.reset();
+    this.animatedValue = new Animated.Value(0);
+    this.animatedShaking = new Animated.Value(0);
+  }
+  animate() {
+    Animated.timing(this.animatedValue, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.quad
+    }).start();
+    if (!this.props.success) {
+      this.animatedShaking.setValue(0);
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(this.animatedShaking, {
+            toValue: 1,
+            duration: 100,
+            easing: Easing.linear
+          }),
+          Animated.timing(this.animatedShaking, {
+            toValue: -1,
+            duration: 200,
+            easing: Easing.linear
+          }),
+          Animated.timing(this.animatedShaking, {
+            toValue: 0,
+            duration: 100,
+            easing: Easing.linear
+          })
+        ]),
+        {iterations: 2}
+      ).start();
+    }
+  }
+  playSound = () => {
+    console.log("playSound called");
+    coinSound.setVolume(4);
+    coinSound.play(success => {
+      if (success) {
+        console.log("successfully finished playing");
+      } else {
+        console.log("playback failed due to audio decoding errors");
+        // reset the player to its uninitialized state (android only)
+        // this is the only option to recover after an error occured and use the player again
+        coinSound.reset();
+      }
+    });
+  };
+  componentDidMount() {
+    this.animate();
+    if (this.props.success) this.playSound();
+  }
   render() {
+    const drop = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [10, 50]
+    });
+    const shaking = this.animatedShaking.interpolate({
+      inputRange: [-1, 1],
+      outputRange: ["-30deg", "30deg"]
+    });
+    const handColor = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"]
+    });
+    const lostMoneyColor = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["red", "white"]
+    });
+
     return (
-      <View style={styles.container}>
-        {this.props.success ? (
-          <FontAwesome style={styles.successIcon}>{Icons.smileO}</FontAwesome>
-        ) : (
-          <FontAwesome style={styles.failIcon}>{Icons.frownO}</FontAwesome>
+      <View style={styles.buttonContainer}>
+        <Animated.Text
+          style={[
+            styles.buttonIcon,
+            {
+              color: handColor,
+              transform: [
+                {
+                  rotateX: this.props.success ? "0deg" : shaking
+                }
+              ]
+            }
+          ]}
+        >
+          {Icons.thumbsUp}
+        </Animated.Text>
+        {!this.props.success && (
+          <AnimateLostMoney drop={drop} color={lostMoneyColor} />
         )}
       </View>
     );
@@ -25,19 +124,32 @@ class GameFeedback extends React.Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: {},
+  // buttonContainer: {
+  //   // borderWidth: 2,
+  //   // borderColor: "red",
+  //   position: "absolute",
+  //   bottom: 50 + 40 - 60,
+  //   justifyContent: "flex-start",
+  //   alignItems: "center",
+  //   height: 100,
+  //   width: 70
+  // },
+  buttonIcon: {
+    fontFamily: "FontAwesome",
+    color: "lightgrey",
+    fontSize: 42 * 1.5
+  },
+  playContainer: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff"
+    height: 100,
+    width: 70
   },
-  successIcon: {
-    color: "#7EB55B",
-    fontSize: 48 * 2
-  },
-  failIcon: {
-    color: "lightgrey",
-    fontSize: 48 * 2
+  lostMoney: {
+    fontFamily: "IRANYekanRDMobile",
+    color: "red",
+    fontSize: 21
   }
 });
 

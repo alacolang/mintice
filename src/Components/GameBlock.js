@@ -23,15 +23,19 @@ class GameBlock extends React.Component<Props> {
     const {game} = this.props;
     return (
       <View style={styles.container}>
-        <game.Goal game={game} />
-        <TouchableOpacity
-          style={styles.playContainer}
-          onPress={this.handleClick}
-        >
-          <MyText style={styles.play}>
-            <FormattedMessage id="block.start" />
-          </MyText>
-        </TouchableOpacity>
+        <View style={styles.body}>
+          <game.Goal game={game} />
+        </View>
+        <View style={styles.footer}>
+          <TouchableOpacity
+            style={styles.playContainer}
+            onPress={this.handleClick}
+          >
+            <MyText style={styles.play}>
+              <FormattedMessage id="block.start" />
+            </MyText>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -45,24 +49,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff"
   },
+  body: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footer: {
+    height: 50 + 50 + 40,
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
   playContainer: {
-    position: "absolute",
-    bottom: 50 + 40,
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-    width: 140,
-    borderWidth: 2,
-    backgroundColor: "#96C3BE",
-    borderColor: "white"
-    // shadowOffset: {width: 5, height: 5},
-    // shadowColor: "#276D68",
-    // shadowOpacity: 0.5
+    width: 180,
+    paddingBottom: 4,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: "#96C3BE"
   },
   play: {
     fontSize: 22,
-    color: "white",
-    textAlign: "center"
+    color: "#96C3BE"
+    // textAlign: "center"
   }
 });
 

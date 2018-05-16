@@ -30,26 +30,30 @@ class GameSession extends React.Component<Props> {
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
-          <View style={styles.headerContainer}>
+          <View style={styles.header}>
             <Image style={styles.logo} source={logo} />
             <MyText style={styles.headerTitle}>
               <FormattedMessage id="session.title" />
             </MyText>
           </View>
-          <MyText style={styles.text}>
-            <FormattedMessage id="session.message1" />
-          </MyText>
-          <TouchableOpacity
-            style={styles.playContainer}
-            onPress={this.handleClick}
-          >
-            <MyText style={styles.play}>
-              <FormattedMessage
-                id="session.start"
-                values={{block: BLOCK_TURN[String(this.props.blocks)]}}
-              />
+          <View style={styles.body}>
+            <MyText style={styles.text}>
+              <FormattedMessage id="session.message1" />
             </MyText>
-          </TouchableOpacity>
+          </View>
+          <View style={styles.footer}>
+            <TouchableOpacity
+              style={styles.playContainer}
+              onPress={this.handleClick}
+            >
+              <MyText style={styles.play}>
+                <FormattedMessage
+                  id="session.start"
+                  values={{block: BLOCK_TURN[String(this.props.blocks)]}}
+                />
+              </MyText>
+            </TouchableOpacity>
+          </View>
         </View>
         <Tabbar />
       </View>
@@ -70,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center"
   },
-  headerContainer: {
-    marginVertical: 30,
+  header: {
+    marginTop: 30,
     alignItems: "center"
   },
   logo: {
@@ -84,6 +88,11 @@ const styles = StyleSheet.create({
     color: "#4F938C",
     fontWeight: "bold"
   },
+  body: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
   text: {
     marginTop: 20,
     marginBottom: 30,
@@ -91,27 +100,26 @@ const styles = StyleSheet.create({
     lineHeight: 2 * 21,
     color: "#A0C251"
   },
+  footer: {
+    height: 50 + 40,
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
   playContainer: {
     position: "absolute",
     bottom: 40,
     justifyContent: "center",
     alignItems: "center",
     height: 50,
-    width: 140,
+    width: 180,
     paddingBottom: 4,
-    borderWidth: 2,
-    backgroundColor: "#96C3BE",
-    borderColor: "black"
-    // paddingHorizontal: 20,
-    // shadowOffset: {width: 5, height: 5},
-    // // shadowColor: "#276D68",
-    // shadowColor: "#276D68",
-    // shadowOpacity: 0.5,
-    // elevation: 5,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: "#96C3BE"
   },
   play: {
     fontSize: 22,
-    color: "white",
+    color: "#96C3BE",
     textAlign: "center"
   }
 });

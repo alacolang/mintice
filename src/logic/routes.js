@@ -5,7 +5,7 @@ export default {
   gameSession: "/game/session",
   gameQuestion: "/game/question",
   gameBlock: "/game/block",
-  gameFeedback: "/game/feedback",
+  gameFeedback: "/game/question/feedback",
   gameBlank: "/game/blank",
   gameFixation: "/game/fixation",
   gameAllDone: "/game/all-done",
