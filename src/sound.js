@@ -21,18 +21,18 @@ export const coinSound = new Sound("coin.mp3", Sound.MAIN_BUNDLE, error => {
 
 coinSound.setVolume(4);
 // coinSound.setCurrentTime(1);
-
-setTimeout(
-  () =>
-    coinSound.play(success => {
-      if (success) {
-        console.log("successfully finished playing");
-      } else {
-        console.log("playback failed due to audio decoding errors");
-        // reset the player to its uninitialized state (android only)
-        // this is the only option to recover after an error occured and use the player again
-        coinSound.reset();
-      }
-    }),
-  1000
-);
+//
+// setTimeout(
+//   () =>
+//     coinSound.play(success => {
+//       if (success) {
+//         console.log("successfully finished playing");
+//       } else {
+//         console.log("playback failed due to audio decoding errors");
+//         // reset the player to its uninitialized state (android only)
+//         // this is the only option to recover after an error occured and use the player again
+//         coinSound.reset();
+//       }
+//     }),
+//   1000
+// );

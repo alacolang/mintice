@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: State) => ({
-  success: true
-  // state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS
+  success:
+    state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS
 });
 export default connect(mapStateToProps)(GameFeedback);
