@@ -12,8 +12,8 @@ export default {
 
   "block.binary.go": "این شکل را دیدی، بزن",
   "block.binary.nogo": "این شکل را دیدی، کاری نکن",
-  "block.hands.go": "دست سالم دیدی، بزن. مثل این‌ها",
-  "block.hands.nogo": "دست زخمی دیدی، کاری نکن. مثل این‌ها",
+  "block.hands.go": "دست سالم دیدی مثل این‌ها، بزن",
+  "block.hands.nogo": "دست زخمی دیدی مثل این‌ها، کاری نکن",
   "block.colors.go": "هر رنگی دیدی، بزن. مثل این‌ها",
   "block.colors.nogo": "اگر رنگش {color} بود، نزن. مثل این‌ها",
   "profile.age": "سن",

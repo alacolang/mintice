@@ -28,11 +28,11 @@ type Props = {
 class GameFeedback extends React.Component<Props> {
   constructor(props) {
     super(props);
-    coinSound.reset();
+    // coinSound.reset();
     this.animatedValue = new Animated.Value(0);
     this.animatedShaking = new Animated.Value(0);
   }
-  animate() {
+  animate = () => {
     Animated.timing(this.animatedValue, {
       toValue: 1,
       duration: 500,
@@ -61,7 +61,7 @@ class GameFeedback extends React.Component<Props> {
         {iterations: 2}
       ).start();
     }
-  }
+  };
   playSound = () => {
     console.log("playSound called");
     coinSound.setVolume(4);
@@ -76,9 +76,11 @@ class GameFeedback extends React.Component<Props> {
       }
     });
   };
+  componentWillMount() {
+    if (this.props.success) this.playSound();
+  }
   componentDidMount() {
     this.animate();
-    if (this.props.success) this.playSound();
   }
   render() {
     const drop = this.animatedValue.interpolate({
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: State) => ({
-  success:
-    state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS
+  success: true
+  // state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS
 });
 export default connect(mapStateToProps)(GameFeedback);
