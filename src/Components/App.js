@@ -10,6 +10,7 @@ import routes from "../logic/routes";
 import Init from "./Init";
 import GameFeedback from "./GameFeedback";
 import Report from "./Report";
+import About from "./About";
 
 class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class App extends React.Component {
           {/*<Route path={routes.gameFeedback} component={GameFeedback} />*/}
           <Route path={routes.game} component={Game} />
           <Route path={routes.report} component={Report} />
+          <Route path={routes.about} component={About} />
         </View>
       </Router>
     );

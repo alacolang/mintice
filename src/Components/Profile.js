@@ -1,6 +1,7 @@
 // @flow
 
 import React from "react";
+import type {History} from "history";
 import {FormattedMessage} from "react-intl";
 import {StyleSheet, View, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
@@ -10,6 +11,7 @@ import FontAwesome, {Icons} from "react-native-fontawesome";
 import {TextField} from "react-native-material-textfield";
 import Tabbar from "./Tabbar";
 import MyText from "./MyText";
+import routes from "../logic/routes";
 import {saveProfile, persist, reset} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
 import messages from "../fa";
@@ -17,11 +19,15 @@ import messages from "../fa";
 type Props = {
   dispatch: Dispatch,
   name: ?string,
-  age: ?number
+  age: ?number,
+  history: History
 };
 class Profile extends React.Component<Props> {
   handleReset = () => {
     this.props.dispatch(reset());
+  };
+  handleAbout = () => {
+    this.props.history.push(routes.about);
   };
   handleChange = values => {
     const {name, age} = this.props;
@@ -41,8 +47,8 @@ class Profile extends React.Component<Props> {
             label={messages["profile.name"]}
             value={this.props.name}
             containerStyle={styles.input}
-            tintColor='#4F938C'
-            textColor='#grey'
+            tintColor="#4F938C"
+            textColor="grey"
             titleTextStyle={[styles.text, styles.textTitle]}
             labelTextStyle={[styles.text, styles.textLabel]}
             affixTextStyle={[styles.text, styles.textAffix]}
@@ -63,6 +69,14 @@ class Profile extends React.Component<Props> {
         >
           <MyText style={styles.reset}>
             <FormattedMessage id="reset" />
+          </MyText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.handleAbout}
+          style={styles.aboutContainer}
+        >
+          <MyText style={styles.about}>
+            <FontAwesome>{Icons.infoCircle}</FontAwesome>
           </MyText>
         </TouchableOpacity>
         <Tabbar />
@@ -113,13 +127,13 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   textTitle: {
-    color: '#4F938C',
+    color: "#4F938C"
   },
   textLabel: {
-    color: '#4F938C',
+    color: "#4F938C"
   },
   textAffix: {
-    color: '#4F938C',
+    color: "#4F938C"
   },
   text: {
     fontFamily: "IRANYekanRDMobile"
@@ -135,6 +149,19 @@ const styles = StyleSheet.create({
   },
   reset: {
     color: "white"
+  },
+  aboutContainer: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    marginBottom: 40,
+    marginRight: 25
+  },
+  about: {
+    color: "#4F938C",
+    fontSize: 28
   }
 });
 export default connect((state: RootState) => state.profile)(Profile);

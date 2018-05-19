@@ -24,6 +24,7 @@ import routes from "./routes";
 import * as actions from "./actions";
 import * as settings from "./settings";
 import type {State} from "./reducers";
+import {uploadGame, persist, rehydrate} from "./persist";
 const moment = require("moment");
 
 function* navigate(path) {
@@ -73,12 +74,11 @@ function* trial(): Saga<void> {
   yield* fixation();
   yield* blank();
   yield* question();
-  // yield* blank();
-  // yield* feedback();
+  yield* feedback();
 }
 
 function* pickNextGame() {
-  return Games[0];
+  // return Games[0];
 
   const {game: state} = yield select();
   const completedGameIDs = state.sessions[state.metrics.sessionID].blockIDs.map(
@@ -124,7 +124,7 @@ function* block(): Saga<void> {
     yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
     yield* trial();
   }
-  // yield put(actions.completeBlock(new Date()));
+  yield put(actions.completeBlock(new Date()));
   // yield put(actions.persist("game"));
 }
 
@@ -163,6 +163,7 @@ function* session(): Saga<void> {
           yield put(actions.completeSession(new Date()));
           yield put(actions.persist("game"));
         }
+        yield* uploadGame();
         yield* enoughToday();
         return;
       } else {
@@ -175,39 +176,13 @@ function* session(): Saga<void> {
   }
   yield* sessionIntro();
   yield* block();
-  // yield* session();
-}
-
-function parse(x) {
-  try {
-    return JSON.parse(x) || {};
-  } catch (e) {
-    return {};
-  }
-}
-
-function* persist({payload: key}): Saga<void> {
-  const state = yield select();
-  const old = yield AsyncStorage.getItem("store");
-  AsyncStorage.setItem(
-    "store",
-    JSON.stringify({
-      ...parse(old),
-      [key]: state[key]
-    })
-  );
-  console.log("persisted:", yield AsyncStorage.getItem("store"));
-}
-
-const KEYS = ["profile", "game"];
-function* rehydrate() {
-  const state = yield AsyncStorage.getItem("store");
-  yield put(actions.hydrateRedux(pick(KEYS, parse(state))));
+  yield* session();
 }
 
 function* init(): Saga<void> {
   console.log("init called");
-  // yield* rehydrate();
+  yield* rehydrate();
+  yield* uploadGame();
   // yield AsyncStorage.clear();
 }
 

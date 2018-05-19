@@ -10,5 +10,6 @@ export default {
   gameFixation: "/game/fixation",
   gameAllDone: "/game/all-done",
   gameEnoughToday: "/game/enough-today",
-  report: "/report"
+  report: "/report",
+  about: "/about"
 };

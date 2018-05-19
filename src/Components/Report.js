@@ -52,8 +52,8 @@ const RenderSession = ({item: session}) => (
       {sessionFailure(session)}
     </MyText>
     <MyText style={styles.date}>
-      <FormattedMessage id="report.date" />
-      {moment(session.finishedAt).format("jYYYY/jM/jD HH:mm")}
+      {/*<FormattedMessage id="report.date" />*/}
+      {moment(session.finishedAt).format("jYYYY/jM/jD")}
     </MyText>
   </View>
 );
@@ -64,7 +64,7 @@ class Report extends React.Component<Props> {
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
-          <Image style={styles.title} source={wallet} />
+          <Image style={styles.icon} source={wallet} />
           {gift(sessionsSuccess(sessions)) > 0 && (
             <MyText style={styles.total}>
               <FormattedMessage
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     flex: 1
   },
-  title: {
+  icon: {
     // fontSize: 32,
     width: 100,
     height: 100,
@@ -116,31 +116,35 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#358078",
     borderBottomWidth: 0,
-    paddingVertical: 10
-    // borderWidth: 1
+    paddingVertical: 10,
+    paddingHorizontal: 30
   },
   text: {
+    fontSize: 18,
     paddingVertical: 5,
     color: "#BFDE78"
   },
   earnings: {
     color: "#76C46A",
+    fontSize: 18,
     fontWeight: "bold",
     paddingVertical: 5
   },
   date: {
+    fontSize: 16,
     color: "grey",
     paddingVertical: 5
   },
   empty: {
     flex: 1,
     marginTop: 20,
-    fontSize: 18
+    fontSize: 21
   },
   total: {
-    fontSize: 18,
+    fontWeight: "bold",
+    fontSize: 21,
     color: "#195C86",
-    paddingVertical: 10
+    paddingVertical: 20
   }
 });
 
