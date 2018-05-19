@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   items: {
-    color: "#A0C251",
+    color: "grey",
     marginVertical: 15,
     fontSize: 18
   }

@@ -15,14 +15,14 @@ import {delay} from "redux-saga";
 import {pick, values, pluck, filter, compose} from "ramda";
 import {AsyncStorage} from "react-native";
 import type {Saga} from "redux-saga";
-import messages from "../fa";
+import messages from "../utils/fa";
 import {diff, pickRandom} from "./games/helpers";
 import Games, {CATEGORY, RESPONSE} from "./games";
 import type {IGame} from "./games";
 import * as types from "./types";
 import routes from "./routes";
 import * as actions from "./actions";
-import * as settings from "./settings";
+import config from "../config";
 import type {State} from "./reducers";
 import {uploadGame, persist, rehydrate} from "./persist";
 const moment = require("moment");
@@ -42,7 +42,7 @@ function* question() {
   const extraLength = yield* extraLengthForHands();
   const {result, timeout} = yield race({
     result: take(types.TRIAL_RESULT),
-    timeout: call(delay, settings.LENGTHS.TRIAL + extraLength)
+    timeout: call(delay, config.LENGTHS.TRIAL + extraLength)
   });
   if (timeout) {
     yield put(actions.trialResult(10 ** 6, true));
@@ -52,17 +52,17 @@ function* question() {
 
 function* feedback() {
   yield* navigate(routes.gameFeedback);
-  yield call(delay, settings.LENGTHS.FEEDBACK);
+  yield call(delay, config.LENGTHS.FEEDBACK);
 }
 
 function* fixation() {
   yield* navigate(routes.gameFixation);
-  yield call(delay, settings.LENGTHS.FIXATION);
+  yield call(delay, config.LENGTHS.FIXATION);
 }
 
 function* blank() {
   yield* navigate(routes.gameBlank);
-  yield call(delay, settings.LENGTHS.BLANK);
+  yield call(delay, config.LENGTHS.BLANK);
 }
 
 function* blockIntro() {
@@ -78,7 +78,7 @@ function* trial(): Saga<void> {
 }
 
 function* pickNextGame() {
-  // return Games[0];
+  // return Games[14];
 
   const {game: state} = yield select();
   const completedGameIDs = state.sessions[state.metrics.sessionID].blockIDs.map(
@@ -120,8 +120,8 @@ function* block(): Saga<void> {
   yield* blockIntro();
   yield take(types.BLOCK_START);
   let n = 0;
-  while (n++ < settings.BLOCK_TRIALS) {
-    yield put(actions.startTrial(settings.LENGTHS.TRIAL, new Date()));
+  while (n++ < config.BLOCK_TRIALS) {
+    yield put(actions.startTrial(config.LENGTHS.TRIAL, new Date()));
     yield* trial();
   }
   yield put(actions.completeBlock(new Date()));
@@ -148,7 +148,7 @@ function* session(): Saga<void> {
   const sessionsCompleted = values(sessions).filter(
     session => session.completed
   ).length;
-  if (sessionsCompleted > settings.SESSIONS) {
+  if (sessionsCompleted > config.SESSIONS) {
     yield navigate(routes.gameAllDone);
     return;
   }
@@ -156,7 +156,7 @@ function* session(): Saga<void> {
     yield put(actions.newSession(new Date()));
   } else {
     const {blockIDs} = sessions[sessionID];
-    if (blockIDs.length == settings.SESSION_BLOCKS) {
+    if (blockIDs.length == config.SESSION_BLOCKS) {
       if (sessionOldEnough(lastActivity)) {
         // recently done, it's enough
         if (!session.completed) {
@@ -183,7 +183,7 @@ function* init(): Saga<void> {
   console.log("init called");
   yield* rehydrate();
   yield* uploadGame();
-  // yield AsyncStorage.clear();
+  yield AsyncStorage.clear();
 }
 
 export default function* rootSaga(): Saga<void> {

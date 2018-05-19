@@ -1,11 +1,11 @@
 // @flow
-import {BASE_URL} from "./settings";
+import config from "../config";
 
 const logger = tag => d => console.log(`api> ${tag}: `, d) || d;
 
 export function uploadGame(token: string, data: any) {
   console.log("token=", token);
-  const url = BASE_URL + "/users";
+  const url = config.BASE_URL + "/users";
   return fetch(url, {
     method: "POST",
     body: JSON.stringify({data}),

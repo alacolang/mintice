@@ -21,10 +21,13 @@ type TabProps = {
 
 const Tab = ({to, icon, image, path}: TabProps) => {
   const contents = image ? (
-    <Image style={styles.image} source={image[path.includes(to) ? 'active': 'inactive']} />
+    <Image
+      style={styles.image}
+      source={image[path.includes(to) ? "active" : "inactive"]}
+    />
   ) : (
     <FontAwesome
-      style={[styles.icon, {color: path.includes(to) ? "#76C46A" : "#96C3BE"}]}
+      style={[styles.icon, {color: path.includes(to) ? "#195C85" : "#9CB9CB"}]}
     >
       {icon}
     </FontAwesome>
@@ -49,7 +52,11 @@ class Tabbar extends React.Component<Props> {
       <View style={styles.container}>
         <Tab to={routes.profile} icon={Icons.user} path={path} />
         <Tab to={routes.game} icon={Icons.playCircle} path={path} />
-        <Tab to={routes.report} image={{active: wallet, inactive: walletInactive}} path={path} />
+        <Tab
+          to={routes.report}
+          image={{active: wallet, inactive: walletInactive}}
+          path={path}
+        />
       </View>
     );
   }
@@ -60,11 +67,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: "100%",
     borderWidth: 1,
-    borderColor: '#D9F19F',
+    borderColor: "#D9F19F",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: '#D9F19F'
+    backgroundColor: "#CFD0C3"
   },
   tabContainer: {
     flex: 1,
@@ -72,14 +79,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   icon: {
-    width: 44,
-    height: 44,
-    fontSize: 42
+    width: 30,
+    height: 30,
+    fontSize: 32
     // borderWidth: 1,
   },
   image: {
-    width: 30,
-    height: 30
+    width: 27,
+    height: 27
   }
 });
 

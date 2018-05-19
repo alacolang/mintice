@@ -12,7 +12,7 @@ const initialState: State = {
   age: undefined
 };
 
-const reducer = (state: State = initialState, action) => {
+const reducer = (state: State = initialState, action: Action) => {
   if (action.type == types.SAVE_PROFILE) {
     return {...state, ...action.payload};
   }

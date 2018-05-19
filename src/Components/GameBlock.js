@@ -62,17 +62,17 @@ const styles = StyleSheet.create({
   playContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 50,
-    width: 180,
+    height: 45,
+    width: 150,
     paddingBottom: 4,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: "#96C3BE"
+    borderColor: "#a0a0a0"
   },
   play: {
-    fontSize: 22,
-    color: "#96C3BE"
-    // textAlign: "center"
+    fontSize: 20,
+    color: "#a0a0a0",
+    textAlign: "center"
   }
 });
 

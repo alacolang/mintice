@@ -2,7 +2,7 @@
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import {NativeRouter as Router, Route, Redirect} from "react-router-native";
-import localize from "../localize";
+import localize from "../utils/localize";
 import MyText from "./MyText";
 import Profile from "./Profile";
 import Game from "./Game";

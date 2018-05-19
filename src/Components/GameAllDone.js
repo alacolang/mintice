@@ -1,7 +1,8 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, Image} from "react-native";
 import {FormattedMessage} from "react-intl";
 import MyText from "./MyText";
+import logo from "../images/logo.png";
 import Tabbar from "./Tabbar";
 
 class GameAllDone extends React.Component {
@@ -9,11 +10,17 @@ class GameAllDone extends React.Component {
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
-          <MyText style={styles.text1}>
+          <View style={styles.header}>
+            <Image style={styles.logo} source={logo} />
+          </View>
+          <MyText style={styles.title}>
             <FormattedMessage id="sessions.allDone1" />
           </MyText>
-          <MyText style={styles.text2}>
+          <MyText style={styles.text}>
             <FormattedMessage id="sessions.allDone2" />
+          </MyText>
+          <MyText style={styles.text}>
+            <FormattedMessage id="sessions.allDone3" />
           </MyText>
         </View>
         <Tabbar />
@@ -25,22 +32,34 @@ class GameAllDone extends React.Component {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "white"
   },
   container: {
+    paddingHorizontal: 25,
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center"
   },
-  text1: {
-    fontSize: 36,
-    color: "green",
-    fontWeight: "bold",
-    marginVertical: 15
+  header: {
+    marginTop: 30,
+    alignItems: "center"
   },
-  text2: {
-    fontSize: 28,
-    color: "green"
+  logo: {
+    width: 120,
+    height: 120,
+    borderRadius: 100 / 2
+  },
+  title: {
+    fontSize: 36,
+    color: "#A1878D",
+    fontWeight: "bold",
+    marginTop: 25,
+    marginBottom: 15
+  },
+  text: {
+    fontSize: 24,
+    lineHeight: 2 * 24,
+    color: "#798081"
   }
 });
 export default GameAllDone;

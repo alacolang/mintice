@@ -7,7 +7,8 @@ import MyText from "./MyText";
 import type {State as RootState} from "../logic/reducers";
 import {RESPONSE} from "../logic/games";
 import Tabbar from "./Tabbar";
-import * as settings from "../logic/settings";
+import config from "../config";
+import {toPersianDigit} from "../utils/format";
 import wallet from "../images/wallet.png";
 const moment = require("moment-jalaali");
 
@@ -15,7 +16,7 @@ type Props = {
   sessions: any
 };
 
-const gift = multiply(settings.SUCCESS_VALUE);
+const gift = multiply(config.SUCCESS_VALUE);
 
 const sessionSuccess = session =>
   sum(
@@ -39,21 +40,21 @@ const sessionsSuccess = compose(sum, map(sessionSuccess));
 const RenderSession = ({item: session}) => (
   <View style={styles.session} key={session.id}>
     <MyText style={styles.earnings}>
-      {gift(sessionSuccess(session))}
+      {toPersianDigit(gift(sessionSuccess(session)))}
       <FormattedMessage id="report.currency" />
       <FormattedMessage id="report.wallet" />
     </MyText>
     <MyText style={styles.text}>
       <FormattedMessage id="report.success" />
-      {sessionSuccess(session)}
+      {toPersianDigit(sessionSuccess(session))}
     </MyText>
     <MyText style={styles.text}>
       <FormattedMessage id="report.failure" />
-      {sessionFailure(session)}
+      {toPersianDigit(sessionFailure(session))}
     </MyText>
     <MyText style={styles.date}>
       {/*<FormattedMessage id="report.date" />*/}
-      {moment(session.finishedAt).format("jYYYY/jM/jD")}
+      {toPersianDigit(moment(session.finishedAt).format("jYYYY/jM/jD"))}
     </MyText>
   </View>
 );
@@ -61,15 +62,16 @@ const RenderSession = ({item: session}) => (
 class Report extends React.Component<Props> {
   render() {
     const {sessions} = this.props;
+    const total = gift(sessionsSuccess(sessions));
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
           <Image style={styles.icon} source={wallet} />
-          {gift(sessionsSuccess(sessions)) > 0 && (
+          {total > 0 && (
             <MyText style={styles.total}>
               <FormattedMessage
                 id="report.total"
-                values={{total: gift(sessionsSuccess(sessions))}}
+                values={{total: toPersianDigit(total)}}
               />
             </MyText>
           )}
@@ -94,7 +96,7 @@ class Report extends React.Component<Props> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#EFF9D8"
+    backgroundColor: "#fdfdfd"
   },
   container: {
     alignItems: "center",
@@ -114,19 +116,19 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     borderTopWidth: 1,
-    borderColor: "#358078",
+    borderColor: "lightgrey",
     borderBottomWidth: 0,
     paddingVertical: 10,
     paddingHorizontal: 30
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     paddingVertical: 5,
-    color: "#BFDE78"
+    color: "grey"
   },
   earnings: {
-    color: "#76C46A",
-    fontSize: 18,
+    color: "#6DA0A5",
+    fontSize: 16,
     fontWeight: "bold",
     paddingVertical: 5
   },

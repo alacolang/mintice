@@ -7,7 +7,6 @@ import {FormattedMessage} from "react-intl";
 import MyText from "./MyText";
 import logo from "../images/logo.png";
 import {startSession} from "../logic/actions";
-import {SESSION_BLOCKS} from "../logic/settings";
 import type {State as RootState} from "../logic/reducers";
 import Tabbar from "./Tabbar";
 
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 25,
+    paddingHorizontal: 30,
     marginTop: 20,
     backgroundColor: "white",
     justifyContent: "flex-start",
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 32,
-    color: "#4F938C",
+    color: "#195C85",
     fontWeight: "bold"
   },
   body: {
@@ -98,7 +97,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 21,
     lineHeight: 2 * 21,
-    color: "#A0C251"
+    color: "grey",
+    textAlign: "center"
   },
   footer: {
     height: 50 + 40,
@@ -110,16 +110,16 @@ const styles = StyleSheet.create({
     bottom: 40,
     justifyContent: "center",
     alignItems: "center",
-    height: 50,
-    width: 180,
+    height: 45,
+    width: 150,
     paddingBottom: 4,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: "#96C3BE"
+    borderColor: "#a0a0a0"
   },
   play: {
-    fontSize: 22,
-    color: "#96C3BE",
+    fontSize: 20,
+    color: "#a0a0a0",
     textAlign: "center"
   }
 });

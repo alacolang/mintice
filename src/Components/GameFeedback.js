@@ -6,7 +6,7 @@ import FontAwesome, {Icons} from "react-native-fontawesome";
 import MyText from "./MyText";
 import type {State} from "../logic/reducers";
 import {RESPONSE} from "../logic/games";
-import {coinSound} from "../sound";
+import {coinSound} from "../utils/sound";
 
 const AnimateLostMoney = ({drop, color}) => (
   <Animated.View

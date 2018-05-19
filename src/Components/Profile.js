@@ -14,7 +14,7 @@ import MyText from "./MyText";
 import routes from "../logic/routes";
 import {saveProfile, persist, reset} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
-import messages from "../fa";
+import messages from "../utils/fa";
 
 type Props = {
   dispatch: Dispatch,
@@ -22,6 +22,15 @@ type Props = {
   age: ?number,
   history: History
 };
+
+const Reset = ({handleReset}) => (
+  <TouchableOpacity onPress={handleReset} style={styles.resetContainer}>
+    <MyText style={styles.reset}>
+      <FormattedMessage id="reset" />
+    </MyText>
+  </TouchableOpacity>
+);
+
 class Profile extends React.Component<Props> {
   handleReset = () => {
     this.props.dispatch(reset());
@@ -63,14 +72,7 @@ class Profile extends React.Component<Props> {
             />
           </View>
         </View>
-        <TouchableOpacity
-          onPress={this.handleReset}
-          style={styles.resetContainer}
-        >
-          <MyText style={styles.reset}>
-            <FormattedMessage id="reset" />
-          </MyText>
-        </TouchableOpacity>
+        <Reset handleReset={this.handleReset} />
         <TouchableOpacity
           onPress={this.handleAbout}
           style={styles.aboutContainer}
@@ -88,7 +90,7 @@ class Profile extends React.Component<Props> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#EFF9D8"
+    backgroundColor: "#fdfdfd"
   },
   container: {
     paddingHorizontal: 25,
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 68,
-    color: "#6FA8A2"
+    color: "#195C85"
     // paddingTop: 25,
   },
   input: {
@@ -139,16 +141,16 @@ const styles = StyleSheet.create({
     fontFamily: "IRANYekanRDMobile"
   },
   resetContainer: {
-    backgroundColor: "red",
+    backgroundColor: "lightgrey",
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
     alignSelf: "flex-end",
-    marginBottom: 40,
-    marginRight: 25
+    marginBottom: 15,
+    marginRight: 35
   },
   reset: {
-    color: "white"
+    color: "grey"
   },
   aboutContainer: {
     width: 44,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     marginRight: 25
   },
   about: {
-    color: "#4F938C",
+    color: "#195C85",
     fontSize: 28
   }
 });

@@ -6,7 +6,6 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
 import {Route} from "react-router";
 import games from "../logic/games";
-import * as settings from "../logic/settings";
 import type {Item, IGame} from "../logic/games";
 import {trialResult, setTrialCategory} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
@@ -77,10 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   body: {
-    // marginBottom: 25,
     flex: 1
-    // justifyContent: "center",
-    // alignItems: "center"
   },
   item: {
     overflow: "hidden",
@@ -89,9 +85,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center"
-    // width: 220,
-    // height: 320,
-    // justifyContent: "center",
   },
   footer: {
     height: 50 + 50 + 40,

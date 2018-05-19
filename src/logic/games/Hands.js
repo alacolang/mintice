@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   items: {
     marginVertical: 15,
     fontSize: 18,
-    color: "#A0C251"
+    color: "grey"
   },
   image: {
     width: 200,

@@ -15,7 +15,9 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "jest"
+    "test": "jest",
+    "build-dev": "NODE_ENV=development ./node_modules/.bin/react-native bundle --platform android --dev true --entry-file index.js   --bundle-output android/app/src/main/assets/index.android.bundle   --assets-dest android/app/src/main/res/",
+    "build": "NODE_ENV=production ./node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js   --bundle-output android/app/src/main/assets/index.android.bundle   --assets-dest android/app/src/main/res/"
   },
   "jest": {
     "preset": "react-native"

@@ -38,13 +38,16 @@ const Footer = () => (
       <MyText style={footerStyles.program}>
         <FormattedMessage id="about.program" />
       </MyText>
+      <MyText style={footerStyles.program}>
+        <FormattedMessage id="about.email" />
+      </MyText>
     </View>
   </View>
 );
 
 class About extends React.Component<Props> {
   handleBack = () => {
-    this.props.history.back();
+    this.props.history.goBack();
   };
   render() {
     return (
@@ -95,10 +98,10 @@ const navbarStyles = StyleSheet.create({
   body: {
     alignItems: "center",
     flexDirection: "row",
-    marginHorizontal: 25
+    marginHorizontal: 20
   },
   title: {
-    marginLeft: 25,
+    marginLeft: 24,
     fontSize: 18
   },
   back: {
@@ -109,7 +112,7 @@ const navbarStyles = StyleSheet.create({
   },
   icon: {
     fontSize: 18,
-    color: "#4F938C"
+    color: "#195C85"
   }
 });
 
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2
   },
   body: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 30,
     // paddingTop: 25,
     // alignItems: "center",
     justifyContent: "flex-start"
@@ -138,13 +141,14 @@ const styles = StyleSheet.create({
     // borderWidth: 1
   },
   iconContainer: {
-    marginHorizontal: 15,
+    marginLeft: 0,
+    marginRight: 15,
     justifyContent: "center",
     alignItems: "center"
   },
   icon: {
     fontSize: 25,
-    color: "green"
+    color: "#195C85"
   },
   image: {
     width: 20,
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     position: "relative",
-    top: -8
+    top: -11
     // borderWidth: 5
   },
   text: {

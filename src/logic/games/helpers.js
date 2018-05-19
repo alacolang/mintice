@@ -3,7 +3,9 @@ import {memoize, pluck, contains} from "ramda";
 import {CATEGORY} from "./index";
 import type {Category} from "./index";
 import type {Item} from "./Game";
-import {GO_VS_NOGO_PERCENTAGE} from "../settings";
+import config from "../../config";
+
+const PERCENTAGE = config.GO_VS_NOGO_PERCENTAGE;
 
 export const randomIntInRange = (lower: number, upper: number): number =>
   Math.floor(Math.random() * (upper - lower + 1)) + lower;
@@ -38,16 +40,11 @@ export const pickRandomGoNogoIdx = (
   goLength: number
 ): [Category, number] => {
   const rand = randomInRange(0, 100);
-  return rand < GO_VS_NOGO_PERCENTAGE
-    ? [
-        CATEGORY.GO,
-        Math.floor(normalize([0, GO_VS_NOGO_PERCENTAGE], [0, goLength], rand))
-      ]
+  return rand < PERCENTAGE
+    ? [CATEGORY.GO, Math.floor(normalize([0, PERCENTAGE], [0, goLength], rand))]
     : [
         CATEGORY.NO_GO,
-        Math.floor(
-          normalize([GO_VS_NOGO_PERCENTAGE, 100], [0, total - goLength], rand)
-        )
+        Math.floor(normalize([PERCENTAGE, 100], [0, total - goLength], rand))
       ];
 };
 
