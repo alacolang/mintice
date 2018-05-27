@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 2 * 16,
     color: "grey"
+    // textAlign: "justify"
   }
 });
 

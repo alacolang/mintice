@@ -22,16 +22,37 @@ type Props = {
   age: ?number,
   history: History
 };
+type State = {
+  name: ?string,
+  age: ?number
+};
 
 const Reset = ({handleReset}) => (
-  <TouchableOpacity onPress={handleReset} style={styles.resetContainer}>
-    <MyText style={styles.reset}>
+  <TouchableOpacity onPress={handleReset} style={resetStyles.resetContainer}>
+    <MyText style={resetStyles.reset}>
       <FormattedMessage id="reset" />
     </MyText>
   </TouchableOpacity>
 );
+const resetStyles = StyleSheet.create({
+  resetContainer: {
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginTop: 20
+  },
+  reset: {
+    color: "grey"
+  }
+});
 
-class Profile extends React.Component<Props> {
+class Profile extends React.Component<Props, State> {
+  state: State = {name: this.props.name, age: this.props.age};
   handleReset = () => {
     this.props.dispatch(reset());
   };
@@ -39,8 +60,11 @@ class Profile extends React.Component<Props> {
     this.props.history.push(routes.about);
   };
   handleChange = values => {
-    const {name, age} = this.props;
-    this.props.dispatch(saveProfile({name, age, ...values}));
+    const {name, age} = this.state;
+    this.setState(currentState => ({name, age, ...values}));
+  };
+  handleSave = () => {
+    this.props.dispatch(saveProfile(this.state));
     this.props.dispatch(persist("profile"));
   };
   render() {
@@ -49,38 +73,41 @@ class Profile extends React.Component<Props> {
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
+          <TouchableOpacity onPress={this.handleAbout} style={styles.about}>
+            <MyText style={styles.aboutLabel}>
+              <FontAwesome>{Icons.infoCircle}</FontAwesome>
+            </MyText>
+          </TouchableOpacity>
           <View style={styles.iconContainer}>
             <FontAwesome style={styles.icon}>{Icons.user}</FontAwesome>
           </View>
           <TextField
             label={messages["profile.name"]}
-            value={this.props.name}
+            value={this.state.name}
             containerStyle={styles.input}
             tintColor="#4F938C"
             textColor="grey"
             titleTextStyle={[styles.text, styles.textTitle]}
             labelTextStyle={[styles.text, styles.textLabel]}
-            affixTextStyle={[styles.text, styles.textAffix]}
             onChangeText={value => this.handleChange({name: value})}
           />
           <View style={styles.ageContainer}>
             <Dropdown
-              value={this.props.age}
+              value={this.state.age}
               label={messages["profile.age"]}
               data={data}
               onChangeText={value => this.handleChange({age: value})}
             />
           </View>
+          <TouchableOpacity onPress={this.handleSave} style={styles.save}>
+            <MyText style={styles.saveLabel}>
+              <FormattedMessage id="profile.save" />
+            </MyText>
+          </TouchableOpacity>
+          {process.env.NODE_ENV == "development " && (
+            <Reset handleReset={this.handleReset} />
+          )}
         </View>
-        <Reset handleReset={this.handleReset} />
-        <TouchableOpacity
-          onPress={this.handleAbout}
-          style={styles.aboutContainer}
-        >
-          <MyText style={styles.about}>
-            <FontAwesome>{Icons.infoCircle}</FontAwesome>
-          </MyText>
-        </TouchableOpacity>
         <Tabbar />
       </View>
     );
@@ -140,29 +167,33 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "IRANYekanRDMobile"
   },
-  resetContainer: {
-    backgroundColor: "lightgrey",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+  save: {
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
     alignSelf: "flex-end",
-    marginBottom: 15,
-    marginRight: 35
+    borderColor: "#4F938C",
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginTop: 20
   },
-  reset: {
-    color: "grey"
+  saveLabel: {
+    color: "#4F938C",
+    fontSize: 16
   },
-  aboutContainer: {
+  about: {
+    position: "absolute",
+    top: 20,
+    right: 0,
     width: 44,
     height: 44,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
-    marginBottom: 40,
     marginRight: 25
   },
-  about: {
-    color: "#195C85",
+  aboutLabel: {
+    color: "grey",
     fontSize: 28
   }
 });

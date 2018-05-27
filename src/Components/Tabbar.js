@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import {View, Image, Text, StyleSheet} from "react-native";
+import {View, Image, Text, StyleSheet, TouchableOpacity} from "react-native";
 import {withRouter} from "react-router";
 import {Link} from "react-router-native";
 import FontAwesome, {Icons} from "react-native-fontawesome";
@@ -36,7 +36,7 @@ const Tab = ({to, icon, image, path}: TabProps) => {
   return path.includes(to) ? (
     <View style={styles.tabContainer}>{contents}</View>
   ) : (
-    <Link style={styles.tabContainer} to={to}>
+    <Link component={TouchableOpacity} style={styles.tabContainer} to={to}>
       {contents}
     </Link>
   );

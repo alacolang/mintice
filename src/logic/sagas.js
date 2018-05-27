@@ -64,7 +64,7 @@ function* blank() {
   yield* navigate(routes.gameBlank);
   yield call(delay, config.LENGTHS.BLANK);
 }
-
+//
 function* blockIntro() {
   console.log("block intro called");
   yield* navigate(routes.gameBlock);
@@ -182,8 +182,7 @@ function* session(): Saga<void> {
 function* init(): Saga<void> {
   console.log("init called");
   yield* rehydrate();
-  yield* uploadGame();
-  yield AsyncStorage.clear();
+  // yield AsyncStorage.clear();
 }
 
 export default function* rootSaga(): Saga<void> {
@@ -191,5 +190,6 @@ export default function* rootSaga(): Saga<void> {
   yield* init();
   yield takeLatest(types.SESSION_REQ, session);
   yield takeEvery(types.PERSIST, persist);
+  yield takeEvery(types.SAVE_PROFILE, uploadGame);
   yield put(actions.reqSession());
 }

@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 32,
-    color: "#195C85",
+    // color: "#195C85",
+    color: "green",
     fontWeight: "bold"
   },
   body: {
@@ -106,21 +107,21 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   playContainer: {
-    position: "absolute",
-    bottom: 40,
+    // position: "absolute",
+    // bottom: 40,
     justifyContent: "center",
     alignItems: "center",
     height: 45,
     width: 150,
     paddingBottom: 4,
     borderWidth: 1,
-    borderRadius: 30,
+    // borderRadius: 10,
     borderColor: "#a0a0a0"
   },
   play: {
     fontSize: 20,
-    color: "#a0a0a0",
-    textAlign: "center"
+    color: "#a0a0a0"
+    // textAlign: "center"
   }
 });
 const mapStateToProps = (state: RootState) => ({

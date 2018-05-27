@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: 150,
     paddingBottom: 4,
     borderWidth: 1,
-    borderRadius: 30,
+    // borderRadius: 30,
     borderColor: "#a0a0a0"
   },
   play: {

@@ -17,13 +17,13 @@ export type Config = {
   BASE_URL: string
 };
 
-// let config: Config;
-// if (process.env.NODE_ENV == "development") {
-//   config = require("./development");
-// } else {
-//   config = require("./production");
-// }
-const config: Config = require("./development");
+let config: Config;
+if (process.env.NODE_ENV == "development") {
+  config = require("./development");
+} else {
+  config = require("./production");
+}
+// const config: Config = require("./development");
 
 console.log("config=", config);
 export default config;

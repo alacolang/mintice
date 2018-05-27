@@ -127,16 +127,6 @@ class GameFeedback extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {},
-  // buttonContainer: {
-  //   // borderWidth: 2,
-  //   // borderColor: "red",
-  //   position: "absolute",
-  //   bottom: 50 + 40 - 60,
-  //   justifyContent: "flex-start",
-  //   alignItems: "center",
-  //   height: 100,
-  //   width: 70
-  // },
   buttonIcon: {
     fontFamily: "FontAwesome",
     color: "lightgrey",
