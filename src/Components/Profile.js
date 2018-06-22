@@ -55,6 +55,7 @@ class Profile extends React.Component<Props, State> {
   state: State = {name: this.props.name, age: this.props.age};
   handleReset = () => {
     this.props.dispatch(reset());
+    this.props.dispatch(persist("game"));
   };
   handleAbout = () => {
     this.props.history.push(routes.about);
