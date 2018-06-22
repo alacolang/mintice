@@ -5,7 +5,7 @@ import type {Category} from "./index";
 import type {Item} from "./Game";
 import config from "../../config";
 
-const PERCENTAGE = config.GO_VS_NOGO_PERCENTAGE;
+const PERCENTAGE = config.goVsNogoPercentage;
 
 export const randomIntInRange = (lower: number, upper: number): number =>
   Math.floor(Math.random() * (upper - lower + 1)) + lower;

@@ -1,8 +1,9 @@
-package com.gonogo;
+package ir.dbtteen.gonogo;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import ir.dbtteen.gonogo.BuildConfig;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.facebook.react.modules.i18nmanager.I18nUtil;
 import com.horcrux.svg.SvgPackage;

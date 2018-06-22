@@ -5,7 +5,7 @@ const logger = tag => d => console.log(`api> ${tag}: `, d) || d;
 
 export function uploadGame(token: string, data: any) {
   console.log("token=", token);
-  const url = config.BASE_URL + "/users";
+  const url = config.baseUrl + "/users";
   return fetch(url, {
     method: "POST",
     body: JSON.stringify({data}),

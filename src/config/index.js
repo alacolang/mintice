@@ -1,20 +1,24 @@
 // @flow
 
 export type Lengths = {
-  BLANK: number,
-  FEEDBACK: number,
-  FIXATION: number,
-  FIXATION: number
+  blank: number,
+  feedback: number,
+  fixation: number,
+  trial: number
 };
 
 export type Config = {
-  LENGTHS: Lengths,
-  SESSIONS: number,
-  SESSION_BLOCKS: number,
-  BLOCK_TRIALS: number,
-  GO_VS_NOGO_PERCENTAGE: number,
-  SUCCESS_VALUE: number,
-  BASE_URL: string
+  lengths: Lengths,
+  sessions: number,
+  sessionBlocks: number,
+  blockTrials: number,
+  goVsNogoPercentage: number,
+  successValue: number,
+  baseUrl: string,
+  newSessionAfter: {
+    unit: "hours" | "minutes",
+    quantity: number
+  }
 };
 
 let config: Config;

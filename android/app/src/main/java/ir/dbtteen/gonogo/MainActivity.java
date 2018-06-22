@@ -1,4 +1,4 @@
-package com.gonogo;
+package ir.dbtteen.gonogo;
 
 import com.facebook.react.ReactActivity;
 

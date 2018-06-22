@@ -2,18 +2,18 @@
 import type {Config} from "./index";
 
 const config: Config = {
-  LENGTHS: {
-    BLANK: 500,
-    FEEDBACK: 700,
-    FIXATION: 800,
-    TRIAL: 700
+  lengths: {
+    blank: 500,
+    feedback: 700,
+    fixation: 800,
+    trial: 800
   },
-  SESSIONS: 10,
-  SESSION_BLOCKS: 3,
-  BLOCK_TRIALS: 200,
-  GO_VS_NOGO_PERCENTAGE: 80, // between 0 and 10,
-  SUCCESS_VALUE: 5, // 3000 / (SESSION_BLOCKS * BLOCK_TRIALS)
-  BASE_URL: "http://198.143.180.184"
+  sessions: 10,
+  sessionBlocks: 3,
+  blockTrials: 200,
+  goVsNogoPercentage: 70, // between 0 and 10,
+  successValue: 5, // 3000 / (SESSION_BLOCKS * BLOCK_TRIALS)
+  baseUrl: "http://198.143.181.153"
 };
 
 module.exports = config;

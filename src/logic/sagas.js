@@ -42,7 +42,7 @@ function* question() {
   const extraLength = yield* extraLengthForHands();
   const {result, timeout} = yield race({
     result: take(types.TRIAL_RESULT),
-    timeout: call(delay, config.LENGTHS.TRIAL + extraLength)
+    timeout: call(delay, config.lengths.trial + extraLength)
   });
   if (timeout) {
     yield put(actions.trialResult(10 ** 6, true));
@@ -52,17 +52,17 @@ function* question() {
 
 function* feedback() {
   yield* navigate(routes.gameFeedback);
-  yield call(delay, config.LENGTHS.FEEDBACK);
+  yield call(delay, config.lengths.feedback);
 }
 
 function* fixation() {
   yield* navigate(routes.gameFixation);
-  yield call(delay, config.LENGTHS.FIXATION);
+  yield call(delay, config.lengths.fixation);
 }
 
 function* blank() {
   yield* navigate(routes.gameBlank);
-  yield call(delay, config.LENGTHS.BLANK);
+  yield call(delay, config.lengths.blank);
 }
 //
 function* blockIntro() {
@@ -120,8 +120,8 @@ function* block(): Saga<void> {
   yield* blockIntro();
   yield take(types.BLOCK_START);
   let n = 0;
-  while (n++ < config.BLOCK_TRIALS) {
-    yield put(actions.startTrial(config.LENGTHS.TRIAL, new Date()));
+  while (n++ < config.blockTrials) {
+    yield put(actions.startTrial(config.lengths.trial, currentTime()));
     yield* trial();
   }
   yield put(actions.completeBlock(new Date()));
@@ -137,9 +137,14 @@ function* sessionIntro() {
   yield take(types.SESSION_START);
 }
 
-const sessionOldEnough = (lastActivity: ?Date) =>
-  moment().diff(lastActivity, "seconds") < 30;
-// moment().diff(lastActivity, "hours") < 18
+function currentTime() {
+  return moment();
+}
+
+const isSameSession = (lastActivity: ?Date) =>
+  // currentTime().diff(lastActivity, "seconds") < 30;
+  currentTime().diff(lastActivity, config.newSessionAfter.unit) <
+  config.newSessionAfter.quantity;
 
 function* session(): Saga<void> {
   console.log("session called");
@@ -148,7 +153,7 @@ function* session(): Saga<void> {
   const sessionsCompleted = values(sessions).filter(
     session => session.completed
   ).length;
-  if (sessionsCompleted > config.SESSIONS) {
+  if (sessionsCompleted > config.sessions) {
     yield navigate(routes.gameAllDone);
     return;
   }
@@ -156,8 +161,8 @@ function* session(): Saga<void> {
     yield put(actions.newSession(new Date()));
   } else {
     const {blockIDs} = sessions[sessionID];
-    if (blockIDs.length == config.SESSION_BLOCKS) {
-      if (sessionOldEnough(lastActivity)) {
+    if (blockIDs.length == config.sessionBlocks) {
+      if (isSameSession(lastActivity)) {
         // recently done, it's enough
         if (!session.completed) {
           yield put(actions.completeSession(new Date()));
