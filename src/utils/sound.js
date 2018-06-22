@@ -19,7 +19,7 @@ export const coinSound = new Sound("coin.mp3", Sound.MAIN_BUNDLE, error => {
   );
 });
 
-coinSound.setVolume(4);
+coinSound.setVolume(1);
 // coinSound.setCurrentTime(1);
 //
 // setTimeout(

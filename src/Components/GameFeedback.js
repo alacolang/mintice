@@ -77,7 +77,7 @@ class GameFeedback extends React.Component<Props> {
     });
   };
   componentWillMount() {
-    if (this.props.success) this.playSound();
+    if (!this.props.success) this.playSound();
   }
   componentDidMount() {
     this.animate();
