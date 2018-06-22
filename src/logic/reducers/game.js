@@ -99,7 +99,7 @@ const reducer = (state: State = initialState, action: Action) =>
 
       draft.metrics.gameID = game.id;
       draft.metrics.blockID = blockID;
-      draft.metrics.lastActivity = new Date();
+      // draft.metrics.lastActivity = moment();
       draft.blocks[blockID] = {
         id: blockID,
         gameID: game.id,
@@ -116,6 +116,7 @@ const reducer = (state: State = initialState, action: Action) =>
 
       draft.blocks[blockID].completed = true;
       draft.blocks[blockID].finishedAt = action.payload.finishedAt;
+      draft.metrics.lastActivity = action.payload.finishedAt;
     } else if (action.type == types.TRIAL_START) {
       const trialID = generateTrialID(state);
 
