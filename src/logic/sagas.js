@@ -159,14 +159,14 @@ function* session(): Saga<void> {
     return;
   }
   if (!sessionID) {
-    yield put(actions.newSession(new Date()));
+    yield put(actions.newSession(currentTime()));
   } else {
     const {blockIDs} = sessions[sessionID];
     if (blockIDs.length == config.sessionBlocks) {
       if (isSameSession(lastActivity)) {
         // recently done, it's enough
         if (!session.completed) {
-          yield put(actions.completeSession(new Date()));
+          yield put(actions.completeSession(currentTime()));
           yield put(actions.persist("game"));
         }
         yield* uploadGame();
@@ -174,10 +174,10 @@ function* session(): Saga<void> {
         return;
       } else {
         // start next session, probably it's next day
-        yield put(actions.newSession(new Date()));
+        yield put(actions.newSession(currentTime()));
       }
-    } else if (!sessionOldEnough(lastActivity)) {
-      yield put(actions.resetSession(sessionID, new Date()));
+    } else if (!isSameSession(lastActivity)) {
+      yield put(actions.resetSession(sessionID, currentTime()));
     }
   }
   yield* sessionIntro();
