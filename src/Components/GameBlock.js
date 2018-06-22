@@ -9,6 +9,7 @@ import games from "../logic/games";
 import type {IGame} from "../logic/games";
 import {startBlock, init} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
+import ProgressBar from "./ProgressBar";
 import MyText from "./MyText";
 
 type Props = {
@@ -36,6 +37,7 @@ class GameBlock extends React.Component<Props> {
             </MyText>
           </TouchableOpacity>
         </View>
+        <ProgressBar />
       </View>
     );
   }

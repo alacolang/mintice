@@ -12,6 +12,7 @@ import type {State as RootState} from "../logic/reducers";
 import {RESPONSE} from "../logic/games";
 import routes from "../logic/routes";
 import GameFeedback from "./GameFeedback";
+import ProgressBar from "./ProgressBar";
 
 type Props = {
   dispatch: Dispatch,
@@ -63,6 +64,7 @@ class GameQuestion extends React.Component<Props, State> {
           />
           <Route path={routes.gameFeedback} component={GameFeedback} />
         </View>
+        <ProgressBar />
       </View>
     );
   }

@@ -14,7 +14,6 @@ import GameEnoughToday from "./GameEnoughToday";
 import GameAllDone from "./GameAllDone";
 import routes from "../logic/routes";
 import {reqSession} from "../logic/actions";
-import ProgressBar from "./ProgressBar";
 
 type Props = {
   dispatch: Dispatch
@@ -33,7 +32,6 @@ class Game extends React.Component<Props> {
         <Route path={routes.gameEnoughToday} component={GameEnoughToday} />
         <Route path={routes.gameAllDone} component={GameAllDone} />
         <Route path={routes.gameSession} exact component={GameSession} />
-        <ProgressBar />
       </View>
     );
   }
