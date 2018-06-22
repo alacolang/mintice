@@ -14,6 +14,7 @@ import GameEnoughToday from "./GameEnoughToday";
 import GameAllDone from "./GameAllDone";
 import routes from "../logic/routes";
 import {reqSession} from "../logic/actions";
+import ProgressBar from "./ProgressBar";
 
 type Props = {
   dispatch: Dispatch
@@ -27,12 +28,12 @@ class Game extends React.Component<Props> {
       <View style={{flex: 1}}>
         <Route path={routes.gameBlock} component={GameBlock} />
         <Route path={routes.gameQuestion} component={GameQuestion} />
-        {/*<Route path={routes.gameFeedback} component={GameFeedback} />*/}
         <Route path={routes.gameBlank} component={GameBlank} />
         <Route path={routes.gameFixation} component={GameFixation} />
         <Route path={routes.gameEnoughToday} component={GameEnoughToday} />
         <Route path={routes.gameAllDone} component={GameAllDone} />
         <Route path={routes.gameSession} exact component={GameSession} />
+        <ProgressBar />
       </View>
     );
   }
