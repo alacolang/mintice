@@ -124,8 +124,9 @@ function* block(): Saga<void> {
     yield put(actions.startTrial(config.lengths.trial, currentTime()));
     yield* trial();
   }
-  yield put(actions.completeBlock(new Date()));
-  // yield put(actions.persist("game"));
+  yield put(actions.completeBlock(currentTime()));
+  yield call(delay, 1000);
+  yield put(actions.persist("game"));
 }
 
 function* enoughToday() {
