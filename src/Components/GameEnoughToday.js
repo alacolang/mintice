@@ -34,13 +34,13 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: 36,
-    color: "green",
+    color: "#A1878D",
     fontWeight: "bold",
     marginVertical: 15
   },
   text2: {
     fontSize: 28,
-    color: "green"
+    color: "#798081"
   }
 });
 export default GameEnoughToday;

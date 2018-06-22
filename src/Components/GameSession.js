@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 32,
-    // color: "#195C85",
-    color: "green",
+    color: "#195C85",
+    // color: "green",
     fontWeight: "bold"
   },
   body: {
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     // borderRadius: 10,
     borderColor: "#a0a0a0"
+    // borderColor: "black"
   },
   play: {
     fontSize: 20,

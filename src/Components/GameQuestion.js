@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   playContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 50,
+    height: 70,
     width: 180,
     paddingBottom: 4,
     borderWidth: 1,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   buttonIcon: {
     color: "lightgrey",
-    fontSize: 42 * 1.5
+    fontSize: 42 * 2
   }
 });
 
