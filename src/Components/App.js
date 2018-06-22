@@ -11,6 +11,7 @@ import Init from "./Init";
 import GameFeedback from "./GameFeedback";
 import Report from "./Report";
 import About from "./About";
+import {codePushify} from "../utils/codepush";
 
 class App extends React.Component {
   render() {
@@ -37,4 +38,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default localize(App, {textComponent: MyText});
+export default codePushify(localize(App, {textComponent: MyText}));
