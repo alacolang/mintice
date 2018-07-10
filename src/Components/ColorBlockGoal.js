@@ -20,7 +20,12 @@ type GameProps = {
 const Goal = ({game}: GameProps) => (
   <View style={styles.container}>
     <MyText style={styles.description}>
-      <FormattedMessage id="block.colors.go" />
+      <FormattedMessage
+        id="block.colors.go"
+        values={{
+          like: <FontAwesome>{Icons.thumbsUp}</FontAwesome>
+        }}
+      />
     </MyText>
     <View style={styles.itemsContainer}>
       <View style={styles.itemsRow}>
@@ -84,7 +89,8 @@ const styles = StyleSheet.create({
   },
   itemText: {
     // textAlign: "center",
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: "bold"
   }
 });
 

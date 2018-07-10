@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import {StyleSheet, Image, FlatList, View} from "react-native";
 import {connect} from "react-redux";
@@ -8,6 +10,7 @@ import type {State as RootState} from "../logic/reducers";
 import {RESPONSE} from "../logic/games";
 import Tabbar from "./Tabbar";
 import config from "../config";
+import type {Session} from "../logic/reducers/games";
 import {toPersianDigit} from "../utils/format";
 import wallet from "../images/wallet.png";
 const moment = require("moment-jalaali");
@@ -16,9 +19,9 @@ type Props = {
   sessions: any
 };
 
-const gift = multiply(config.SUCCESS_VALUE);
+const gift = multiply(config.successValue);
 
-const sessionSuccess = session =>
+const sessionSuccess = (session: Session) =>
   sum(
     session.blocks.map(
       block =>
@@ -52,10 +55,11 @@ const RenderSession = ({item: session}) => (
       <FormattedMessage id="report.failure" />
       {toPersianDigit(sessionFailure(session))}
     </MyText>
-    <MyText style={styles.date}>
-      {/*<FormattedMessage id="report.date" />*/}
-      {toPersianDigit(moment(session.finishedAt).format("jYYYY/jM/jD"))}
-    </MyText>
+    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+      <MyText style={styles.date}>
+        {toPersianDigit(moment(session.finishedAt).format("jYYYY/jM/jD"))}
+      </MyText>
+    </View>
   </View>
 );
 

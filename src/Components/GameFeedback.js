@@ -85,7 +85,7 @@ class GameFeedback extends React.Component<Props> {
   render() {
     const drop = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [40, 85]
+      outputRange: [50, 95]
     });
     const shaking = this.animatedShaking.interpolate({
       inputRange: [-1, 1],
@@ -130,13 +130,13 @@ const styles = StyleSheet.create({
   buttonIcon: {
     fontFamily: "FontAwesome",
     color: "lightgrey",
-    fontSize: 42 * 2
+    fontSize: 42 * 2.5
   },
   playContainer: {
     justifyContent: "center",
     alignItems: "center",
-    height: 100,
-    width: 70
+    height: 120,
+    width: 80
   },
   lostMoney: {
     fontFamily: "IRANYekanRDMobile",

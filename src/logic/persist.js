@@ -29,7 +29,7 @@ export function* persist({payload: key}: {payload: string}): Saga<void> {
       [key]: state[key]
     })
   );
-  console.log("persisted:", yield AsyncStorage.getItem(STORE_KEY));
+  // console.log("persisted:", yield AsyncStorage.getItem(STORE_KEY));
 }
 
 export function* rehydrate() {

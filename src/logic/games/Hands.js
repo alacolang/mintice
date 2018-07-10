@@ -52,7 +52,12 @@ const GoalItem = ({item}: {item: Item}) => (
 const Goal = () => (
   <View style={styles.goalContainer}>
     <MyText style={styles.items}>
-      <FormattedMessage id="block.hands.go" />
+      <FormattedMessage
+        id="block.hands.go"
+        values={{
+          like: <FontAwesome>{Icons.thumbsUp}</FontAwesome>
+        }}
+      />
     </MyText>
     <View style={styles.goalItemsContainer}>
       {take(2, goItems).map(item => <GoalItem key={item.id} item={item} />)}

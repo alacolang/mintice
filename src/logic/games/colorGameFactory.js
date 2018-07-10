@@ -44,7 +44,8 @@ const factory = (id: string, colors: {[key: string]: string}) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 48
+    fontSize: 48,
+    fontWeight: "bold"
   }
 });
 

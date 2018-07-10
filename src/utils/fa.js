@@ -10,12 +10,13 @@ export default {
   "sessions.allDone3": "پاداش شما آماده است.",
 
   "block.start": "شروع",
+  "block.continue": "ادامه",
 
-  "block.binary.go": "این شکل را دیدی، بزن",
+  "block.binary.go": "این شکل را دیدی، {like} را بزن",
   "block.binary.nogo": "این شکل را دیدی، کاری نکن",
-  "block.hands.go": "دست سالم دیدی مثل این‌ها، بزن",
+  "block.hands.go": "دست سالم دیدی مثل این‌ها، {like} را بزن",
   "block.hands.nogo": "دست زخمی دیدی مثل این‌ها، کاری نکن",
-  "block.colors.go": "هر رنگی که دیدی، بزن",
+  "block.colors.go": "هر رنگی که دیدی، {like} را بزن",
   "block.colors.nogo": "اگر رنگش مثل این‌ها {color} بود، کاری نکن",
   "profile.age": "سن",
   "profile.name": "نام و نام خانوادگی",

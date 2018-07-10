@@ -9,7 +9,7 @@ import games from "../logic/games";
 import type {IGame} from "../logic/games";
 import {startBlock, init} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
-import ProgressBar from "./ProgressBar";
+import BlockProgressBar from "./BlockProgressBar";
 import MyText from "./MyText";
 
 type Props = {
@@ -33,11 +33,15 @@ class GameBlock extends React.Component<Props> {
             onPress={this.handleClick}
           >
             <MyText style={styles.play}>
-              <FormattedMessage id="block.start" />
+              {this.props.location.state.resume ? (
+                <FormattedMessage id="block.continue" />
+              ) : (
+                <FormattedMessage id="block.start" />
+              )}
             </MyText>
           </TouchableOpacity>
         </View>
-        <ProgressBar />
+        <BlockProgressBar />
       </View>
     );
   }

@@ -3,10 +3,10 @@ import type {Config} from "./index";
 
 const config: Config = {
   lengths: {
-    blank: 500,
-    feedback: 700,
-    fixation: 800,
-    trial: 600
+    blank: 500 - 100,
+    feedback: 700 - 200,
+    fixation: 800 - 300,
+    trial: 600 + 200 - 400
   },
   sessions: 2,
   sessionBlocks: 3,
@@ -15,8 +15,8 @@ const config: Config = {
   successValue: 5,
   baseUrl: "http://192.168.100.102:3000",
   newSessionAfter: {
-    unit: "hours",
-    quantity: 18
+    unit: "minutes",
+    quantity: 5
   }
 };
 

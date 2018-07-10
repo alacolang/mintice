@@ -1,13 +1,13 @@
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
-import ProgressBar from "./ProgressBar";
+import BlockProgressBar from "./BlockProgressBar";
 
 class GameFixation extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>+</Text>
-        <ProgressBar />
+        <BlockProgressBar />
       </View>
     );
   }

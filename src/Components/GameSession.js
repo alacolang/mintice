@@ -9,6 +9,7 @@ import logo from "../images/logo.png";
 import {startSession} from "../logic/actions";
 import type {State as RootState} from "../logic/reducers";
 import Tabbar from "./Tabbar";
+import {sessionCompletedBlocks} from "../logic/selectors";
 
 type Props = {
   dispatch: Dispatch,
@@ -126,6 +127,6 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = (state: RootState) => ({
-  blocks: state.game.sessions[state.game.metrics.sessionID].blockIDs.length
+  blocks: sessionCompletedBlocks(state).length
 });
 export default connect(mapStateToProps)(GameSession);

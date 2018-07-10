@@ -1,12 +1,12 @@
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
-import ProgressBar from "./ProgressBar";
+import BlockProgressBar from "./BlockProgressBar";
 
 class GameBlank extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ProgressBar />
+        <BlockProgressBar />
       </View>
     );
   }

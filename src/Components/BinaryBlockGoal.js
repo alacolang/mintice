@@ -13,7 +13,12 @@ const Goal = ({game}: {game: IGame}) => {
   return (
     <View style={styles.container}>
       <MyText style={styles.items}>
-        <FormattedMessage id="block.binary.go" />
+        <FormattedMessage
+          id="block.binary.go"
+          values={{
+            like: <FontAwesome>{Icons.thumbsUp}</FontAwesome>
+          }}
+        />
       </MyText>
       {game.goItems().map(item => <ItemRenderer key={item.id} item={item} />)}
       <MyText style={styles.items}>

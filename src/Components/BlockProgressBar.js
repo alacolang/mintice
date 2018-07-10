@@ -13,7 +13,7 @@ const defaultProps = {
   progress: 0
 };
 
-const ProgressBar = ({progress} = defaultProps) => (
+const BlockProgressBar = ({progress} = defaultProps) => (
   <View style={styles.container}>
     <View style={[styles.bar, {width: `${progress}%`}]} />
   </View>
@@ -26,19 +26,22 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: "100%",
-    alignItems: "flex-start"
+    alignItems: "flex-end"
   },
   bar: {
-    height: 4,
+    height: 12,
     backgroundColor: "lightgreen"
   }
 });
 
 const mapStateToProps = (state: RootState) => {
-  if (!state.game.metrics.blockID) return {progress: 0};
-  const block = state.game.blocks[state.game.metrics.blockID];
+  const {metrics: {blockID}, blocks} = state.game;
+  if (!blockID) return {progress: 0};
+  const block = blocks[blockID];
   return {
-    progress: Math.floor(length(block.trialIDs) / config.blockTrials * 100)
+    progress: Math.floor(
+      (length(block.trialIDs) - 1) / config.blockTrials * 100
+    )
   };
 };
-export default connect(mapStateToProps)(ProgressBar);
+export default connect(mapStateToProps)(BlockProgressBar);

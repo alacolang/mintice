@@ -99,7 +99,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.gonogo"
+        applicationId "ir.dbtteen.gonogo"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
