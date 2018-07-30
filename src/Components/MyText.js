@@ -1,16 +1,16 @@
 // @flow
 
 import React from "react";
-import {StyleSheet, Text} from "react-native";
-import type {Element} from "react";
+import { StyleSheet, Text } from "react-native";
+import type { Element } from "react";
 
 type Props = {
   style: any,
-  children: Element<*>
+  children: React.Node
 };
 
-const MyText = ({style, children}: Props) => (
-  <Text style={[style, styles.persian]}>{children}</Text>
+const MyText = ({ style, children }: Props) => (
+  <Text style={[styles.persian, style]}>{children}</Text>
 );
 
 const styles = StyleSheet.create({
