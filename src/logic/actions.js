@@ -1,8 +1,8 @@
 // @flow
-import type {History} from "history";
+import type { History } from "history";
 import * as types from "./types";
-import type {State as Profile} from "./reducers/profile";
-import type {Category} from "./games";
+import type { State as Profile } from "./reducers/profile";
+import type { Category } from "./games";
 export const init = () => ({
   type: types.INIT
 });
@@ -37,17 +37,17 @@ export const startSession = () => ({
 
 export const completeSession = (finishedAt: Date) => ({
   type: types.SESSION_COMPLETED,
-  payload: {finishedAt}
+  payload: { finishedAt }
 });
 
 export const newSession = (startedAt: Date) => ({
   type: types.SESSION_NEW,
-  payload: {startedAt}
+  payload: { startedAt }
 });
 
 export const resetSession = (sessionID: string, startedAt: Date) => ({
   type: types.SESSION_RESET,
-  payload: {startedAt, sessionID}
+  payload: { startedAt, sessionID }
 });
 
 export const newBlock = (gameID: string) => ({
@@ -57,17 +57,17 @@ export const newBlock = (gameID: string) => ({
 
 export const startBlock = (startedAt: Date) => ({
   type: types.BLOCK_START,
-  payload: {startedAt}
+  payload: { startedAt }
 });
 
 export const completeBlock = (finishedAt: Date) => ({
   type: types.BLOCK_COMPLETED,
-  payload: {finishedAt}
+  payload: { finishedAt }
 });
 
 export const startTrial = (length: number, startedAt: Date) => ({
   type: types.TRIAL_START,
-  payload: {length, startedAt}
+  payload: { length, startedAt }
 });
 
 export const setTrialCategory = (category: Category) => ({
@@ -77,7 +77,17 @@ export const setTrialCategory = (category: Category) => ({
 
 export const trialResult = (rt: number, timeout?: boolean = false) => ({
   type: types.TRIAL_RESULT,
-  payload: {rt, timeout}
+  payload: { rt, timeout }
+});
+
+export const startBreathing = (startedAt: Date) => ({
+  type: types.BREATHING_START,
+  payload: { startedAt }
+});
+
+export const completeBreathing = (finishedAt: Date) => ({
+  type: types.BREATHING_COMPLETED,
+  payload: { finishedAt }
 });
 
 export const reset = () => ({

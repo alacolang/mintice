@@ -11,5 +11,6 @@ export default {
   gameAllDone: "/game/all-done",
   gameEnoughToday: "/game/enough-today",
   report: "/report",
-  about: "/about"
+  about: "/about",
+  breathing: "/breathing"
 };

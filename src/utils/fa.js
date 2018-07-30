@@ -44,5 +44,11 @@ export default {
     "این برنامه ابزار مداخله بخشی از پایان نامه پریسا پدرام، دانشجوی دکتری روانشناسی دانشگاه الزهرا است.",
   "about.email": "parisa.pedraam@gmail.com",
   reset: "ریست",
-  "profile.save": "ثبت"
+  "profile.save": "ثبت",
+
+  "breathing.inhale": "دم",
+  "breathing.inhaleThrough": "از بینی",
+  "breathing.hold": "نگه‌دار",
+  "breathing.exhale": "بازدم",
+  "breathing.exhaleWith": "از دهان"
 };

@@ -11,17 +11,17 @@ import {
   race,
   fork
 } from "redux-saga/effects";
-import {delay} from "redux-saga";
-import {AsyncStorage} from "react-native";
-import type {Saga} from "redux-saga";
+import { delay } from "redux-saga";
+import { AsyncStorage } from "react-native";
+import type { Saga } from "redux-saga";
 import messages from "../utils/fa";
-import type {IGame} from "./games";
+import type { IGame } from "./games";
 import * as types from "./types";
 import routes from "./routes";
 import * as actions from "./actions";
 import config from "../config";
-import type {State} from "./reducers";
-import {uploadGame, persist, rehydrate} from "./persist";
+import type { State } from "./reducers";
+import { uploadGame, persist, rehydrate } from "./persist";
 import {
   shouldResumeBlock,
   getCurrentSession,
@@ -35,7 +35,7 @@ import {
 } from "./selectors";
 
 function* navigate(path, options) {
-  const {history} = yield select();
+  const { history } = yield select();
   yield call(history.replace, path, options);
 }
 
@@ -47,7 +47,7 @@ function* extraLengthForHands() {
 function* question() {
   yield* navigate(routes.gameQuestion);
   const extraLength = yield* extraLengthForHands();
-  const {result, timeout} = yield race({
+  const { result, timeout } = yield race({
     result: take(types.TRIAL_RESULT),
     timeout: call(delay, config.lengths.trial + extraLength)
   });
@@ -74,7 +74,7 @@ function* blank() {
 //
 function* blockIntro(resume) {
   console.log("block intro called");
-  yield* navigate(routes.gameBlock, {resume});
+  yield* navigate(routes.gameBlock, { resume });
 }
 
 function* trial(): Saga<void> {
@@ -153,12 +153,23 @@ function* session(): Saga<void> {
       }
     } else if (!isSameSession()) {
       // session is not done and old =>
-      yield put(actions.resetSession(sessionID, currentTime()));
+      const state = yield select();
+      yield put(
+        actions.resetSession(state.game.metrics.sessionID, currentTime())
+      );
     }
   }
   yield* sessionIntro();
   yield* block();
+  yield* breathing();
   yield* session();
+}
+
+function* breathing(): Saga<void> {
+  yield put(actions.startBreathing(currentTime()));
+  yield navigate(routes.breathing);
+  yield call(delay, config.lengths.feedback);
+  yield put(actions.completeBreathing(currentTime()));
 }
 
 function* init(): Saga<void> {

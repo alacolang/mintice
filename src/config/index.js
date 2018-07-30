@@ -4,7 +4,13 @@ export type Lengths = {
   blank: number,
   feedback: number,
   fixation: number,
-  trial: number
+  trial: number,
+  breathing: {
+    inhale: number,
+    hold: number,
+    exhale: number,
+    preInhale: number
+  }
 };
 
 export type Config = {

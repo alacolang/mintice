@@ -1,12 +1,18 @@
 // @flow
-import type {Config} from "./index";
+import type { Config } from "./index";
 
 const config: Config = {
   lengths: {
     blank: 500, // - 100,
     feedback: 700, // - 200,
     fixation: 800, // - 300,
-    trial: 600 + 200
+    trial: 600 + 200,
+    breathing: {
+      preInhale: 400,
+      inhale: 3000,
+      hold: 4000,
+      exhale: 6000
+    }
   },
   sessions: 10,
   sessionBlocks: 3,
