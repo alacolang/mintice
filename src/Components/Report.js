@@ -1,46 +1,29 @@
 // @flow
 
 import React from "react";
-import {StyleSheet, Image, FlatList, View} from "react-native";
-import {connect} from "react-redux";
-import {values, sum, isEmpty, compose, map, multiply} from "ramda";
-import {FormattedMessage} from "react-intl";
+import { StyleSheet, Image, FlatList, View } from "react-native";
+import { connect } from "react-redux";
+import { values, isEmpty, map } from "ramda";
+import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
-import type {State as RootState} from "../logic/reducers";
-import {RESPONSE} from "../logic/games";
+import type { State as RootState } from "../logic/reducers";
+import { RESPONSE } from "../logic/games";
 import Tabbar from "./Tabbar";
-import config from "../config";
-import type {Session} from "../logic/reducers/games";
-import {toPersianDigit} from "../utils/format";
+import { toPersianDigit } from "../utils/format";
 import wallet from "../images/wallet.png";
 const moment = require("moment-jalaali");
+import {
+  gift,
+  sessionFailure,
+  sessionSuccess,
+  sessionsSuccess
+} from "../logic/report";
 
 type Props = {
   sessions: any
 };
 
-const gift = multiply(config.successValue);
-
-const sessionSuccess = (session: Session) =>
-  sum(
-    session.blocks.map(
-      block =>
-        block.trials.filter(trial => trial.response == RESPONSE.SUCCESS).length
-    )
-  );
-
-const sessionFailure = session =>
-  sum(
-    session.blocks.map(
-      block =>
-        block.trials.filter(trial => trial.response != RESPONSE.SUCCESS).length
-    )
-  );
-
-// const sessionsSuccess = sessions => sum(sessions.map(sessionSuccess));
-const sessionsSuccess = compose(sum, map(sessionSuccess));
-
-const RenderSession = ({item: session}) => (
+const RenderSession = ({ item: session }) => (
   <View style={styles.session} key={session.id}>
     <MyText style={styles.earnings}>
       {toPersianDigit(gift(sessionSuccess(session)))}
@@ -55,7 +38,7 @@ const RenderSession = ({item: session}) => (
       <FormattedMessage id="report.failure" />
       {toPersianDigit(sessionFailure(session))}
     </MyText>
-    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
       <MyText style={styles.date}>
         {toPersianDigit(moment(session.finishedAt).format("jYYYY/jM/jD"))}
       </MyText>
@@ -65,7 +48,7 @@ const RenderSession = ({item: session}) => (
 
 class Report extends React.Component<Props> {
   render() {
-    const {sessions} = this.props;
+    const { sessions } = this.props;
     const total = gift(sessionsSuccess(sessions));
     return (
       <View style={styles.outerContainer}>
@@ -75,7 +58,7 @@ class Report extends React.Component<Props> {
             <MyText style={styles.total}>
               <FormattedMessage
                 id="report.total"
-                values={{total: toPersianDigit(total)}}
+                values={{ total: toPersianDigit(total) }}
               />
             </MyText>
           )}
@@ -155,7 +138,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: RootState) => {
-  const {sessions, blocks, trials} = state.game;
+  const { sessions, blocks, trials } = state.game;
   const sessionsExtra = values(sessions)
     .filter(session => session.completed)
     .map(session => ({
