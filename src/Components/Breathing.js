@@ -1,3 +1,5 @@
+// @flow
+
 import React from "react";
 import { View, StyleSheet, Animated } from "react-native";
 import MyText from "./MyText";
@@ -5,29 +7,42 @@ import { toPersianDigit } from "../utils/format";
 import config from "../config";
 import messages from "../utils/fa";
 
-class Breathing extends React.Component {
+type Props = {};
+type State = {
+  radius: Animated.Value,
+  holdCountDown: number,
+  title: string,
+  description: string
+};
+class Breathing extends React.Component<Props, State> {
   state = {
     radius: new Animated.Value(0),
-    count: 0
+    holdCountDown: 0,
+    title: "",
+    description: ""
   };
+  breathingsCount = config.breathings;
+
   componentDidMount() {
     this.animate();
   }
 
+  componentWillUnmount() {}
+
   inhale = () => {
     this.setState({
-      count: Math.round(config.lengths.breathing.hold / 1000),
+      holdCountDown: Math.round(config.lengths.breathing.hold / 1000),
       title: messages["breathing.inhale"],
       description: messages["breathing.inhaleThrough"]
     });
   };
 
   hold = () => {
-    if (this.state.count > 0) {
+    if (this.state.holdCountDown > 0) {
       this.setState({
-        count: this.state.count - 1,
+        holdCountDown: this.state.holdCountDown - 1,
         title: messages["breathing.hold"],
-        description: `${toPersianDigit(this.state.count)}`
+        description: `${toPersianDigit(this.state.holdCountDown)}`
       });
       setTimeout(() => {
         this.hold();
@@ -44,6 +59,7 @@ class Breathing extends React.Component {
       this.setState({ title: "", description: "" });
     }, config.lengths.breathing.exhale);
   };
+
   animate = () => {
     this.inhale();
     setTimeout(this.hold, config.lengths.breathing.inhale);
@@ -58,7 +74,12 @@ class Breathing extends React.Component {
         duration: config.lengths.breathing.exhale
       }),
       Animated.delay(config.lengths.breathing.preInhale)
-    ]).start(this.animate);
+    ]).start(this.shouldContinue);
+  };
+
+  shouldContinue = () => {
+    this.breathingsCount--;
+    if (this.breathingsCount > 0) this.animate();
   };
 
   render() {

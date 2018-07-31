@@ -13,6 +13,7 @@ import {
 } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { AsyncStorage } from "react-native";
+import { sum, values } from "ramda";
 import type { Saga } from "redux-saga";
 import messages from "../utils/fa";
 import type { IGame } from "./games";
@@ -165,10 +166,13 @@ function* session(): Saga<void> {
   yield* session();
 }
 
+const breathingLength = () =>
+  sum(values(config.lengths.breathing)) * config.breathings;
+
 function* breathing(): Saga<void> {
   yield put(actions.startBreathing(currentTime()));
   yield navigate(routes.breathing);
-  yield call(delay, config.lengths.feedback);
+  yield call(delay, breathingLength());
   yield put(actions.completeBreathing(currentTime()));
 }
 
