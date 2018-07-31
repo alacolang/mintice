@@ -1,9 +1,10 @@
 // @flow
 
 import React from "react";
-import {connect} from "react-redux";
-import type {History} from "history";
-import {addHistory, init} from "../logic/actions";
+import { connect } from "react-redux";
+import type { Action } from "redux";
+import type { History } from "history";
+import { addHistory, init } from "../logic/actions";
 
 type Props = {
   history: History,

@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   Image
 } from "react-native";
-import {FormattedMessage} from "react-intl";
-import FontAwesome, {Icons} from "react-native-fontawesome";
+import type { History } from "history";
+import { FormattedMessage } from "react-intl";
+import FontAwesome, { Icons } from "react-native-fontawesome";
 import MyText from "./MyText";
 import logo from "../images/logo.png";
 import wallet from "../images/wallet.png";
 
-const Navbar = ({handleBack}) => (
+const Navbar = ({ handleBack }) => (
   <View style={navbarStyles.navbar}>
     <View style={navbarStyles.body}>
       <TouchableOpacity onPress={handleBack} style={navbarStyles.back}>
@@ -45,6 +46,9 @@ const Footer = () => (
   </View>
 );
 
+type Props = {
+  history: History
+};
 class About extends React.Component<Props> {
   handleBack = () => {
     this.props.history.goBack();
