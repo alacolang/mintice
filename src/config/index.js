@@ -24,7 +24,8 @@ export type Config = {
   newSessionAfter: {
     unit: "hours" | "minutes",
     quantity: number
-  }
+  },
+  breathings: number
 };
 
 let config: Config;

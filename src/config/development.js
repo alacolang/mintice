@@ -14,15 +14,16 @@ const config: Config = {
       exhale: 6000
     }
   },
+  breathings: 2,
   sessions: 2,
   sessionBlocks: 3,
   blockTrials: 4,
   goVsNogoPercentage: 80, // between 0 and 10,
   successValue: 5,
-  baseUrl: "http://192.168.100.102:3000",
+  baseUrl: "http://192.168.100.103:3000",
   newSessionAfter: {
     unit: "minutes",
-    quantity: 5
+    quantity: 1
   }
 };
 
