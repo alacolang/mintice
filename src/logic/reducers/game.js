@@ -1,19 +1,18 @@
 // @flow
 
-import {values, keys, last} from "ramda";
-import * as types from "../types";
-import Games, {CATEGORY, RESPONSE} from "../games";
-import type {Category, Response, IGame} from "../games";
-import type {Action} from "./index";
-
+import { keys, last } from "ramda";
 import produce from "immer";
+import * as types from "../types";
+import Games, { CATEGORY, RESPONSE } from "../games";
+import type { Category, Response, IGame } from "../games";
+import type { Action } from "./index";
 
 export type Session = {
   id: string,
   completed: boolean,
   startedAt: Date,
   finishedAt?: Date,
-  blockIDs: string[]
+  blockIDs: string[],
 };
 export type Block = {
   id: string,
@@ -21,7 +20,9 @@ export type Block = {
   completed: boolean,
   startedAt?: Date,
   finishedAt?: Date,
-  trialIDs: string[]
+  trialIDs: string[],
+  breathingStartedAt?: Date,
+  breathingFinishedAt?: Date,
 };
 export type Trial = {
   id: string,
@@ -29,31 +30,31 @@ export type Trial = {
   length: number,
   category: Category,
   rt?: number,
-  response?: Response
+  response?: Response,
 };
 export type Metrics = {
-  lastLength: number,
+  // lastLength?: number,
   sessionID?: string,
   blockID?: string,
   trialID?: string,
   lastActivity?: Date,
-  gameID: string
+  gameID: string,
 };
 
 export type State = {
   metrics: Metrics,
-  sessions: {[string]: Session},
-  blocks: {[string]: Block},
-  trials: {[string]: Trial}
+  sessions: { [string]: Session },
+  blocks: { [string]: Block },
+  trials: { [string]: Trial },
 };
 
 const initialState: State = {
   metrics: {
-    lastLength: 300
+    // lastLength: 300
   },
   sessions: {},
   blocks: {},
-  trials: {}
+  trials: {},
 };
 
 const generateBlockID = (state: State) =>
@@ -66,30 +67,32 @@ const generateTrialID = (state: State) =>
 const reducer = (state: State = initialState, action: Action) =>
   produce((state: State), (draft: State): void => {
     if (action.type == types.SESSION_NEW) {
+      if (!action.payload) return;
       const sessionID = generateSessionID(state);
 
       draft.metrics.sessionID = sessionID;
-      draft.metrics.blockID = 0;
+      draft.metrics.blockID = "";
       draft.sessions[sessionID] = {
         id: sessionID,
         completed: false,
         startedAt: action.payload.startedAt,
-        blockIDs: []
+        blockIDs: [],
       };
     } else if (action.type == types.SESSION_RESET) {
-      const {sessionID, startedAt} = action.payload;
+      if (!action.payload) return;
+      const { sessionID, startedAt } = action.payload;
 
       draft.metrics.sessionID = sessionID;
-      draft.metrics.blockID = 0;
+      draft.metrics.blockID = "";
       draft.sessions[sessionID] = {
         id: sessionID,
         completed: false,
         startedAt: startedAt,
-        blockIDs: []
+        blockIDs: [],
       };
     } else if (action.type == types.SESSION_COMPLETED) {
-      const {sessionID} = state.metrics;
-
+      const { sessionID } = state.metrics;
+      if (!sessionID || !action.payload) return;
       draft.sessions[sessionID].completed = true;
       draft.sessions[sessionID].finishedAt = action.payload.finishedAt;
     } else if (action.type == types.BLOCK_NEW) {
@@ -104,19 +107,31 @@ const reducer = (state: State = initialState, action: Action) =>
         id: blockID,
         gameID: game.id,
         completed: false,
-        trialIDs: []
+        trialIDs: [],
       };
       draft.sessions[draft.metrics.sessionID].blockIDs.push(blockID);
     } else if (action.type == types.BLOCK_START) {
-      const blockID = state.metrics.blockID;
+      const { blockID } = state.metrics;
+      if (!blockID || !action.payload) return;
 
       draft.blocks[blockID].startedAt = action.payload.startedAt;
     } else if (action.type == types.BLOCK_COMPLETED) {
-      const blockID = state.metrics.blockID;
+      const { blockID } = state.metrics;
+      if (!blockID || !action.payload) return;
 
       draft.blocks[blockID].completed = true;
       draft.blocks[blockID].finishedAt = action.payload.finishedAt;
       draft.metrics.lastActivity = action.payload.finishedAt;
+    } else if (action.type == types.BREATHING_START) {
+      const { blockID } = state.metrics;
+      if (!blockID || !action.payload) return;
+
+      draft.blocks[blockID].breathingStartedAt = action.payload.startedAt;
+    } else if (action.type == types.BREATHING_COMPLETED) {
+      const { blockID } = state.metrics;
+      if (!blockID || !action.payload) return;
+
+      draft.blocks[blockID].breathingFinishedAt = action.payload.finishedAt;
     } else if (action.type == types.TRIAL_START) {
       const trialID = generateTrialID(state);
 
@@ -124,14 +139,16 @@ const reducer = (state: State = initialState, action: Action) =>
       draft.blocks[draft.metrics.blockID].trialIDs.push(trialID);
       draft.trials[trialID] = {
         id: trialID,
-        ...action.payload
+        ...action.payload,
       };
     } else if (action.type == types.TRIAL_SET_CATEGORY) {
-      const {trialID} = state.metrics;
+      const { trialID } = state.metrics;
+      if (!trialID || !action.payload) return;
       draft.trials[trialID].category = action.payload;
     } else if (action.type == types.TRIAL_RESULT) {
-      const {rt, timeout} = action.payload;
-      const {trialID} = state.metrics;
+      if (!action.payload) return;
+      const { rt, timeout } = action.payload;
+      const { trialID } = state.metrics;
       if (!trialID) return;
       const trial = state.trials[trialID];
       let response = undefined;

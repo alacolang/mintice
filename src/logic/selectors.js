@@ -1,20 +1,17 @@
-import {select} from "redux-saga/effects";
-import {pluck, values, filter, compose} from "ramda";
+// @flow
+
+import { select } from "redux-saga/effects";
+import { pluck, values, filter, compose } from "ramda";
 import config from "../config";
-import type {IGame} from "./games";
-import Games, {CATEGORY, RESPONSE} from "./games";
-import type {State} from "./reducers";
-import {diff, pickRandom} from "./games/helpers";
-
-const moment = require("moment");
-
-export function currentTime() {
-  return moment();
-}
+import type { IGame } from "./games";
+import Games from "./games";
+import type { State } from "./reducers";
+import { diff, pickRandom } from "./games/helpers";
+import { currentTime } from "../utils/time";
 
 export function* isSameSession() {
   const state: State = yield select();
-  const {metrics: {lastActivity}} = state.game;
+  const { metrics: { lastActivity } } = state.game;
   // currentTime().diff(lastActivity, "seconds") < 30;
   return (
     currentTime().diff(lastActivity, config.newSessionAfter.unit) <
@@ -24,18 +21,18 @@ export function* isSameSession() {
 
 export function* getCurrentSession() {
   const state: State = yield select();
-  const {metrics: {sessionID}, sessions} = state.game;
+  const { metrics: { sessionID }, sessions } = state.game;
   return sessions[sessionID];
 }
 
 export function* isJustStarted() {
   const state: State = yield select();
-  const {metrics: {sessionID}} = state.game;
+  const { metrics: { sessionID } } = state.game;
   return !sessionID;
 }
 
 function sessionsCompleted(state: State) {
-  const {sessions} = state.game;
+  const { sessions } = state.game;
   return values(sessions).filter(session => session.completed);
 }
 export function* isAllDone() {
@@ -44,7 +41,7 @@ export function* isAllDone() {
 }
 
 export function sessionCompletedBlocks(state: State) {
-  const {metrics: {sessionID}, sessions, blocks} = state.game;
+  const { metrics: { sessionID }, sessions, blocks } = state.game;
   return sessions[sessionID].blockIDs
     .map(blockID => blocks[blockID])
     .filter(block => block.completed);
@@ -57,21 +54,21 @@ export function* isSessionDone() {
 
 export function* startBlockFromTrialNumber() {
   const state: State = yield select();
-  const {metrics: {blockID}, blocks} = state.game;
+  const { metrics: { blockID }, blocks } = state.game;
   if (!blockID) return 0;
   return blocks[blockID].trialIDs.length;
 }
 
 export function* shouldResumeBlock() {
   const state: State = yield select();
-  const {metrics: {blockID}, blocks} = state.game;
+  const { metrics: { blockID }, blocks } = state.game;
   return blockID && blocks[blockID].trialIDs.length < config.blockTrials;
 }
 
 // completed games in current session
 function* getSessionCompletedGames() {
   const state: State = yield select();
-  const {metrics: {sessionID}, sessions, blocks} = state.game;
+  const { metrics: { sessionID }, sessions, blocks } = state.game;
   const completedGameIDs = sessions[sessionID].blockIDs.map(
     blockID => blocks[blockID].gameID
   );
@@ -91,7 +88,7 @@ function* getBlockToRun() {
 // completed game IDs in all sessions
 function* getCompletedGameIDs() {
   const state: State = yield select();
-  const {metrics: {sessionID}, sessions, blocks} = state.game;
+  const { metrics: { sessionID }, sessions, blocks } = state.game;
   const gameIDs: string[] = values(blocks)
     .filter(block => block.completed)
     .map(block => block.gameID)
@@ -100,7 +97,7 @@ function* getCompletedGameIDs() {
 }
 
 export function* pickNextGame() {
-  // return Games[14];
+  // return Games[1];
 
   // console.log("Games=", Games);
   // console.log("done gameIDs=", gameIDs);
