@@ -35,8 +35,8 @@ function* navigate(path, options) {
 }
 
 function* extraLengthForHands() {
-  const state = yield select();
-  return state.game.metrics.gameID == "hands" ? 200 : 0;
+  const { game } = yield select();
+  return game.metrics.gameID == "hands" ? 200 : 0;
 }
 
 function* question() {
@@ -79,23 +79,25 @@ function* trial(): Saga<void> {
   yield* feedback();
 }
 
-function* setNextGame() {
-  const game = yield* pickNextGame();
+function* setNextGame(state: State) {
+  const game = pickNextGame(state);
   if (!game) return navigate(routes.gameAllDone);
   yield put(actions.newBlock(game.id));
 }
 
 function* block(): Saga<void> {
   console.log("block called");
-  const resume = yield* shouldResumeBlock();
+  const state = yield select();
+
+  const resume = shouldResumeBlock(state);
   console.log("block> resume=", resume);
-  if (!resume) yield* setNextGame();
-  // yield* setNextGame();
+  if (!resume) yield* setNextGame(state);
+  // yield* setNextGame(state);
 
   yield* blockIntro(resume);
   yield take(types.BLOCK_START);
 
-  let n = yield* startBlockFromTrialNumber();
+  let n = startBlockFromTrialNumber(yield select());
   // let n = 0;
 
   while (n++ < config.blockTrials) {
@@ -118,7 +120,8 @@ function* sessionIntro() {
 }
 
 function* handleSessionDone() {
-  const session = yield* getCurrentSession();
+  const state: State = yield select();
+  const session = getCurrentSession(state);
   if (!session.completed) {
     // session not marked as completed yet
     yield put(actions.completeSession(currentTime()));
@@ -130,26 +133,26 @@ function* handleSessionDone() {
 
 function* session(): Saga<void> {
   console.log("session called");
+  const state: State = yield select();
 
-  if (yield* isAllDone()) {
+  if (isAllDone(state)) {
     yield navigate(routes.gameAllDone);
     return;
   }
 
-  if (yield* isJustStarted()) {
+  if (isJustStarted(state)) {
     yield put(actions.newSession(currentTime()));
   } else {
-    if (yield* isSessionDone()) {
-      if (yield* isSameSession()) {
+    if (isSessionDone(state)) {
+      if (isSameSession(state)) {
         yield* handleSessionDone();
         return;
       } else {
         // start next session, probably it's next day
         yield put(actions.newSession(currentTime()));
       }
-    } else if (!isSameSession()) {
+    } else if (!isSameSession(state)) {
       // session is not done and old =>
-      const state = yield select();
       yield put(
         actions.resetSession(state.game.metrics.sessionID, currentTime())
       );
