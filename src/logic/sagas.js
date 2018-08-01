@@ -6,22 +6,16 @@ import {
   takeEvery,
   takeLatest,
   select,
-  all,
   take,
   race,
-  fork
 } from "redux-saga/effects";
 import { delay } from "redux-saga";
-import { AsyncStorage } from "react-native";
-import { sum, values } from "ramda";
+// import { AsyncStorage } from "react-native";
 import type { Saga } from "redux-saga";
-import messages from "../utils/fa";
-import type { IGame } from "./games";
 import * as types from "./types";
 import routes from "./routes";
 import * as actions from "./actions";
 import config from "../config";
-import type { State } from "./reducers";
 import { uploadGame, persist, rehydrate } from "./persist";
 import {
   shouldResumeBlock,
@@ -166,14 +160,10 @@ function* session(): Saga<void> {
   yield* session();
 }
 
-const breathingLength = () =>
-  sum(values(config.lengths.breathing)) * config.breathings;
-
 function* breathing(): Saga<void> {
   yield put(actions.startBreathing(currentTime()));
   yield navigate(routes.breathing);
-  yield call(delay, breathingLength());
-  yield put(actions.completeBreathing(currentTime()));
+  yield take(types.BREATHING_COMPLETED);
 }
 
 function* init(): Saga<void> {
