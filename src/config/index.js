@@ -1,6 +1,6 @@
 // @flow
 
-export type Lengths = {
+export type Lengths = {|
   blank: number,
   feedback: number,
   fixation: number,
@@ -9,11 +9,12 @@ export type Lengths = {
     inhale: number,
     hold: number,
     exhale: number,
-    preInhale: number
-  }
-};
+    preInhale: number,
+  },
+  breathings: number,
+|};
 
-export type Config = {
+export type Config = {|
   lengths: Lengths,
   sessions: number,
   sessionBlocks: number,
@@ -23,18 +24,16 @@ export type Config = {
   baseUrl: string,
   newSessionAfter: {
     unit: "hours" | "minutes",
-    quantity: number
+    quantity: number,
   },
-  breathings: number
-};
+|};
 
-let config: Config;
-if (process.env.NODE_ENV == "development") {
-  config = require("./development");
-} else {
-  config = require("./production");
-}
-// const config: Config = require("./development");
+let config: Config =
+  process.env.NODE_ENV == "development"
+    ? require("./development")
+    : require("./production");
 
 console.log("config=", config);
+
 export default config;
+// export default (config: Config);
