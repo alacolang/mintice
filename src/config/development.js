@@ -11,10 +11,10 @@ const config: Config = {
       preInhale: 400,
       inhale: 3000,
       hold: 4000,
-      exhale: 6000
-    }
+      exhale: 6000,
+    },
+    breathings: 2 * (6000 + 4000 + 3000 + 400),
   },
-  breathings: 2,
   sessions: 2,
   sessionBlocks: 3,
   blockTrials: 4,
