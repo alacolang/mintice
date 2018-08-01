@@ -23,8 +23,8 @@ const config: Config = {
   baseUrl: "http://192.168.100.103:3000",
   newSessionAfter: {
     unit: "minutes",
-    quantity: 1
-  }
+    quantity: 1,
+  },
 };
 
 module.exports = config;

@@ -23,8 +23,8 @@ const config: Config = {
   baseUrl: "http://dbtteen.ir",
   newSessionAfter: {
     unit: "hours",
-    quantity: 18
-  }
+    quantity: 18,
+  },
 };
 
 module.exports = config;

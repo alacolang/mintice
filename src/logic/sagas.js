@@ -26,8 +26,8 @@ import {
   isSameSession,
   pickNextGame,
   startBlockFromTrialNumber,
-  currentTime
 } from "./selectors";
+import { currentTime } from "../utils/time";
 
 function* navigate(path, options) {
   const { history } = yield select();
@@ -42,9 +42,9 @@ function* extraLengthForHands() {
 function* question() {
   yield* navigate(routes.gameQuestion);
   const extraLength = yield* extraLengthForHands();
-  const { result, timeout } = yield race({
+  const { timeout } = yield race({
     result: take(types.TRIAL_RESULT),
-    timeout: call(delay, config.lengths.trial + extraLength)
+    timeout: call(delay, config.lengths.trial + extraLength),
   });
   if (timeout) {
     yield put(actions.trialResult(10 ** 6, true));
@@ -91,6 +91,7 @@ function* block(): Saga<void> {
   console.log("block> resume=", resume);
   if (!resume) yield* setNextGame();
   // yield* setNextGame();
+
   yield* blockIntro(resume);
   yield take(types.BLOCK_START);
 
