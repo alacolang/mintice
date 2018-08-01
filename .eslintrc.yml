@@ -1,0 +1,32 @@
+env:
+  browser: true
+  commonjs: true
+  es6: true
+  node: true
+extends:
+  - 'plugin:flowtype/recommended'
+  - 'eslint:recommended'
+  - 'plugin:react/recommended'
+  - prettier
+parser: babel-eslint
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+  sourceType: module
+  allowImportExportEverywhere: true
+plugins:
+  - flowtype
+  - import
+  - react
+rules:
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - double
+  semi:
+    - error
+    - always
+  no-console: off
