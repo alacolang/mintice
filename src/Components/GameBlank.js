@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import BlockProgressBar from "./BlockProgressBar";
 
 class GameBlank extends React.Component {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff"
-  }
+    backgroundColor: "#fff",
+  },
 });
 export default GameBlank;

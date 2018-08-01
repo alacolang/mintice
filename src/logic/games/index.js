@@ -1,7 +1,7 @@
 // @flow
 
-import type {Item, IGame} from "./Game";
-export type {Item, IGame};
+import type { Item, IGame } from "./Game";
+export type { Item, IGame };
 import Game1 from "./Game1"; // Circle yellow+green
 import Game2 from "./Game2"; // Triangle green+blue
 import Game3 from "./Game3"; // Circle+Triangle
@@ -25,13 +25,13 @@ const COLORS_LABLES = {
   purple: "بنفش",
   pink: "صورتی",
   black: "سیاه",
-  brown: "قهوه‌ای"
+  brown: "قهوه‌ای",
 };
 const pickColors = (colors: string[]) =>
   colors.reduce(
     (acc, color) => ({
       ...acc,
-      [COLORS_VALUES[color]]: COLORS_LABLES[color]
+      [COLORS_VALUES[color]]: COLORS_LABLES[color],
     }),
     {}
   );
@@ -39,13 +39,13 @@ const COLORS_VALUES = {
   green: "#B4EF91",
   red: "#5E0016",
   blue: "#2E6AF3",
-  yellow: "yellow",
+  yellow: "#FFDC00",
   pink: "#FF69B4",
   purple: "#7B68EE",
   grey: "#575E5D",
   black: "black",
   orange: "orange",
-  brown: "brown"
+  brown: "brown",
 };
 
 const Game11 = colorGameFactory("11", pickColors(["blue", "red", "green"]));
@@ -81,19 +81,19 @@ const Games: IGame[] = [
   Game15,
   Game16,
   Game17,
-  Game18
+  Game18,
 ];
 export default Games;
 
 export const RESPONSE = {
   SUCCESS: "SUCCESS",
   OMISSION: "OMISSION",
-  COMISSION: "COMISSION"
+  COMISSION: "COMISSION",
 };
 
 export const CATEGORY = {
   GO: "GO",
-  NO_GO: "NO_GO"
+  NO_GO: "NO_GO",
 };
 
 export type Category = $Values<typeof CATEGORY>;
