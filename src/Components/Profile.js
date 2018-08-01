@@ -1,33 +1,33 @@
 // @flow
 
 import React from "react";
-import type {History} from "history";
-import {FormattedMessage} from "react-intl";
-import {StyleSheet, View, TouchableOpacity} from "react-native";
-import {connect} from "react-redux";
-import type {Dispatch} from "redux";
-import {Dropdown} from "react-native-material-dropdown";
-import FontAwesome, {Icons} from "react-native-fontawesome";
-import {TextField} from "react-native-material-textfield";
+import type { History } from "history";
+import { FormattedMessage } from "react-intl";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import type { Dispatch } from "redux";
+import { Dropdown } from "react-native-material-dropdown";
+import FontAwesome, { Icons } from "react-native-fontawesome";
+import { TextField } from "react-native-material-textfield";
 import Tabbar from "./Tabbar";
 import MyText from "./MyText";
 import routes from "../logic/routes";
-import {saveProfile, persist, reset} from "../logic/actions";
-import type {State as RootState} from "../logic/reducers";
+import { saveProfile, persist, reset } from "../logic/actions";
+import type { State as RootState } from "../logic/reducers";
 import messages from "../utils/fa";
 
 type Props = {
   dispatch: Dispatch,
   name: ?string,
   age: ?number,
-  history: History
+  history: History,
 };
 type State = {
   name: ?string,
-  age: ?number
+  age: ?number,
 };
 
-const Reset = ({handleReset}) => (
+const Reset = ({ handleReset }) => (
   <TouchableOpacity onPress={handleReset} style={resetStyles.resetContainer}>
     <MyText style={resetStyles.reset}>
       <FormattedMessage id="reset" />
@@ -44,15 +44,15 @@ const resetStyles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 15,
     paddingVertical: 3,
-    marginTop: 20
+    marginTop: 20,
   },
   reset: {
-    color: "grey"
-  }
+    color: "grey",
+  },
 });
 
 class Profile extends React.Component<Props, State> {
-  state: State = {name: this.props.name, age: this.props.age};
+  state: State = { name: this.props.name, age: this.props.age };
   handleReset = () => {
     this.props.dispatch(reset());
     this.props.dispatch(persist("game"));
@@ -61,15 +61,15 @@ class Profile extends React.Component<Props, State> {
     this.props.history.push(routes.about);
   };
   handleChange = values => {
-    const {name, age} = this.state;
-    this.setState(currentState => ({name, age, ...values}));
+    const { name, age } = this.state;
+    this.setState(currentState => ({ name, age, ...values }));
   };
   handleSave = () => {
     this.props.dispatch(saveProfile(this.state));
     this.props.dispatch(persist("profile"));
   };
   render() {
-    let data = ["14", "15", "16", "17", "18"].map(age => ({value: age}));
+    let data = ["14", "15", "16", "17", "18"].map(age => ({ value: age }));
 
     return (
       <View style={styles.outerContainer}>
@@ -90,14 +90,14 @@ class Profile extends React.Component<Props, State> {
             textColor="grey"
             titleTextStyle={[styles.text, styles.textTitle]}
             labelTextStyle={[styles.text, styles.textLabel]}
-            onChangeText={value => this.handleChange({name: value})}
+            onChangeText={value => this.handleChange({ name: value })}
           />
           <View style={styles.ageContainer}>
             <Dropdown
               value={this.state.age}
               label={messages["profile.age"]}
               data={data}
-              onChangeText={value => this.handleChange({age: value})}
+              onChangeText={value => this.handleChange({ age: value })}
             />
           </View>
           <TouchableOpacity onPress={this.handleSave} style={styles.save}>
@@ -105,7 +105,7 @@ class Profile extends React.Component<Props, State> {
               <FormattedMessage id="profile.save" />
             </MyText>
           </TouchableOpacity>
-          {process.env.NODE_ENV == "development " && (
+          {process.env.NODE_ENV == "development" && (
             <Reset handleReset={this.handleReset} />
           )}
         </View>
@@ -118,12 +118,12 @@ class Profile extends React.Component<Props, State> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#fdfdfd"
+    backgroundColor: "#fdfdfd",
   },
   container: {
     paddingHorizontal: 25,
     alignItems: "flex-start",
-    flex: 1
+    flex: 1,
   },
   iconContainer: {
     alignSelf: "center",
@@ -134,39 +134,39 @@ const styles = StyleSheet.create({
     // borderRadius: 100/2,
     height: 100,
     width: 100,
-    marginTop: 30
+    marginTop: 30,
   },
   icon: {
     fontSize: 68,
-    color: "#195C85"
+    color: "#195C85",
     // paddingTop: 25,
   },
   input: {
     height: 80,
-    width: "90%"
+    width: "90%",
   },
   ageContainer: {
     width: 102,
-    height: 82
+    height: 82,
     // fontWeight: 'bold',
   },
   picker: {
     width: 100,
     height: 50,
     flexDirection: "row",
-    borderWidth: 1
+    borderWidth: 1,
   },
   textTitle: {
-    color: "#4F938C"
+    color: "#4F938C",
   },
   textLabel: {
-    color: "#4F938C"
+    color: "#4F938C",
   },
   textAffix: {
-    color: "#4F938C"
+    color: "#4F938C",
   },
   text: {
-    fontFamily: "IRANYekanRDMobile"
+    fontFamily: "IRANYekanRDMobile",
   },
   save: {
     width: 100,
@@ -177,11 +177,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 15,
     paddingVertical: 3,
-    marginTop: 20
+    marginTop: 20,
   },
   saveLabel: {
     color: "#4F938C",
-    fontSize: 16
+    fontSize: 16,
   },
   about: {
     position: "absolute",
@@ -191,11 +191,11 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 25
+    marginRight: 25,
   },
   aboutLabel: {
     color: "grey",
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 });
 export default connect((state: RootState) => state.profile)(Profile);

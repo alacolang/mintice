@@ -5,7 +5,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import type { History } from "history";
 import { FormattedMessage } from "react-intl";
@@ -14,7 +14,8 @@ import MyText from "./MyText";
 import logo from "../images/logo.png";
 import wallet from "../images/wallet.png";
 
-const Navbar = ({ handleBack }) => (
+type NavbarProps = { handleBack: () => void };
+const Navbar = ({ handleBack }: NavbarProps) => (
   <View style={navbarStyles.navbar}>
     <View style={navbarStyles.body}>
       <TouchableOpacity onPress={handleBack} style={navbarStyles.back}>
@@ -47,7 +48,7 @@ const Footer = () => (
 );
 
 type Props = {
-  history: History
+  history: History,
 };
 class About extends React.Component<Props> {
   handleBack = () => {
@@ -97,80 +98,73 @@ const navbarStyles = StyleSheet.create({
     paddingVertical: 11,
     width: "100%",
     borderBottomWidth: 1,
-    borderColor: "lightgrey"
+    borderColor: "lightgrey",
   },
   body: {
     alignItems: "center",
     flexDirection: "row",
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   title: {
     marginLeft: 24,
-    fontSize: 18
+    fontSize: 18,
   },
   back: {
     width: 44,
     height: 44,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   icon: {
     fontSize: 18,
-    color: "#195C85"
-  }
+    color: "#195C85",
+  },
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 20,
     backgroundColor: "white",
     justifyContent: "flex-start",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
     // borderWidth: 2
   },
   body: {
     paddingHorizontal: 30,
-    // paddingTop: 25,
-    // alignItems: "center",
-    justifyContent: "flex-start"
-    // borderWidth: 4,
-    // borderColor: "red"
+    justifyContent: "flex-start",
   },
   note: {
     flexDirection: "row",
     alignItems: "flex-start",
-    marginVertical: 10
-    // width: "95%",
-    // borderWidth: 1
+    marginVertical: 10,
   },
   iconContainer: {
     marginLeft: 0,
     marginRight: 15,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   icon: {
     fontSize: 25,
-    color: "#195C85"
+    color: "#195C85",
   },
   image: {
     width: 20,
-    height: 20
+    height: 20,
   },
   noteBody: {
     flexDirection: "column",
     flex: 1,
     position: "relative",
-    top: -11
+    top: -11,
     // borderWidth: 5
   },
   text: {
     fontSize: 16,
     lineHeight: 2 * 16,
-    color: "grey"
+    color: "grey",
     // textAlign: "justify"
-  }
+  },
 });
 
 const footerStyles = StyleSheet.create({
@@ -180,34 +174,28 @@ const footerStyles = StyleSheet.create({
     flexDirection: "row",
     borderTopWidth: 1,
     borderColor: "lightgrey",
-    backgroundColor: "#f8f8f8"
+    backgroundColor: "#f8f8f8",
   },
   logo: {
     width: 50,
-    height: 50
+    height: 50,
   },
+  body: {},
   title: {
     fontSize: 18,
     color: "#4F938C",
     marginLeft: 15,
     position: "relative",
-    top: -8
+    top: -8,
   },
   program: {
     fontSize: 16,
     color: "grey",
     marginLeft: 15,
     marginRight: 15,
-    lineHeight: 2 * 16
+    lineHeight: 2 * 16,
     // position: "relative",
-  }
-  // researcher: {
-  //   fontSize: 18,
-  //   color: "#4F938C",
-  //   marginLeft: 15,
-  //   // position: "relative",
-  //   // top: -8
-  // }
+  },
 });
 
 export default About;

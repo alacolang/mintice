@@ -1,42 +1,46 @@
 // @flow
 import React from "react";
-import {connect} from "react-redux";
-import {StyleSheet, Text, View, Animated, Easing} from "react-native";
-import FontAwesome, {Icons} from "react-native-fontawesome";
-import MyText from "./MyText";
-import type {State} from "../logic/reducers";
-import {RESPONSE} from "../logic/games";
-import {coinSound} from "../utils/sound";
+import { connect } from "react-redux";
+import { StyleSheet, View, Animated, Easing } from "react-native";
+import { Icons } from "react-native-fontawesome";
+import type { State } from "../logic/reducers";
+import { RESPONSE } from "../logic/games";
+import { coinSound } from "../utils/sound";
 
-const AnimateLostMoney = ({drop, color}) => (
+type AnimateLostMoneyProps = {
+  drop: number,
+  color: string,
+};
+const AnimateLostMoney = ({ drop, color }: AnimateLostMoneyProps) => (
   <Animated.View
     style={[
       styles.playContainer,
       {
         position: "absolute",
-        top: drop
-      }
+        top: drop,
+      },
     ]}
   >
-    <Animated.Text style={[styles.lostMoney, {color}]}>- ۵</Animated.Text>
+    <Animated.Text style={[styles.lostMoney, { color }]}>- ۵</Animated.Text>
   </Animated.View>
 );
 
 type Props = {
-  success: boolean
+  success: boolean,
 };
 class GameFeedback extends React.Component<Props> {
-  constructor(props) {
-    super(props);
-    // coinSound.reset();
-    this.animatedValue = new Animated.Value(0);
-    this.animatedShaking = new Animated.Value(0);
+  animatedValue = new Animated.Value(0);
+  animatedShaking = new Animated.Value(0);
+
+  componentDidMount() {
+    if (!this.props.success) this.playSound();
+    this.animate();
   }
   animate = () => {
     Animated.timing(this.animatedValue, {
       toValue: 1,
       duration: 500,
-      easing: Easing.quad
+      easing: Easing.quad,
     }).start();
     if (!this.props.success) {
       this.animatedShaking.setValue(0);
@@ -45,20 +49,20 @@ class GameFeedback extends React.Component<Props> {
           Animated.timing(this.animatedShaking, {
             toValue: 1,
             duration: 100,
-            easing: Easing.linear
+            easing: Easing.linear,
           }),
           Animated.timing(this.animatedShaking, {
             toValue: -1,
             duration: 200,
-            easing: Easing.linear
+            easing: Easing.linear,
           }),
           Animated.timing(this.animatedShaking, {
             toValue: 0,
             duration: 100,
-            easing: Easing.linear
-          })
+            easing: Easing.linear,
+          }),
         ]),
-        {iterations: 2}
+        { iterations: 2 }
       ).start();
     }
   };
@@ -76,32 +80,27 @@ class GameFeedback extends React.Component<Props> {
       }
     });
   };
-  componentWillMount() {
-    if (!this.props.success) this.playSound();
-  }
-  componentDidMount() {
-    this.animate();
-  }
+
   render() {
     const drop = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [50, 95]
+      outputRange: [50, 95],
     });
     const shaking = this.animatedShaking.interpolate({
       inputRange: [-1, 1],
-      outputRange: ["-30deg", "30deg"]
+      outputRange: ["-30deg", "30deg"],
     });
     const handColor = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"]
+      outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"],
     });
     const lostMoneyColor = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ["red", "white"]
+      outputRange: ["red", "white"],
     });
 
     return (
-      <View style={styles.buttonContainer}>
+      <View>
         <Animated.Text
           style={[
             styles.buttonIcon,
@@ -109,10 +108,10 @@ class GameFeedback extends React.Component<Props> {
               color: handColor,
               transform: [
                 {
-                  rotateX: this.props.success ? "0deg" : shaking
-                }
-              ]
-            }
+                  rotateX: this.props.success ? "0deg" : shaking,
+                },
+              ],
+            },
           ]}
         >
           {Icons.thumbsUp}
@@ -130,23 +129,23 @@ const styles = StyleSheet.create({
   buttonIcon: {
     fontFamily: "FontAwesome",
     color: "lightgrey",
-    fontSize: 42 * 2.5
+    fontSize: 42 * 2.5,
   },
   playContainer: {
     justifyContent: "center",
     alignItems: "center",
     height: 120,
-    width: 80
+    width: 80,
   },
   lostMoney: {
     fontFamily: "IRANYekanRDMobile",
     color: "red",
-    fontSize: 21
-  }
+    fontSize: 21,
+  },
 });
 
 const mapStateToProps = (state: State) => ({
   success:
-    state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS
+    state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS,
 });
 export default connect(mapStateToProps)(GameFeedback);
