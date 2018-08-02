@@ -8,22 +8,32 @@ import { RESPONSE } from "../logic/games";
 import { coinSound } from "../utils/sound";
 
 type AnimateLostMoneyProps = {
-  drop: number,
-  color: string,
+  animatedValue: number,
 };
-const AnimateLostMoney = ({ drop, color }: AnimateLostMoneyProps) => (
-  <Animated.View
-    style={[
-      styles.playContainer,
-      {
-        position: "absolute",
-        top: drop,
-      },
-    ]}
-  >
-    <Animated.Text style={[styles.lostMoney, { color }]}>- ۵</Animated.Text>
-  </Animated.View>
-);
+const AnimateLostMoney = ({ animatedValue }: AnimateLostMoneyProps) => {
+  const drop = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [40, 95],
+  });
+  const color = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["red", "white"],
+  });
+  return (
+    <Animated.View
+      style={[
+        styles.playContainer,
+        {
+          position: "absolute",
+          bottom: drop,
+          left: 0,
+        },
+      ]}
+    >
+      <Animated.Text style={[styles.lostMoney, { color }]}>- ۵</Animated.Text>
+    </Animated.View>
+  );
+};
 
 type Props = {
   success: boolean,
@@ -52,7 +62,7 @@ class GameFeedback extends React.Component<Props> {
             easing: Easing.linear,
           }),
           Animated.timing(this.animatedShaking, {
-            toValue: -1,
+            toValue: 1,
             duration: 200,
             easing: Easing.linear,
           }),
@@ -82,10 +92,6 @@ class GameFeedback extends React.Component<Props> {
   };
 
   render() {
-    const drop = this.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [50, 95],
-    });
     const shaking = this.animatedShaking.interpolate({
       inputRange: [-1, 1],
       outputRange: ["-30deg", "30deg"],
@@ -94,13 +100,12 @@ class GameFeedback extends React.Component<Props> {
       inputRange: [0, 1],
       outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"],
     });
-    const lostMoneyColor = this.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["red", "white"],
-    });
 
     return (
       <View>
+        {!this.props.success && (
+          <AnimateLostMoney animatedValue={this.animatedValue} />
+        )}
         <Animated.Text
           style={[
             styles.buttonIcon,
@@ -116,9 +121,6 @@ class GameFeedback extends React.Component<Props> {
         >
           {Icons.thumbsUp}
         </Animated.Text>
-        {!this.props.success && (
-          <AnimateLostMoney drop={drop} color={lostMoneyColor} />
-        )}
       </View>
     );
   }
@@ -133,9 +135,10 @@ const styles = StyleSheet.create({
   },
   playContainer: {
     justifyContent: "center",
-    alignItems: "center",
-    height: 120,
+    alignItems: "flex-start",
+    height: 80,
     width: 80,
+    // borderWidth: 1,
   },
   lostMoney: {
     fontFamily: "IRANYekanRDMobile",
