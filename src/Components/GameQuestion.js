@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import type { Dispatch } from "redux";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
 import type { Location } from "react-router-native";
 import { FormattedMessage } from "react-intl";
 import { prop } from "ramda";
@@ -76,7 +76,7 @@ class GameQuestion extends React.Component<Props, State> {
     if (!item) return null;
     return (
       <View style={styles.container}>
-        {isTest && <TestQuestion />}
+        {this.props.match.isExact && isTest && <TestQuestion />}
         <View style={styles.item}>
           <item.Component />
         </View>
