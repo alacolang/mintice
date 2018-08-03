@@ -2,41 +2,67 @@
 import React from "react";
 import { connect } from "react-redux";
 import { StyleSheet, View, Animated, Easing } from "react-native";
+import { FormattedMessage } from "react-intl";
+import { prop } from "ramda";
+import type { Location } from "react-router-native";
 import { Icons } from "react-native-fontawesome";
+import MyText from "./MyText";
 import type { State } from "../logic/reducers";
 import { RESPONSE } from "../logic/games";
 import { coinSound } from "../utils/sound";
 
 type AnimateLostMoneyProps = {
-  animatedValue: number,
+  animatedValue: Animated.Value,
 };
 const AnimateLostMoney = ({ animatedValue }: AnimateLostMoneyProps) => {
   const drop = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [40, 95],
+    outputRange: [10, -15],
   });
   const color = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ["red", "white"],
+    outputRange: ["darkred", "white"],
   });
   return (
-    <Animated.View
-      style={[
-        styles.playContainer,
-        {
-          position: "absolute",
-          bottom: drop,
-          left: 0,
-        },
-      ]}
-    >
-      <Animated.Text style={[styles.lostMoney, { color }]}>- ۵</Animated.Text>
+    <Animated.View style={[lostMoneyStyles.container, { top: drop }]}>
+      <Animated.Text style={[lostMoneyStyles.body, { color }]}>
+        - ۵
+      </Animated.Text>
     </Animated.View>
   );
 };
+const lostMoneyStyles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 30,
+    width: 30,
+    position: "absolute",
+    left: -30,
+  },
+  body: {
+    fontFamily: "IRANYekanRDMobile",
+    color: "darkred",
+    fontSize: 21,
+  },
+});
+const TooLate = () => (
+  <View style={tooLateStyles.container}>
+    <MyText style={tooLateStyles.title}>
+      <FormattedMessage id="feedback.tooLate" />
+    </MyText>
+  </View>
+);
+
+const tooLateStyles = StyleSheet.create({
+  container: { position: "absolute", top: -15, right: -40 },
+  title: { fontSize: 18, color: "darkred" },
+});
 
 type Props = {
   success: boolean,
+  omission: boolean,
+  location: Location,
 };
 class GameFeedback extends React.Component<Props> {
   animatedValue = new Animated.Value(0);
@@ -100,12 +126,12 @@ class GameFeedback extends React.Component<Props> {
       inputRange: [0, 1],
       outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"],
     });
-
+    const isTest = prop("isTest", this.props.location.state);
     return (
       <View>
-        {!this.props.success && (
-          <AnimateLostMoney animatedValue={this.animatedValue} />
-        )}
+        {!this.props.success &&
+          !isTest && <AnimateLostMoney animatedValue={this.animatedValue} />}
+        {this.props.omission && <TooLate />}
         <Animated.Text
           style={[
             styles.buttonIcon,
@@ -133,22 +159,13 @@ const styles = StyleSheet.create({
     color: "lightgrey",
     fontSize: 42 * 2.5,
   },
-  playContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-    height: 80,
-    width: 80,
-    // borderWidth: 1,
-  },
-  lostMoney: {
-    fontFamily: "IRANYekanRDMobile",
-    color: "red",
-    fontSize: 21,
-  },
 });
 
-const mapStateToProps = (state: State) => ({
-  success:
-    state.game.trials[state.game.metrics.trialID].response == RESPONSE.SUCCESS,
-});
+const mapStateToProps = (state: State) => {
+  const { response } = state.game.trials[state.game.metrics.trialID];
+  return {
+    omission: response == RESPONSE.OMISSION,
+    success: response == RESPONSE.SUCCESS,
+  };
+};
 export default connect(mapStateToProps)(GameFeedback);
