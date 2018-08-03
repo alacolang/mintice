@@ -14,12 +14,8 @@ export const isSameSession = ({
     metrics: { lastActivity },
   },
 }: State) =>
-  console.log(
-    "time diff=",
-    currentTime().diff(lastActivity, config.newSessionAfter.unit)
-  ) ||
   currentTime().diff(lastActivity, config.newSessionAfter.unit) <
-    config.newSessionAfter.quantity;
+  config.newSessionAfter.quantity;
 
 export function getCurrentSession(state: State) {
   const {
