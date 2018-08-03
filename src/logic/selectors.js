@@ -10,7 +10,9 @@ import { diff, pickRandom } from "./games/helpers";
 import { currentTime } from "../utils/time";
 
 export function isSameSession(state) {
-  const { metrics: { lastActivity } } = state.game;
+  const {
+    metrics: { lastActivity },
+  } = state.game;
   // currentTime().diff(lastActivity, "seconds") < 30;
   return (
     currentTime().diff(lastActivity, config.newSessionAfter.unit) <
@@ -19,7 +21,10 @@ export function isSameSession(state) {
 }
 
 export function getCurrentSession(state: State) {
-  const { metrics: { sessionID }, sessions } = state.game;
+  const {
+    metrics: { sessionID },
+    sessions,
+  } = state.game;
   return sessions[sessionID];
 }
 
@@ -27,16 +32,18 @@ export function isJustStarted(state: State) {
   return !state.game.metrics.sessionID;
 }
 
-function sessionsCompleted(state: State) {
-  const { sessions } = state.game;
-  return values(sessions).filter(session => session.completed);
-}
-export function isAllDone(state: State) {
-  return sessionsCompleted(state).length > config.sessions;
-}
+const sessionsCompleted = ({ game: { sessions } }: State) =>
+  values(sessions).filter(session => session.completed);
+
+export const isAllDone = (state: State) =>
+  sessionsCompleted(state).length > config.sessions;
 
 export function sessionCompletedBlocks(state: State) {
-  const { metrics: { sessionID }, sessions, blocks } = state.game;
+  const {
+    metrics: { sessionID },
+    sessions,
+    blocks,
+  } = state.game;
   return sessions[sessionID].blockIDs
     .map(blockID => blocks[blockID])
     .filter(block => block.completed);
@@ -46,42 +53,47 @@ export function isSessionDone(state: State) {
   return sessionCompletedBlocks(state).length == config.sessionBlocks;
 }
 
-export function startBlockFromTrialNumber(state: State) {
-  const { metrics: { blockID }, blocks } = state.game;
-  if (!blockID) return 0;
-  return blocks[blockID].trialIDs.length;
-}
+export const startBlockFromTrialNumber = ({
+  game: {
+    metrics: { blockID },
+    blocks,
+  },
+}: State) => (!blockID ? 0 : blocks[blockID].trialIDs.length);
 
-export function shouldResumeBlock(state: State) {
-  const { metrics: { blockID }, blocks } = state.game;
-  return blockID && blocks[blockID].trialIDs.length < config.blockTrials;
-}
+export const shouldResumeBlock = ({
+  game: {
+    metrics: { blockID },
+    blocks,
+  },
+}: State) => blockID && blocks[blockID].trialIDs.length < config.blockTrials;
 
 // completed games in current session
-function getSessionCompletedGames(state: State) {
+const getSessionCompletedGames = (state: State) => {
   const completedGameIDs = sessionCompletedBlocks(state).map(
     block => block.gameID
   );
   return Games.filter(game => completedGameIDs.includes(game.id));
-}
+};
 
 // pick a blockToRun in current session
 // each session should cover 3 types randomly presented
-function getBlockToRun(state: State) {
-  return pickRandom(
+const getBlockToRun = (state: State) =>
+  pickRandom(
     diff([1, 2, 3], pluck("blockToRun", getSessionCompletedGames(state)))
   );
-}
 
 // completed game IDs in all sessions
-function getCompletedGameIDs(state: State) {
-  const { metrics: { sessionID }, sessions, blocks } = state.game;
-  const gameIDs: string[] = values(blocks)
+const getCompletedGameIDs = ({
+  game: {
+    metrics: { sessionID },
+    sessions,
+    blocks,
+  },
+}: State): string[] =>
+  values(blocks)
     .filter(block => block.completed)
     .map(block => block.gameID)
     .filter(gameID => gameID != "hands");
-  return gameIDs;
-}
 
 export function pickNextGame(state: State) {
   // return Games[1];

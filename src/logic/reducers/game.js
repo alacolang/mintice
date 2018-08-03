@@ -38,7 +38,7 @@ export type Metrics = {
   blockID?: string,
   trialID?: string,
   lastActivity?: Date,
-  gameID: string,
+  gameID?: string,
 };
 
 export type State = {
@@ -65,106 +65,119 @@ const generateTrialID = (state: State) =>
   (+(last(keys(state.trials)) || "0") + 1).toString();
 
 const reducer = (state: State = initialState, action: Action) =>
-  produce((state: State), (draft: State): void => {
-    if (action.type == types.SESSION_NEW) {
-      if (!action.payload) return;
-      const sessionID = generateSessionID(state);
+  produce(
+    (state: State),
+    (draft: State): void => {
+      if (action.type == types.SESSION_NEW) {
+        // SESSION_NEW
+        if (!action.payload) return;
+        const sessionID = generateSessionID(state);
 
-      draft.metrics.sessionID = sessionID;
-      draft.metrics.blockID = "";
-      draft.sessions[sessionID] = {
-        id: sessionID,
-        completed: false,
-        startedAt: action.payload.startedAt,
-        blockIDs: [],
-      };
-    } else if (action.type == types.SESSION_RESET) {
-      if (!action.payload) return;
-      const { sessionID, startedAt } = action.payload;
+        draft.metrics.sessionID = sessionID;
+        draft.metrics.blockID = "";
+        draft.sessions[sessionID] = {
+          id: sessionID,
+          completed: false,
+          startedAt: action.payload.startedAt,
+          blockIDs: [],
+        };
+      } else if (action.type == types.SESSION_RESET) {
+        // SESSION_RESET
+        if (!action.payload) return;
+        const { sessionID, startedAt } = action.payload;
 
-      draft.metrics.sessionID = sessionID;
-      draft.metrics.blockID = "";
-      draft.sessions[sessionID] = {
-        id: sessionID,
-        completed: false,
-        startedAt: startedAt,
-        blockIDs: [],
-      };
-    } else if (action.type == types.SESSION_COMPLETED) {
-      const { sessionID } = state.metrics;
-      if (!sessionID || !action.payload) return;
-      draft.sessions[sessionID].completed = true;
-      draft.sessions[sessionID].finishedAt = action.payload.finishedAt;
-    } else if (action.type == types.BLOCK_NEW) {
-      console.log("reducers> new_block action, state=", state, action);
-      const blockID = generateBlockID(state);
-      const game: IGame = Games.filter(game => game.id == action.payload)[0];
+        draft.metrics.sessionID = sessionID;
+        draft.metrics.blockID = "";
+        draft.sessions[sessionID] = {
+          id: sessionID,
+          completed: false,
+          startedAt: startedAt,
+          blockIDs: [],
+        };
+      } else if (action.type == types.SESSION_COMPLETED) {
+        // SESSION_COMPLETED
+        const { sessionID } = state.metrics;
+        if (!sessionID || !action.payload) return;
+        draft.sessions[sessionID].completed = true;
+        draft.sessions[sessionID].finishedAt = action.payload.finishedAt;
+      } else if (action.type == types.BLOCK_NEW) {
+        const blockID = generateBlockID(state);
+        const game: IGame = Games.filter(game => game.id == action.payload)[0];
 
-      draft.metrics.gameID = game.id;
-      draft.metrics.blockID = blockID;
-      // draft.metrics.lastActivity = moment();
-      draft.blocks[blockID] = {
-        id: blockID,
-        gameID: game.id,
-        completed: false,
-        trialIDs: [],
-      };
-      draft.sessions[draft.metrics.sessionID].blockIDs.push(blockID);
-    } else if (action.type == types.BLOCK_START) {
-      const { blockID } = state.metrics;
-      if (!blockID || !action.payload) return;
+        draft.metrics.gameID = game.id;
+        draft.metrics.blockID = blockID;
+        draft.blocks[blockID] = {
+          id: blockID,
+          gameID: game.id,
+          completed: false,
+          trialIDs: [],
+        };
+        draft.sessions[draft.metrics.sessionID].blockIDs.push(blockID);
+      } else if (action.type == types.BLOCK_START) {
+        // BLOCK_START
+        const { blockID } = state.metrics;
+        if (!blockID || !action.payload) return;
 
-      draft.blocks[blockID].startedAt = action.payload.startedAt;
-    } else if (action.type == types.BLOCK_COMPLETED) {
-      const { blockID } = state.metrics;
-      if (!blockID || !action.payload) return;
+        draft.blocks[blockID].startedAt = action.payload.startedAt;
+      } else if (action.type == types.BLOCK_COMPLETED) {
+        // BLOCK_COMPLETED
+        const { blockID } = state.metrics;
+        if (!blockID || !action.payload) return;
 
-      draft.blocks[blockID].completed = true;
-      draft.blocks[blockID].finishedAt = action.payload.finishedAt;
-      draft.metrics.lastActivity = action.payload.finishedAt;
-    } else if (action.type == types.BREATHING_START) {
-      const { blockID } = state.metrics;
-      if (!blockID || !action.payload) return;
+        draft.blocks[blockID].completed = true;
+        draft.blocks[blockID].finishedAt = action.payload.finishedAt;
+        draft.metrics.lastActivity = action.payload.finishedAt;
+      } else if (action.type == types.BREATHING_START) {
+        // BREATHING_START
+        const { blockID } = state.metrics;
+        if (!blockID || !action.payload) return;
 
-      draft.blocks[blockID].breathingStartedAt = action.payload.startedAt;
-    } else if (action.type == types.BREATHING_COMPLETED) {
-      const { blockID } = state.metrics;
-      if (!blockID || !action.payload) return;
+        draft.blocks[blockID].breathingStartedAt = action.payload.startedAt;
+      } else if (action.type == types.BREATHING_COMPLETED) {
+        // BREATHING_COMPLETED
+        const { blockID } = state.metrics;
+        if (!blockID || !action.payload) return;
 
-      draft.blocks[blockID].breathingFinishedAt = action.payload.finishedAt;
-    } else if (action.type == types.TRIAL_START) {
-      const trialID = generateTrialID(state);
+        draft.blocks[blockID].breathingFinishedAt = action.payload.finishedAt;
+      } else if (action.type == types.TRIAL_START) {
+        // TRIAL_START
+        const trialID = generateTrialID(state);
 
-      draft.metrics.trialID = trialID;
-      draft.blocks[draft.metrics.blockID].trialIDs.push(trialID);
-      draft.trials[trialID] = {
-        id: trialID,
-        ...action.payload,
-      };
-    } else if (action.type == types.TRIAL_SET_CATEGORY) {
-      const { trialID } = state.metrics;
-      if (!trialID || !action.payload) return;
-      draft.trials[trialID].category = action.payload;
-    } else if (action.type == types.TRIAL_RESULT) {
-      if (!action.payload) return;
-      const { rt, timeout } = action.payload;
-      const { trialID } = state.metrics;
-      if (!trialID) return;
-      const trial = state.trials[trialID];
-      let response = undefined;
-      if (trial.category == CATEGORY.GO) {
-        response = trial.length > rt ? RESPONSE.SUCCESS : RESPONSE.OMISSION;
-      } else if (trial.category == CATEGORY.NO_GO) {
-        response = trial.length > rt ? RESPONSE.COMISSION : RESPONSE.SUCCESS;
+        draft.metrics.trialID = trialID;
+        draft.blocks[draft.metrics.blockID].trialIDs.push(trialID);
+        draft.trials[trialID] = {
+          id: trialID,
+          ...action.payload,
+        };
+      } else if (action.type == types.TRIAL_SET_CATEGORY) {
+        // TRIAL_SET_CATEGORY
+        const { trialID } = state.metrics;
+        if (!trialID || !action.payload) return;
+        draft.trials[trialID].category = action.payload;
+      } else if (action.type == types.TRIAL_RESULT) {
+        // TRIAL_RESULT
+        if (!action.payload) return;
+        const { rt, timeout } = action.payload;
+        const { trialID } = state.metrics;
+        if (!trialID) return;
+
+        const trial = state.trials[trialID];
+        let response = undefined;
+        if (trial.category == CATEGORY.GO) {
+          response = trial.length > rt ? RESPONSE.SUCCESS : RESPONSE.OMISSION;
+        } else if (trial.category == CATEGORY.NO_GO) {
+          response = trial.length > rt ? RESPONSE.COMISSION : RESPONSE.SUCCESS;
+        }
+        draft.trials[trialID].response = response;
+        draft.trials[trialID].rt = rt;
+      } else if (action.type == types.RESET) {
+        // RESET
+        draft.metrics = initialState.metrics;
+        draft.sessions = initialState.sessions;
+        draft.blocks = initialState.blocks;
+        draft.trials = initialState.trials;
       }
-      draft.trials[trialID].response = response;
-      draft.trials[trialID].rt = rt;
-    } else if (action.type == types.RESET) {
-      draft.metrics = initialState.metrics;
-      draft.sessions = initialState.sessions;
-      draft.blocks = initialState.blocks;
-      draft.trials = initialState.trials;
     }
-  });
+  );
 
 export default reducer;
