@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   bar: {
-    height: 12,
-    backgroundColor: "#5a5f67",
+    height: 8,
+    backgroundColor: "#9db2d6",
   },
 });
 

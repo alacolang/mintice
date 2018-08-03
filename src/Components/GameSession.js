@@ -1,25 +1,25 @@
 // @flow
 import React from "react";
-import type {Dispatch} from "redux";
-import {connect} from "react-redux";
-import {StyleSheet, View, TouchableOpacity, Image} from "react-native";
-import {FormattedMessage} from "react-intl";
+import type { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
 import logo from "../images/logo.png";
-import {startSession} from "../logic/actions";
-import type {State as RootState} from "../logic/reducers";
+import { startSession } from "../logic/actions";
+import type { State as RootState } from "../logic/reducers";
 import Tabbar from "./Tabbar";
-import {sessionCompletedBlocks} from "../logic/selectors";
+import { sessionCompletedBlocks } from "../logic/selectors";
 
 type Props = {
   dispatch: Dispatch,
-  blocks: number
+  blocks: number,
 };
 
 const BLOCK_TURN = {
   "0": "اول",
   "1": "دوم",
-  "2": "سوم"
+  "2": "سوم",
 };
 
 class GameSession extends React.Component<Props> {
@@ -49,7 +49,7 @@ class GameSession extends React.Component<Props> {
               <MyText style={styles.play}>
                 <FormattedMessage
                   id="session.start"
-                  values={{block: BLOCK_TURN[String(this.props.blocks)]}}
+                  values={{ block: BLOCK_TURN[String(this.props.blocks)] }}
                 />
               </MyText>
             </TouchableOpacity>
@@ -64,7 +64,7 @@ class GameSession extends React.Component<Props> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   container: {
     flex: 1,
@@ -72,27 +72,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "white",
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
   },
   header: {
     marginTop: 30,
-    alignItems: "center"
+    alignItems: "center",
   },
   logo: {
     width: 120,
     height: 120,
-    borderRadius: 100 / 2
+    borderRadius: 100 / 2,
   },
   headerTitle: {
     fontSize: 32,
     color: "#195C85",
     // color: "green",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   body: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   text: {
     marginTop: 20,
@@ -100,12 +100,12 @@ const styles = StyleSheet.create({
     fontSize: 21,
     lineHeight: 2 * 21,
     color: "grey",
-    textAlign: "center"
+    textAlign: "center",
   },
   footer: {
     height: 50 + 40,
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
   },
   playContainer: {
     // position: "absolute",
@@ -113,20 +113,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 45,
-    width: 150,
+    width: 200,
     paddingBottom: 4,
     borderWidth: 1,
-    // borderRadius: 10,
-    borderColor: "#a0a0a0"
+    borderRadius: 30,
+    borderColor: "#a0a0a0",
     // borderColor: "black"
   },
   play: {
     fontSize: 20,
-    color: "#a0a0a0"
+    color: "#a0a0a0",
     // textAlign: "center"
-  }
+  },
 });
 const mapStateToProps = (state: RootState) => ({
-  blocks: sessionCompletedBlocks(state).length
+  blocks: sessionCompletedBlocks(state).length,
 });
 export default connect(mapStateToProps)(GameSession);

@@ -105,10 +105,6 @@ const styles = StyleSheet.create({
   item: {
     overflow: "hidden",
     position: "absolute",
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
   },
   footer: {
     height: 50 + 50 + 40 + 20,
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
   },
   buttonIcon: {
     color: "lightgrey",
-    fontSize: 42 * 2.5,
+    fontSize: 42 * 2,
   },
   buttonContainer: {
     alignItems: "center",
@@ -153,23 +149,24 @@ const testQuestionStyles = StyleSheet.create({
   container: {
     position: "absolute",
     top: 60,
-    left: 30,
+    left: 120,
+    // right: 150,
     borderWidth: 2,
     borderStyle: "dashed",
     width: 70,
     height: 70,
     borderRadius: 70,
-    borderColor: "darkred",
+    borderColor: "#9db2d6",
     justifyContent: "center",
     alignItems: "center",
-    transform: [{ rotate: "30deg" }],
+    transform: [{ rotate: "0deg" }],
   },
   title: {
-    color: "darkred",
+    color: "#9db2d6",
     fontSize: 14,
   },
   description: {
-    color: "darkred",
+    color: "#9db2d6",
     fontSize: 9,
   },
 });

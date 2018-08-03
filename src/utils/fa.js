@@ -46,7 +46,7 @@ export default {
   reset: "ریست",
   "profile.save": "ثبت",
 
-  "breathing.title": "پنج دقیقه استراحت کن و نفس عمیق بکش.",
+  "breathing.title": "۵ دقیقه استراحت کن و نفس عمیق بکش.",
   "breathing.inhale": "دم",
   "breathing.inhaleThrough": "از بینی",
   "breathing.hold": "نگه‌دار",

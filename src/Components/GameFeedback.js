@@ -42,7 +42,7 @@ const lostMoneyStyles = StyleSheet.create({
   },
   body: {
     fontFamily: "IRANYekanRDMobile",
-    color: "darkred",
+    color: "#D46A6A",
     fontSize: 21,
   },
 });
@@ -55,8 +55,20 @@ const TooLate = () => (
 );
 
 const tooLateStyles = StyleSheet.create({
-  container: { position: "absolute", top: -15, right: -40 },
-  title: { fontSize: 18, color: "darkred" },
+  container: {
+    position: "absolute",
+    borderWidth: 1,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 60,
+    borderStyle: "dashed",
+    borderColor: "#9db2d6",
+    top: 20,
+    right: -90,
+  },
+  title: { fontSize: 16, color: "#9db2d6" },
 });
 
 type Props = {
@@ -124,13 +136,13 @@ class GameFeedback extends React.Component<Props> {
     });
     const handColor = this.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ["lightgrey", this.props.success ? "#7EB55B" : "red"],
+      outputRange: ["lightgrey", this.props.success ? "#4B956F" : "#D46A6A"],
     });
     const isTest = prop("isTest", this.props.location.state);
     return (
       <View>
-        {!this.props.success &&
-          !isTest && <AnimateLostMoney animatedValue={this.animatedValue} />}
+        {/* {!this.props.success &&
+          !isTest && <AnimateLostMoney animatedValue={this.animatedValue} />} */}
         {this.props.omission && <TooLate />}
         <Animated.Text
           style={[
@@ -157,7 +169,7 @@ const styles = StyleSheet.create({
   buttonIcon: {
     fontFamily: "FontAwesome",
     color: "lightgrey",
-    fontSize: 42 * 2.5,
+    fontSize: 42 * 2,
   },
 });
 

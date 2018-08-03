@@ -105,7 +105,7 @@ class Breathing extends React.Component<Props, State> {
     const { radius } = this.state;
     const r = radius.interpolate({
       inputRange: [0, 1],
-      outputRange: [100, 250 - 30],
+      outputRange: [90, 180 - 30],
     });
     return (
       <View style={styles.container}>
@@ -128,7 +128,7 @@ class Breathing extends React.Component<Props, State> {
           </Animated.View>
         </View>
         <ProgressBar
-          progress={this.state.ellapsed / config.lengths.breathings * 100}
+          progress={(this.state.ellapsed / config.lengths.breathings) * 100}
         />
       </View>
     );
@@ -146,25 +146,25 @@ const styles = StyleSheet.create({
     top: 50,
     fontSize: 18,
     color: "#9db2d6",
-    width: 200,
+    width: 150,
     textAlign: "center",
     lineHeight: 1.4 * 18,
   },
   body: {
-    width: 250,
-    height: 250,
-    borderRadius: 250,
+    width: 180,
+    height: 180,
+    borderRadius: 180,
     backgroundColor: "#5a5f67",
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
-    fontSize: 30,
+    fontSize: 26,
     // fontWeight: "bold",
     color: "white",
   },
   description: {
-    fontSize: 21,
+    fontSize: 18,
     width: 70,
     textAlign: "center",
     color: "white",

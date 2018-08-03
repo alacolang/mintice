@@ -36,10 +36,12 @@ const Reset = ({ handleReset }) => (
 );
 const resetStyles = StyleSheet.create({
   resetContainer: {
-    width: 100,
+    width: 200,
+    height: 45,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
+    alignSelf: "center",
     borderColor: "lightgrey",
     borderWidth: 1,
     paddingHorizontal: 15,
@@ -169,15 +171,17 @@ const styles = StyleSheet.create({
     fontFamily: "IRANYekanRDMobile",
   },
   save: {
-    width: 100,
+    height: 45,
+    width: 200,
+    borderRadius: 30,
+    alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
     borderColor: "#4F938C",
     borderWidth: 1,
     paddingHorizontal: 15,
     paddingVertical: 3,
-    marginTop: 20,
+    marginTop: 50,
   },
   saveLabel: {
     color: "#4F938C",
