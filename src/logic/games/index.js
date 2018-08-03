@@ -45,7 +45,7 @@ const COLORS_VALUES = {
   grey: "#575E5D",
   black: "black",
   orange: "orange",
-  brown: "darkbrown",
+  brown: "#654321",
 };
 
 const Game11 = colorGameFactory("11", pickColors(["blue", "red", "green"]));
@@ -56,7 +56,7 @@ const Game12 = colorGameFactory(
 const Game13 = colorGameFactory("13", pickColors(["black", "yellow", "blue"]));
 const Game14 = colorGameFactory("14", pickColors(["red", "purple", "grey"]));
 const Game15 = colorGameFactory("15", pickColors(["green", "yellow", "blue"]));
-const Game16 = colorGameFactory("16", pickColors(["brown", "black", "yellow"]));
+const Game16 = colorGameFactory("16", pickColors(["brown", "pink", "yellow"]));
 const Game17 = colorGameFactory("17", pickColors(["blue", "grey", "pink"]));
 const Game18 = colorGameFactory("18", pickColors(["brown", "yellow", "blue"]));
 const Game19 = colorGameFactory("19", pickColors(["blue", "purple", "pink"]));
