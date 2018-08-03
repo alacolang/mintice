@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   playContainer: {
-    // position: "absolute",
-    // bottom: 40,
     justifyContent: "center",
     alignItems: "center",
     height: 45,
@@ -118,7 +116,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: "#a0a0a0",
-    // borderColor: "black"
   },
   play: {
     fontSize: 20,

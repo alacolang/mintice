@@ -152,9 +152,8 @@ const testQuestionStyles = StyleSheet.create({
   container: {
     position: "absolute",
     top: 60,
-    left: 120,
-    // right: 150,
-    borderWidth: 2,
+    left: (Dimensions.get("window").width - 70) / 2,
+    borderWidth: 1,
     borderStyle: "dashed",
     width: 70,
     height: 70,
