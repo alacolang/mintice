@@ -141,6 +141,8 @@ function* handleSessionDone() {
 
 function* session(): Saga<void> {
   console.log("session called");
+  yield* uploadGame();
+
   const state: State = yield select();
 
   if (isAllDone(state)) {

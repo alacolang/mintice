@@ -1,10 +1,10 @@
 // @flow
 
-import {AsyncStorage} from "react-native";
-import {put, select} from "redux-saga/effects";
-import {pick} from "ramda";
-import type {Saga} from "redux-saga";
-import {hydrateRedux} from "./actions";
+import { AsyncStorage } from "react-native";
+import { put, select } from "redux-saga/effects";
+import { pick } from "ramda";
+import type { Saga } from "redux-saga";
+import { hydrateRedux } from "./actions";
 import * as api from "./api";
 import getToken from "./token";
 
@@ -19,25 +19,26 @@ function parse(x) {
   }
 }
 
-export function* persist({payload: key}: {payload: string}): Saga<void> {
+export function* persist({ payload: key }: { payload: string }): Saga<void> {
   const state = yield select();
   const old = yield AsyncStorage.getItem(STORE_KEY);
   AsyncStorage.setItem(
     STORE_KEY,
     JSON.stringify({
       ...parse(old),
-      [key]: state[key]
+      [key]: state[key],
     })
   );
   // console.log("persisted:", yield AsyncStorage.getItem(STORE_KEY));
 }
 
-export function* rehydrate() {
+export function* rehydrate(): Saga<void> {
   const state = yield AsyncStorage.getItem(STORE_KEY);
   yield put(hydrateRedux(pick(KEYS, parse(state))));
 }
 
-export function* uploadGame() {
+export function* uploadGame(): Saga<void> {
+  console.log("uploading game...");
   const token = yield getToken();
   const state = yield select();
   api.uploadGame(token, pick(KEYS, state));
