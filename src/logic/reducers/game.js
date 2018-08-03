@@ -144,6 +144,7 @@ const reducer = (state: State = initialState, action: Action) =>
         const trialID = generateTrialID(state);
 
         draft.metrics.trialID = trialID;
+        draft.metrics.lastActivity = action.payload.date;
         draft.blocks[draft.metrics.blockID].trialIDs.push(trialID);
         draft.trials[trialID] = {
           id: trialID,

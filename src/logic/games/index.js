@@ -45,7 +45,7 @@ const COLORS_VALUES = {
   grey: "#575E5D",
   black: "black",
   orange: "orange",
-  brown: "brown",
+  brown: "darkbrown",
 };
 
 const Game11 = colorGameFactory("11", pickColors(["blue", "red", "green"]));

@@ -9,16 +9,17 @@ import type { State } from "./reducers";
 import { diff, pickRandom } from "./games/helpers";
 import { currentTime } from "../utils/time";
 
-export function isSameSession(state) {
-  const {
+export const isSameSession = ({
+  game: {
     metrics: { lastActivity },
-  } = state.game;
-  // currentTime().diff(lastActivity, "seconds") < 30;
-  return (
-    currentTime().diff(lastActivity, config.newSessionAfter.unit) <
-    config.newSessionAfter.quantity
-  );
-}
+  },
+}: State) =>
+  console.log(
+    "time diff=",
+    currentTime().diff(lastActivity, config.newSessionAfter.unit)
+  ) ||
+  currentTime().diff(lastActivity, config.newSessionAfter.unit) <
+    config.newSessionAfter.quantity;
 
 export function getCurrentSession(state: State) {
   const {
@@ -96,7 +97,7 @@ const getCompletedGameIDs = ({
     .filter(gameID => gameID != "hands");
 
 export function pickNextGame(state: State) {
-  // return Games[1];
+  // return Games[3];
 
   // console.log("Games=", Games);
   // console.log("done gameIDs=", gameIDs);

@@ -23,6 +23,7 @@ import {
   shouldResumeBlock,
   getCurrentSession,
   isJustStarted,
+  sessionCompletedBlocks,
   isAllDone,
   isSessionDone,
   isSameSession,
@@ -52,7 +53,7 @@ function* question() {
     timeout: call(delay, config.lengths.trial + extraLength),
   });
   if (timeout) {
-    yield put(actions.trialResult(10 ** 6, true));
+    yield put(actions.trialResult(10 ** 6, true, currentTime()));
     console.log("timeout!");
   }
 }
@@ -172,6 +173,8 @@ function* session(): Saga<void> {
 }
 
 function* breathing(): Saga<void> {
+  const state = yield select();
+  if (sessionCompletedBlocks(state).length == config.sessionBlocks) return;
   yield put(actions.startBreathing(currentTime()));
   yield navigate(routes.breathing);
   yield take(types.BREATHING_COMPLETED);

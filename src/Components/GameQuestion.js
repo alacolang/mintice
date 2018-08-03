@@ -16,6 +16,7 @@ import type { State as RootState } from "../logic/reducers";
 import routes from "../logic/routes";
 import GameFeedback from "./GameFeedback";
 import BlockProgressBar from "./BlockProgressBar";
+import { currentTime } from "../utils/time";
 
 type FeedbackButtonProps = {
   handlePress: () => void,
@@ -55,7 +56,7 @@ type State = {
 };
 
 class GameQuestion extends React.Component<Props, State> {
-  state = { item: null, isGo: null, start: new Date() };
+  state = { item: null, isGo: null, start: currentTime() };
 
   componentDidMount() {
     const [category, item] = this.props.game.pickItem();
@@ -65,7 +66,9 @@ class GameQuestion extends React.Component<Props, State> {
   componentWillUnmount() {}
 
   handlePress = () => {
-    this.props.dispatch(trialResult(new Date() - this.state.start));
+    this.props.dispatch(
+      trialResult(currentTime() - this.state.start, false, currentTime())
+    );
   };
   render() {
     const { item } = this.state;
