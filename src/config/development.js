@@ -18,6 +18,7 @@ const config: Config = {
   sessions: 2,
   sessionBlocks: 3,
   blockTrials: 4,
+  testTrials: 1,
   goVsNogoPercentage: 80, // between 0 and 10,
   successValue: 5,
   baseUrl: "http://192.168.100.103:3000",

@@ -13,11 +13,13 @@ import { delay } from "redux-saga";
 // import { AsyncStorage } from "react-native";
 import type { Saga } from "redux-saga";
 import * as types from "./types";
+import type { State } from "./reducers";
 import routes from "./routes";
 import * as actions from "./actions";
 import config from "../config";
 import { uploadGame, persist, rehydrate } from "./persist";
 import {
+  isTestQuestion,
   shouldResumeBlock,
   getCurrentSession,
   isJustStarted,
@@ -40,8 +42,11 @@ function* extraLengthForHands() {
 }
 
 function* question() {
-  yield* navigate(routes.gameQuestion);
+  const state = yield select();
+  yield* navigate(routes.gameQuestion, { isTest: isTestQuestion(state) });
+
   const extraLength = yield* extraLengthForHands();
+  // yield take(types.TRIAL_RESULT);
   const { timeout } = yield race({
     result: take(types.TRIAL_RESULT),
     timeout: call(delay, config.lengths.trial + extraLength),
@@ -53,8 +58,10 @@ function* question() {
 }
 
 function* feedback() {
-  yield* navigate(routes.gameFeedback);
+  const state = yield select();
+  yield* navigate(routes.gameFeedback, { isTest: isTestQuestion(state) });
   yield call(delay, config.lengths.feedback);
+  // yield take(types.TRIAL_RESULT);
 }
 
 function* fixation() {

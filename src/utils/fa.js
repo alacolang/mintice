@@ -51,5 +51,8 @@ export default {
   "breathing.inhaleThrough": "از بینی",
   "breathing.hold": "نگه‌دار",
   "breathing.exhale": "بازدم",
-  "breathing.exhaleWith": "از دهان"
+  "breathing.exhaleWith": "از دهان",
+  "test.title": "آزمایشی",
+  "test.description": "بدون جریمه",
+  "feedback.tooLate": "دیر شد",
 };

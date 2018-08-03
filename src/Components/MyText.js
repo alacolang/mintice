@@ -5,8 +5,8 @@ import { StyleSheet, Text } from "react-native";
 import type { Element } from "react";
 
 type Props = {
-  style: any,
-  children: React.Node
+  style?: any,
+  children: React.Node,
 };
 
 const MyText = ({ style, children }: Props) => (
@@ -16,7 +16,7 @@ const MyText = ({ style, children }: Props) => (
 const styles = StyleSheet.create({
   persian: {
     fontFamily: "IRANYekanRDMobile",
-    textAlign: "left"
-  }
+    textAlign: "left",
+  },
 });
 export default MyText;

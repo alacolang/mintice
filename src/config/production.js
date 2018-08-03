@@ -18,6 +18,7 @@ const config: Config = {
   sessions: 10,
   sessionBlocks: 3,
   blockTrials: 200,
+  testTrials: 5,
   goVsNogoPercentage: 70, // between 0 and 10,
   successValue: 5, // 3000 / (SESSION_BLOCKS * BLOCK_TRIALS)
   baseUrl: "http://dbtteen.ir",

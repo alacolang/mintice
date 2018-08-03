@@ -19,6 +19,7 @@ export type Config = {|
   sessions: number,
   sessionBlocks: number,
   blockTrials: number,
+  testTrials: number,
   goVsNogoPercentage: number,
   successValue: number,
   baseUrl: string,

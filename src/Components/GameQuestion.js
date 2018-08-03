@@ -3,6 +3,10 @@ import React from "react";
 import { connect } from "react-redux";
 import type { Dispatch } from "redux";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
+import type { Location } from "react-router-native";
+import { FormattedMessage } from "react-intl";
+import { prop } from "ramda";
+import MyText from "./MyText";
 import FontAwesome, { Icons } from "react-native-fontawesome";
 import { Route } from "react-router";
 import games from "../logic/games";
@@ -28,9 +32,21 @@ const FeedbackButton = ({ handlePress }: FeedbackButtonProps) => (
   </View>
 );
 
+const TestQuestion = ({ isTest }) => (
+  <View style={testQuestionStyles.container}>
+    <MyText style={testQuestionStyles.title}>
+      <FormattedMessage id="test.title" />
+    </MyText>
+    <MyText style={testQuestionStyles.description}>
+      <FormattedMessage id="test.description" />
+    </MyText>
+  </View>
+);
+
 type Props = {
   dispatch: Dispatch,
   game: IGame,
+  location: Location,
 };
 type State = {
   item: ?Item,
@@ -53,9 +69,11 @@ class GameQuestion extends React.Component<Props, State> {
   };
   render() {
     const { item } = this.state;
+    const isTest = prop("isTest", this.props.location.state);
     if (!item) return null;
     return (
       <View style={styles.container}>
+        {isTest && <TestQuestion />}
         <View style={styles.item}>
           <item.Component />
         </View>
@@ -128,6 +146,31 @@ const styles = StyleSheet.create({
     top: -10,
     left: 0,
     right: 0,
+  },
+});
+
+const testQuestionStyles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+    borderWidth: 2,
+    borderStyle: "dashed",
+    width: 70,
+    height: 70,
+    borderRadius: 70,
+    borderColor: "darkred",
+    justifyContent: "center",
+    alignItems: "center",
+    transform: [{ rotate: "30deg" }],
+  },
+  title: {
+    color: "darkred",
+    fontSize: 14,
+  },
+  description: {
+    color: "darkred",
+    fontSize: 9,
   },
 });
 

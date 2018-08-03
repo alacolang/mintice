@@ -103,3 +103,10 @@ export function pickNextGame(state: State) {
   // return Games.filter(game => game.id == rd)[0];
   return game;
 }
+
+export const isTestQuestion = ({
+  game: {
+    blocks,
+    metrics: { blockID },
+  },
+}: State) => blocks[blockID].trialIDs.length <= config.testTrials;
