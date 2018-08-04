@@ -105,7 +105,7 @@ class Breathing extends React.Component<Props, State> {
     const { radius } = this.state;
     const r = radius.interpolate({
       inputRange: [0, 1],
-      outputRange: [90, 180 - 30],
+      outputRange: [95, 180 - 30],
     });
     return (
       <View style={styles.container}>
