@@ -55,4 +55,5 @@ export default {
   "test.title": "آزمایشی",
   "test.description": "بدون جریمه",
   "feedback.tooLate": "دیر شد",
+  version: "نسخه {version}",
 };

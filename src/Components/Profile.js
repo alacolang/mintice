@@ -5,6 +5,7 @@ import type { History } from "history";
 import { FormattedMessage } from "react-intl";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import codePush from "react-native-code-push";
 import type { Dispatch } from "redux";
 import { Dropdown } from "react-native-material-dropdown";
 import FontAwesome, { Icons } from "react-native-fontawesome";
@@ -15,17 +16,6 @@ import routes from "../logic/routes";
 import { saveProfile, persist, reset } from "../logic/actions";
 import type { State as RootState } from "../logic/reducers";
 import messages from "../utils/fa";
-
-type Props = {
-  dispatch: Dispatch,
-  name: ?string,
-  age: ?number,
-  history: History,
-};
-type State = {
-  name: ?string,
-  age: ?number,
-};
 
 const Reset = ({ handleReset }) => (
   <TouchableOpacity onPress={handleReset} style={resetStyles.resetContainer}>
@@ -53,8 +43,30 @@ const resetStyles = StyleSheet.create({
   },
 });
 
+type Props = {
+  dispatch: Dispatch,
+  name: ?string,
+  age: ?number,
+  history: History,
+};
+type State = {
+  name: ?string,
+  age: ?number,
+  version: string,
+};
 class Profile extends React.Component<Props, State> {
-  state: State = { name: this.props.name, age: this.props.age };
+  state: State = { name: this.props.name, age: this.props.age, version: "x" };
+  componentDidMount() {
+    codePush
+      .getUpdateMetadata()
+      .then(metadata => {
+        this.setState({
+          version: `${metadata.appVersion}.${metadata.label}`,
+        });
+      })
+      .catch(() => {});
+  }
+
   handleReset = () => {
     this.props.dispatch(reset());
     this.props.dispatch(persist("game"));
@@ -111,6 +123,12 @@ class Profile extends React.Component<Props, State> {
             <Reset handleReset={this.handleReset} />
           )}
         </View>
+        <MyText style={styles.version}>
+          <FormattedMessage
+            id="version"
+            values={{ version: this.state.version }}
+          />
+        </MyText>
         <Tabbar />
       </View>
     );
@@ -200,6 +218,12 @@ const styles = StyleSheet.create({
   aboutLabel: {
     color: "grey",
     fontSize: 28,
+  },
+  version: {
+    alignSelf: "flex-end",
+    padding: 10,
+    color: "grey",
+    fontSize: 12,
   },
 });
 export default connect((state: RootState) => state.profile)(Profile);
