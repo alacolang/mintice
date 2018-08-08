@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
-import logo from "../images/logo.png";
+import logo from "../images/icemint.png";
 import { startSession } from "../logic/actions";
 import type { State as RootState } from "../logic/reducers";
 import Tabbar from "./Tabbar";
@@ -81,12 +81,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    borderRadius: 100 / 2,
   },
   headerTitle: {
-    fontSize: 32,
-    color: "#195C85",
-    // color: "green",
+    fontSize: 28,
+    color: "#81D981",
     fontWeight: "bold",
   },
   body: {

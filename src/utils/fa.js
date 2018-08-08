@@ -1,6 +1,6 @@
 // @flow
 export default {
-  "session.title": "برو نرو",
+  "session.title": "نعناع یخی",
   "session.message1": "سه تمرین داریم که لازم است پشت سر هم انجام‌شان بدهی.",
   "session.enoughToday1": "خیلی‌خوب",
   "session.enoughToday2": "برای امروز کافی است.",
