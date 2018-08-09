@@ -1,14 +1,14 @@
 // @flow
 import React from "react";
-import {View, Image, StyleSheet} from "react-native";
-import {take} from "ramda";
-import FontAwesome, {Icons} from "react-native-fontawesome";
-import {FormattedMessage} from "react-intl";
+import { View, Image, StyleSheet } from "react-native";
+import { take } from "ramda";
+import FontAwesome, { Icons } from "react-native-fontawesome";
+import { FormattedMessage } from "react-intl";
 import Game from "./Game";
-import type {Item, IGame} from "./Game";
+import type { Item, IGame } from "./Game";
 import MyText from "../../Components/MyText";
-import {CATEGORY} from "./index";
-import type {Category} from "./index";
+import { CATEGORY } from "./index";
+import type { Category } from "./index";
 
 const G1 = "hands_go_1";
 const G2 = "hands_go_2";
@@ -34,9 +34,13 @@ const NG10 = "hands_nogo_10";
 const itemFactory = (images, startIdx = 0): Item[] =>
   images.map((image, idx) => ({
     id: idx + startIdx,
-    Component: ({style}) => (
-      <Image source={{uri: image}} style={[styles.image, style]} />
-    )
+    Component: ({ style }) => (
+      <Image
+        source={{ uri: image }}
+        style={[styles.image, style]}
+        resizeMode="cover"
+      />
+    ),
   }));
 const goItems = itemFactory([G1, G2, G3, G4, G5, G6, G7, G8, G9, G10]);
 const ngItems = itemFactory(
@@ -45,7 +49,7 @@ const ngItems = itemFactory(
 );
 const items = goItems.concat(ngItems);
 
-const GoalItem = ({item}: {item: Item}) => (
+const GoalItem = ({ item }: { item: Item }) => (
   <item.Component style={styles.goalImage} />
 );
 
@@ -55,7 +59,7 @@ const Goal = () => (
       <FormattedMessage
         id="block.hands.go"
         values={{
-          like: <FontAwesome>{Icons.thumbsUp}</FontAwesome>
+          like: <FontAwesome>{Icons.thumbsUp}</FontAwesome>,
         }}
       />
     </MyText>
@@ -83,17 +87,17 @@ const Hands: IGame = {
   nogoItems() {
     return ngItems;
   },
-  Goal
+  Goal,
 };
 
 const styles = StyleSheet.create({
   goalContainer: {
-    alignItems: "center"
+    alignItems: "center",
   },
   goalItemsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   goalImage: {
     width: 90,
@@ -101,18 +105,18 @@ const styles = StyleSheet.create({
     height: 90,
     borderWidth: 1,
     borderColor: "lightgrey",
-    borderRadius: 5
+    borderRadius: 5,
   },
   items: {
     marginVertical: 15,
     fontSize: 18,
-    color: "grey"
+    color: "grey",
   },
   image: {
     width: 200,
     height: 200,
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
 });
 
 export default Hands;
