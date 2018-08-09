@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View, Animated, Easing } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { FormattedMessage } from "react-intl";
 import { prop } from "ramda";
 import type { Location } from "react-router-native";
@@ -10,42 +10,10 @@ import MyText from "./MyText";
 import type { State } from "../logic/reducers";
 import { RESPONSE } from "../logic/games";
 import { coinSound } from "../utils/sound";
+import iceImg from "../images/ice.jpeg";
+import mintImg from "../images/mint.jpeg";
+import BlockProgressBar from "./BlockProgressBar";
 
-type AnimateLostMoneyProps = {
-  animatedValue: Animated.Value,
-};
-const AnimateLostMoney = ({ animatedValue }: AnimateLostMoneyProps) => {
-  const drop = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [10, -15],
-  });
-  const color = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["darkred", "white"],
-  });
-  return (
-    <Animated.View style={[lostMoneyStyles.container, { top: drop }]}>
-      <Animated.Text style={[lostMoneyStyles.body, { color }]}>
-        - ۵
-      </Animated.Text>
-    </Animated.View>
-  );
-};
-const lostMoneyStyles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: 30,
-    width: 30,
-    position: "absolute",
-    left: -30,
-  },
-  body: {
-    fontFamily: "IRANYekanRDMobile",
-    color: "#D46A6A",
-    fontSize: 21,
-  },
-});
 const TooLate = () => (
   <View style={tooLateStyles.container}>
     <MyText style={tooLateStyles.title}>
@@ -56,64 +24,22 @@ const TooLate = () => (
 
 const tooLateStyles = StyleSheet.create({
   container: {
-    position: "absolute",
-    borderWidth: 1,
-    width: 60,
-    height: 60,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 60,
-    borderStyle: "dashed",
-    borderColor: "#9db2d6",
-    top: 20,
-    right: -90,
   },
-  title: { fontSize: 16, color: "#9db2d6" },
+  title: { fontSize: 32, color: "#9db2d6" },
 });
 
 type Props = {
   success: boolean,
   omission: boolean,
+  comission: boolean,
   location: Location,
 };
 class GameFeedback extends React.Component<Props> {
-  animatedValue = new Animated.Value(0);
-  animatedShaking = new Animated.Value(0);
-
   componentDidMount() {
     if (!this.props.success) this.playSound();
-    this.animate();
   }
-  animate = () => {
-    Animated.timing(this.animatedValue, {
-      toValue: 1,
-      duration: 500,
-      easing: Easing.quad,
-    }).start();
-    if (!this.props.success) {
-      this.animatedShaking.setValue(0);
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(this.animatedShaking, {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.linear,
-          }),
-          Animated.timing(this.animatedShaking, {
-            toValue: 1,
-            duration: 200,
-            easing: Easing.linear,
-          }),
-          Animated.timing(this.animatedShaking, {
-            toValue: 0,
-            duration: 100,
-            easing: Easing.linear,
-          }),
-        ]),
-        { iterations: 2 }
-      ).start();
-    }
-  };
   playSound = () => {
     console.log("playSound called");
     coinSound.setVolume(4);
@@ -130,46 +56,40 @@ class GameFeedback extends React.Component<Props> {
   };
 
   render() {
-    const shaking = this.animatedShaking.interpolate({
-      inputRange: [-1, 1],
-      outputRange: ["-30deg", "30deg"],
-    });
-    const handColor = this.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["lightgrey", this.props.success ? "#4B956F" : "#D46A6A"],
-    });
     const isTest = prop("isTest", this.props.location.state);
     return (
-      <View>
-        {/* {!this.props.success &&
-          !isTest && <AnimateLostMoney animatedValue={this.animatedValue} />} */}
-        {this.props.omission && <TooLate />}
-        <Animated.Text
-          style={[
-            styles.buttonIcon,
-            {
-              color: handColor,
-              transform: [
-                {
-                  rotateX: this.props.success ? "0deg" : shaking,
-                },
-              ],
-            },
-          ]}
-        >
-          {Icons.thumbsUp}
-        </Animated.Text>
+      <View style={styles.container}>
+        <View style={styles.body}>
+          {this.props.omission && <TooLate />}
+          {this.props.comission && (
+            <Image source={iceImg} style={styles.img} resizeMode="contain" />
+          )}
+          {this.props.success && (
+            <Image source={mintImg} style={styles.img} resizeMode="contain" />
+          )}
+        </View>
+        <BlockProgressBar />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  buttonIcon: {
-    fontFamily: "FontAwesome",
-    color: "lightgrey",
-    fontSize: 42 * 2,
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  body: {
+    width: 150,
+    height: 150,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  img: {
+    width: 150,
+    height: 150,
   },
 });
 
@@ -177,6 +97,7 @@ const mapStateToProps = (state: State) => {
   const { response } = state.game.trials[state.game.metrics.trialID];
   return {
     omission: response == RESPONSE.OMISSION,
+    comission: response == RESPONSE.COMISSION,
     success: response == RESPONSE.SUCCESS,
   };
 };

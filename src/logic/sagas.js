@@ -19,7 +19,6 @@ import * as actions from "./actions";
 import config from "../config";
 import { uploadGame, persist, rehydrate } from "./persist";
 import {
-  isTestQuestion,
   shouldResumeBlock,
   getCurrentSession,
   isJustStarted,
@@ -43,8 +42,7 @@ function* extraLengthForHands() {
 }
 
 function* question() {
-  const state = yield select();
-  yield* navigate(routes.gameQuestion, { isTest: isTestQuestion(state) });
+  yield* navigate(routes.gameQuestion);
 
   const extraLength = yield* extraLengthForHands();
   // yield take(types.TRIAL_RESULT);
@@ -59,8 +57,7 @@ function* question() {
 }
 
 function* feedback() {
-  const state = yield select();
-  yield* navigate(routes.gameFeedback, { isTest: isTestQuestion(state) });
+  yield* navigate(routes.gameFeedback);
   yield call(delay, config.lengths.feedback);
   // yield take(types.TRIAL_RESULT);
 }

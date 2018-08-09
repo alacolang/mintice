@@ -4,11 +4,9 @@ import { connect } from "react-redux";
 import type { Dispatch } from "redux";
 import { View } from "react-native";
 import { Route } from "react-router-native";
-import GameQuestion from "./GameQuestion";
 import GameSession from "./GameSession";
-import GameBlank from "./GameBlank";
 import GameBlock from "./GameBlock";
-import GameFixation from "./GameFixation";
+import GameTrial from "./GameTrial";
 import GameEnoughToday from "./GameEnoughToday";
 import GameAllDone from "./GameAllDone";
 import routes from "../logic/routes";
@@ -25,9 +23,7 @@ class Game extends React.Component<Props> {
     return (
       <View style={{ flex: 1 }}>
         <Route path={routes.gameBlock} component={GameBlock} />
-        <Route path={routes.gameQuestion} component={GameQuestion} />
-        <Route path={routes.gameBlank} component={GameBlank} />
-        <Route path={routes.gameFixation} component={GameFixation} />
+        <Route path={routes.gameTrial} component={GameTrial} />
         <Route path={routes.gameEnoughToday} component={GameEnoughToday} />
         <Route path={routes.gameAllDone} component={GameAllDone} />
         <Route path={routes.gameSession} exact component={GameSession} />
