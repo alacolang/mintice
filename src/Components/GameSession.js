@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
-import logo from "../images/icemint.jpeg";
+import logo from "../images/logo.jpeg";
 import { startSession } from "../logic/actions";
 import type { State as RootState } from "../logic/reducers";
 import Tabbar from "./Tabbar";

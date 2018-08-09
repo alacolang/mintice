@@ -179,6 +179,7 @@ const footerStyles = StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
+    borderRadius: 5,
   },
   body: {},
   title: {

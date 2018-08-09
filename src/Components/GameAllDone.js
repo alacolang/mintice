@@ -1,6 +1,6 @@
 import React from "react";
-import {StyleSheet, View, Image} from "react-native";
-import {FormattedMessage} from "react-intl";
+import { StyleSheet, View, Image } from "react-native";
+import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
 import logo from "../images/logo.png";
 import Tabbar from "./Tabbar";
@@ -32,34 +32,34 @@ class GameAllDone extends React.Component {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   container: {
     paddingHorizontal: 25,
     flex: 1,
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
   },
   header: {
     marginTop: 30,
-    alignItems: "center"
+    alignItems: "center",
   },
   logo: {
     width: 120,
     height: 120,
-    borderRadius: 100 / 2
+    borderRadius: 100 / 2,
   },
   title: {
     fontSize: 36,
     color: "#A1878D",
     fontWeight: "bold",
     marginTop: 25,
-    marginBottom: 15
+    marginBottom: 15,
   },
   text: {
     fontSize: 24,
     lineHeight: 2 * 24,
-    color: "#798081"
-  }
+    color: "#798081",
+  },
 });
 export default GameAllDone;
