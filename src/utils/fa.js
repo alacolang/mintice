@@ -54,6 +54,8 @@ export default {
   "breathing.exhaleWith": "از دهان",
   "test.title": "آزمایشی",
   "test.description": "بدون جریمه",
-  "feedback.tooLate": "دیر شد",
+  "feedback.omission": "دیر شد",
+  "feedback.comission": "اشتباه",
+  "feedback.success": "درست",
   version: "نسخه {version}",
 };

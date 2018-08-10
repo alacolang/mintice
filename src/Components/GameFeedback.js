@@ -10,15 +10,25 @@ import MyText from "./MyText";
 import type { State } from "../logic/reducers";
 import { RESPONSE } from "../logic/games";
 import { coinSound } from "../utils/sound";
-import iceImg from "../images/ice.jpeg";
-import mintImg from "../images/mint.jpeg";
+import { isTestQuestion } from "../logic/selectors";
+import omissionImg from "../images/too-late.jpeg";
+import comissionImg from "../images/ice.jpeg";
+import successImg from "../images/mint.jpeg";
 import BlockProgressBar from "./BlockProgressBar";
 
-const TooLate = () => (
+type MessageProps = {
+  title: string,
+  image: any,
+  showTitle: boolean,
+};
+const Message = ({ title, image, showTitle }: MessageProps) => (
   <View style={tooLateStyles.container}>
-    <MyText style={tooLateStyles.title}>
-      <FormattedMessage id="feedback.tooLate" />
-    </MyText>
+    <Image source={image} style={styles.img} resizeMode="contain" />
+    {showTitle && (
+      <MyText style={tooLateStyles.title}>
+        <FormattedMessage id={title} />
+      </MyText>
+    )}
   </View>
 );
 
@@ -31,6 +41,7 @@ const tooLateStyles = StyleSheet.create({
 });
 
 type Props = {
+  isTest: boolean,
   success: boolean,
   omission: boolean,
   comission: boolean,
@@ -56,16 +67,29 @@ class GameFeedback extends React.Component<Props> {
   };
 
   render() {
-    const isTest = prop("isTest", this.props.location.state);
     return (
       <View style={styles.container}>
         <View style={styles.body}>
-          {this.props.omission && <TooLate />}
+          {this.props.omission && (
+            <Message
+              title="feedback.omission"
+              image={omissionImg}
+              showTitle={this.props.isTest}
+            />
+          )}
           {this.props.comission && (
-            <Image source={iceImg} style={styles.img} resizeMode="contain" />
+            <Message
+              title="feedback.comission"
+              image={comissionImg}
+              showTitle={this.props.isTest}
+            />
           )}
           {this.props.success && (
-            <Image source={mintImg} style={styles.img} resizeMode="contain" />
+            <Message
+              title="feedback.success"
+              image={successImg}
+              showTitle={this.props.isTest}
+            />
           )}
         </View>
         <BlockProgressBar />
@@ -86,6 +110,7 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   img: {
     width: 150,
@@ -96,6 +121,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: State) => {
   const { response } = state.game.trials[state.game.metrics.trialID];
   return {
+    isTest: isTestQuestion(state),
     omission: response == RESPONSE.OMISSION,
     comission: response == RESPONSE.COMISSION,
     success: response == RESPONSE.SUCCESS,
