@@ -36,9 +36,9 @@ const itemFactory = (images, startIdx = 0): Item[] =>
     id: idx + startIdx,
     Component: ({ style }) => (
       <Image
-        source={{ uri: image }}
         style={[styles.image, style]}
         resizeMode="cover"
+        source={{ uri: image }}
       />
     ),
   }));
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     color: "grey",
   },
   image: {
-    width: 200,
+    width: 250,
     height: 200,
     borderRadius: 5,
   },

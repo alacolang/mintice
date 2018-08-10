@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { FormattedMessage } from "react-intl";
 import MyText from "./MyText";
-import logo from "../images/logo.jpeg";
+import logo from "../images/logo.png";
 import { startSession } from "../logic/actions";
 import type { State as RootState } from "../logic/reducers";
 import Tabbar from "./Tabbar";
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     marginTop: 20,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    color: "#81D981",
+    color: "#195C85",
     fontWeight: "bold",
   },
   body: {
