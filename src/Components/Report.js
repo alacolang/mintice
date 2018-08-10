@@ -16,11 +16,11 @@ import {
   gift,
   sessionFailure,
   sessionSuccess,
-  sessionsSuccess
+  sessionsSuccess,
 } from "../logic/report";
 
 type Props = {
-  sessions: any
+  sessions: any,
 };
 
 const RenderSession = ({ item: session }) => (
@@ -83,19 +83,19 @@ class Report extends React.Component<Props> {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#fdfdfd"
+    backgroundColor: "#fdfdfd",
   },
   container: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
-    flex: 1
+    flex: 1,
   },
   icon: {
     // fontSize: 32,
     width: 100,
     height: 100,
-    marginBottom: 20
+    marginBottom: 20,
   },
   session: {
     // width: "100%",
@@ -106,35 +106,35 @@ const styles = StyleSheet.create({
     borderColor: "lightgrey",
     borderBottomWidth: 0,
     paddingVertical: 10,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
   },
   text: {
     fontSize: 16,
     paddingVertical: 5,
-    color: "grey"
+    color: "grey",
   },
   earnings: {
     color: "#6DA0A5",
     fontSize: 16,
     fontWeight: "bold",
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   date: {
     fontSize: 16,
     color: "grey",
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   empty: {
     flex: 1,
     marginTop: 20,
-    fontSize: 21
+    fontSize: 21,
   },
   total: {
     fontWeight: "bold",
     fontSize: 21,
     color: "#195C86",
-    paddingVertical: 20
-  }
+    paddingVertical: 20,
+  },
 });
 
 const mapStateToProps = (state: RootState) => {
@@ -145,11 +145,11 @@ const mapStateToProps = (state: RootState) => {
       ...session,
       blocks: session.blockIDs.map(blockID => blocks[blockID]).map(block => ({
         ...block,
-        trials: block.trialIDs.map(trialID => trials[trialID])
-      }))
+        trials: block.trialIDs.map(trialID => trials[trialID]),
+      })),
     }));
   return {
-    sessions: sessionsExtra
+    sessions: sessionsExtra,
   };
 };
 export default connect(mapStateToProps)(Report);

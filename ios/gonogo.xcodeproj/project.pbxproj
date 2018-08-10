@@ -35,7 +35,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* gonogoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* gonogoTests.m */; };
-		3B9AC3D320AACE700083F7D9 /* hands.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9AC3D220AACE700083F7D9 /* hands.xcassets */; };
+		3BBABB7B211DBAED00945DB5 /* hands.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BBABB7A211DBAED00945DB5 /* hands.xcassets */; };
 		3BE423592070D33D009AE654 /* IRANYekanRDMobile-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */; };
 		3BE4235A2070D33D009AE654 /* IRANYekanRDMobile-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */; };
 		3BE4235B2070D33D009AE654 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BE423572070D33D009AE654 /* FontAwesome.ttf */; };
@@ -369,7 +369,7 @@
 		2D02E47B1E0B4A5D006451C7 /* gonogo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gonogo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* gonogo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "gonogo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A5CE7BDEC014D1DBD2EAC52 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
-		3B9AC3D220AACE700083F7D9 /* hands.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = hands.xcassets; sourceTree = "<group>"; };
+		3BBABB7A211DBAED00945DB5 /* hands.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = hands.xcassets; sourceTree = "<group>"; };
 		3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANYekanRDMobile-Bold.ttf"; path = "../android/app/src/main/assets/fonts/IRANYekanRDMobile-Bold.ttf"; sourceTree = "<group>"; };
 		3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANYekanRDMobile-Light.ttf"; path = "../android/app/src/main/assets/fonts/IRANYekanRDMobile-Light.ttf"; sourceTree = "<group>"; };
 		3BE423572070D33D009AE654 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = ../android/app/src/main/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
@@ -532,6 +532,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				3BBABB7A211DBAED00945DB5 /* hands.xcassets */,
 			);
 			name = gonogo;
 			sourceTree = "<group>";
@@ -653,7 +654,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				3B9AC3D220AACE700083F7D9 /* hands.xcassets */,
 				3BE423572070D33D009AE654 /* FontAwesome.ttf */,
 				3BE4233A2070D33C009AE654 /* IRANYekanRDMobile-Bold.ttf */,
 				3BE423562070D33D009AE654 /* IRANYekanRDMobile-Light.ttf */,
@@ -1172,7 +1172,7 @@
 			files = (
 				3BE4235A2070D33D009AE654 /* IRANYekanRDMobile-Light.ttf in Resources */,
 				3BE4235C2070D33D009AE654 /* IRANYekanRDMobile.ttf in Resources */,
-				3B9AC3D320AACE700083F7D9 /* hands.xcassets in Resources */,
+				3BBABB7B211DBAED00945DB5 /* hands.xcassets in Resources */,
 				3BE4235B2070D33D009AE654 /* FontAwesome.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3BE423592070D33D009AE654 /* IRANYekanRDMobile-Bold.ttf in Resources */,
