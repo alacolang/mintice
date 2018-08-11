@@ -31,7 +31,7 @@ export default {
   "report.total": "کل پاداش {total} تومان",
 
   "about.title": "درباره ما",
-  "app.title": "برو نرو",
+  "app.title": "نعناع یخی",
   "about.message1": "مشکلی برات پیش آمده کسگم",
   "about.researcher": "پژوهشگر: پریسا پدرام",
   "about.goal":

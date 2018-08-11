@@ -3,9 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { StyleSheet, View, Image } from "react-native";
 import { FormattedMessage } from "react-intl";
-import { prop } from "ramda";
 import type { Location } from "react-router-native";
-import { Icons } from "react-native-fontawesome";
 import MyText from "./MyText";
 import type { State } from "../logic/reducers";
 import { RESPONSE } from "../logic/games";
@@ -22,22 +20,26 @@ type MessageProps = {
   showTitle: boolean,
 };
 const Message = ({ title, image, showTitle }: MessageProps) => (
-  <View style={tooLateStyles.container}>
-    <Image source={image} style={styles.img} resizeMode="contain" />
+  <View style={messageStyles.container}>
+    <Image source={image} style={messageStyles.img} resizeMode="contain" />
     {showTitle && (
-      <MyText style={tooLateStyles.title}>
+      <MyText style={messageStyles.title}>
         <FormattedMessage id={title} />
       </MyText>
     )}
   </View>
 );
 
-const tooLateStyles = StyleSheet.create({
+const messageStyles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
   },
   title: { fontSize: 32, color: "#9db2d6" },
+  img: {
+    width: 150,
+    height: 150,
+  },
 });
 
 type Props = {
@@ -69,29 +71,27 @@ class GameFeedback extends React.Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.body}>
-          {this.props.omission && (
-            <Message
-              title="feedback.omission"
-              image={omissionImg}
-              showTitle={this.props.isTest}
-            />
-          )}
-          {this.props.comission && (
-            <Message
-              title="feedback.comission"
-              image={comissionImg}
-              showTitle={this.props.isTest}
-            />
-          )}
-          {this.props.success && (
-            <Message
-              title="feedback.success"
-              image={successImg}
-              showTitle={this.props.isTest}
-            />
-          )}
-        </View>
+        {this.props.omission && (
+          <Message
+            title="feedback.omission"
+            image={omissionImg}
+            showTitle={this.props.isTest}
+          />
+        )}
+        {this.props.comission && (
+          <Message
+            title="feedback.comission"
+            image={comissionImg}
+            showTitle={this.props.isTest}
+          />
+        )}
+        {this.props.success && (
+          <Message
+            title="feedback.success"
+            image={successImg}
+            showTitle={this.props.isTest}
+          />
+        )}
         <BlockProgressBar />
       </View>
     );
@@ -104,17 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-  },
-  body: {
-    width: 150,
-    height: 150,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  img: {
-    width: 150,
-    height: 150,
   },
 });
 
