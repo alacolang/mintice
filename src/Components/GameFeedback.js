@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: State) => {
   const { response } = state.game.trials[state.game.metrics.trialID];
   return {
-    isTest: isTestQuestion(state),
+    isTest: true, //isTestQuestion(state),
     omission: response == RESPONSE.OMISSION,
     comission: response == RESPONSE.COMISSION,
     success: response == RESPONSE.SUCCESS,
