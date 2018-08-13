@@ -1374,6 +1374,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = ir.dbtteen.gonogo;
 				PRODUCT_NAME = gonogo;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1398,6 +1399,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = ir.dbtteen.gonogo;
 				PRODUCT_NAME = gonogo;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
